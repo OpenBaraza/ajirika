@@ -40,7 +40,7 @@
           Problem 2: No Standardized CV Platform
         </h3>
         <p>
-          We’re building a <strong>unified platform</strong> for applicants to update their CVs, export in a
+          We are building a <strong>unified platform</strong> for applicants to update their CVs, export in a
           <strong>standard data format</strong>, and easily share across job portals.
         </p>
       </div>
@@ -68,7 +68,7 @@
     <section class="max-w-5xl mx-auto mb-16 p-6">
       <h2 class="text-2xl font-semibold mb-4 text-center">Project History</h2>
       <p class="text-gray-600 mb-6 text-center">
-        A chronological overview of Project Ajirika’s journey and milestones.
+        A chronological overview of Project Ajirika's journey and milestones.
       </p>
 
       <!-- Timeline Graphic -->
@@ -140,7 +140,7 @@
     <section class="max-w-5xl mx-auto mb-16 p-6">
       <h2 class="text-2xl font-semibold mb-4 text-center">Next Steps</h2>
       <p class="text-gray-600 mb-6 text-center">
-        Our roadmap for the next phase of Project Ajirika’s evolution.
+        Our roadmap for the next phase of Project Ajirika's evolution.
       </p>
 
       <!-- Graphic Representation -->
@@ -172,7 +172,7 @@
     <section class="text-center max-w-3xl mx-auto mb-16 p-6">
       <h2 class="text-2xl font-semibold mb-4">Join the Conversation</h2>
       <p class="text-gray-600 mb-6">
-        We’re looking for HR professionals, developers, and community builders who believe in creating a more efficient and transparent hiring ecosystem. Let’s shape the future of recruitment - together.
+        We are looking for HR professionals, developers, and community builders who believe in creating a more efficient and transparent hiring ecosystem. Let's shape the future of recruitment - together.
       </p>
       <div class="flex justify-center gap-4">
         <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-lg">
@@ -193,5 +193,6 @@
     <script>lucide.createIcons();</script>
   </body>
 </html>
+
 
 
