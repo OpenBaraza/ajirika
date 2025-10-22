@@ -179,7 +179,7 @@
           Join the HR Community
         </button>
         <button class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-6 rounded-lg">
-          Contribute on GitHub
+          <a href="https://github.com/OpenBaraza/ajirika" target="_blank">Contribute on GitHub</a>
         </button>
       </div>
     </section>
@@ -193,3 +193,4 @@
     <script>lucide.createIcons();</script>
   </body>
 </html>
+
