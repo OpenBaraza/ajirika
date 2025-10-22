@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project Ajirika — Data CV Standard</title>
+    <title>Project Ajirika - Data CV Standard</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -13,10 +13,10 @@
     <!-- Hero Section -->
     <section class="text-center max-w-4xl mx-auto mt-12 mb-12 p-6">
       <h1 class="text-4xl font-bold mb-4">
-        Project Ajirika — Building a Standard for the Data CV
+        Project Ajirika - Building a Standard for the Data CV
       </h1>
       <p class="text-lg text-gray-600 mb-6">
-        We’re rethinking how job seekers and employers connect. Instead of filling the same details over and over again, imagine a world where your CV is a structured data file you can carry anywhere — readable by any job portal.
+        We are rethinking how job seekers and employers connect. Instead of filling the same details over and over again, imagine a world where your CV is a structured data file you can carry anywhere - readable by any job portal.
       </p>
       <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg">
         Get Involved
@@ -50,7 +50,7 @@
           Problem 3: HR Standardization in Kenya
         </h3>
         <p>
-          We aim to <strong>collaborate with the HR community in Kenya</strong> to define and standardize key CV terms — ensuring interoperability and local relevance.
+          We aim to <strong>collaborate with the HR community in Kenya</strong> to define and standardize key CV terms - ensuring interoperability and local relevance.
         </p>
       </div>
 
@@ -148,14 +148,14 @@
         <div class="bg-white rounded-xl shadow-md p-6 text-center border-t-4 border-green-500">
           <h3 class="text-lg font-semibold mb-2">Survey Adoption</h3>
           <p class="text-gray-700">
-            Assess how existing standards like JSON Resume and HR Open Standards are used in Kenya — and whether local HR systems and job portals support data import/export.
+            Assess how existing standards like JSON Resume and HR Open Standards are used in Kenya - and whether local HR systems and job portals support data import/export.
           </p>
         </div>
 
         <div class="bg-white rounded-xl shadow-md p-6 text-center border-t-4 border-blue-500">
           <h3 class="text-lg font-semibold mb-2">Define Core Schema</h3>
           <p class="text-gray-700">
-            Define the <strong>minimum viable schema</strong> for CV data — distinguishing between core, optional, and extended fields to ensure broad compatibility.
+            Define the <strong>minimum viable schema</strong> for CV data - distinguishing between core, optional, and extended fields to ensure broad compatibility.
           </p>
         </div>
 
@@ -172,7 +172,7 @@
     <section class="text-center max-w-3xl mx-auto mb-16 p-6">
       <h2 class="text-2xl font-semibold mb-4">Join the Conversation</h2>
       <p class="text-gray-600 mb-6">
-        We’re looking for HR professionals, developers, and community builders who believe in creating a more efficient and transparent hiring ecosystem. Let’s shape the future of recruitment — together.
+        We’re looking for HR professionals, developers, and community builders who believe in creating a more efficient and transparent hiring ecosystem. Let’s shape the future of recruitment - together.
       </p>
       <div class="flex justify-center gap-4">
         <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-lg">
@@ -186,11 +186,12 @@
 
     <!-- Footer -->
     <footer class="text-center text-gray-500 text-sm py-6 border-t">
-      © <script>document.write(new Date().getFullYear());</script> Project Ajirika — Open Source CV Standard Initiative
+      © <script>document.write(new Date().getFullYear());</script> Project Ajirika - Open Source CV Standard Initiative
     </footer>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>lucide.createIcons();</script>
   </body>
 </html>
+
 
