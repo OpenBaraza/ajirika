@@ -1,13 +1,15 @@
 # 🧭 Project Ajirika — Building a Standard for the Data CV
 Hiring has evolved — from handwritten letters and printed CVs, to email attachments, and now to online job application portals.
 These portals have made life easier for HR teams — but for applicants, each submission still takes time and effort to re-enter the same details over and over again.
+
 **Project Ajirika** is starting a conversation around this.
 > 💡 *What if we had a standard data structure for job applications — where an applicant could upload one structured “data CV” that any portal could read?*
 This would:
 - Save time for applicants  
 - Ensure accuracy across job submissions  
 - Make job matching more efficient  
-- Enable AI-assisted CV writing and job matching  
+- Enable AI-assisted CV writing and job matching
+
 ---
 ## 🎯 Our Goals
 1. **Reusable JSON CV Format**  
