@@ -12,6 +12,15 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SubmitFormServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private static final String URL = "jdbc:postgresql://sandbox:5432/ajirika";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "Invent2k";
+
+    // example db configurations for local usage
+    // private static final String URL = "jdbc:postgresql://localhost:5432/ajirika_db";
+    // private static final String USER = "andrew_ajirika";
+    // private static final String PASSWORD = "";
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String role = request.getParameter("role");
@@ -25,10 +34,7 @@ public class SubmitFormServlet extends HttpServlet {
             // Load PostgreSQL JDBC driver before creating the connection
             Class.forName("org.postgresql.Driver");
 
-            try (Connection conn = DriverManager.getConnection(
-                        "jdbc:postgresql://localhost:5432/ajirika_db",
-                        "andrew_ajirika",
-                        null);  // no password
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, role);
