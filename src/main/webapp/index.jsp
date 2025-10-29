@@ -349,12 +349,21 @@
           <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Project <span class="gradient-text-blue">Ajirika</span>
           </h1>
-          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            Building a Standard for the Data CV
+          <p class="text-2xl text-gray-800 font-semibold mb-4 leading-snug">
+            Tired of rewriting your CV on every job portal?  
           </p>
+
           <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-            We are rethinking how job seekers and employers connect. Instead of filling the same details over and over again,
-            imagine a world where your CV is a structured data file you can carry anywhere - readable by any job portal.
+            Ajirika introduces a universal, data-driven CV format that both <span class="font-medium text-gray-800">job seekers</span> and 
+            <span class="font-medium text-gray-800">HR professionals</span> can use seamlessly.  
+            Your profile becomes a reusable <span class="text-blue-700 font-semibold">JSON CV</span> — standardized, shareable, 
+            and readable by any job platform.
+          </p>
+
+          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+            For applicants, it means applying once — anywhere.  
+            For recruiters, it means receiving structured, consistent candidate data.  
+            Together, we’re building a smarter, faster hiring ecosystem.
           </p>
           <button id="heroGetInvolvedBtn" class="btn-shimmer text-white py-3 px-8 rounded-lg font-semibold text-lg">
             Get Involved
