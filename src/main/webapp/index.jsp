@@ -212,15 +212,17 @@
       transform: scale(1.1);
     }
 
-    /* Navbar styles */
+    /* Updated navbar styles with gradient background for better visual appeal */
     .navbar {
       transition: all 0.3s ease;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
     }
 
     .navbar-scrolled {
-      background: rgba(255, 255, 255, 0.95);
+      background: linear-gradient(135deg, rgba(240, 249, 255, 0.98) 0%, rgba(224, 242, 254, 0.98) 50%, rgba(219, 234, 254, 0.98) 100%);
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
     }
 
     .nav-link {
@@ -263,7 +265,7 @@
 
 <body class="bg-white text-gray-800">
   <!-- Navigation Bar -->
-  <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 bg-white">
+  <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <!-- Logo -->
@@ -318,7 +320,7 @@
 
   <!-- Hero Section -->
   <section id="home" class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-50"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-5 via-purple-50 to-pink-50 opacity-50"></div>
     <div class="relative max-w-7xl mx-auto px-6 py-20">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="animate-fade-in-up">
@@ -354,15 +356,33 @@
       <p class="text-xl text-gray-600">Four key problems in the current recruitment ecosystem</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-4 gap-6">
       <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border border-gray-100 scroll-reveal">
-        <div class="image-zoom rounded-xl overflow-hidden mb-6 h-48">
-          <img src="/ajirika/images/problem-repetitive.jpg" alt="Repetitive Resume Entry" class="w-full h-full object-cover" />
+        <!-- Reduced icon container height from h-48 to h-32 -->
+        <div class="rounded-xl overflow-hidden mb-6 h-32 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-6">
+          <svg viewBox="0 0 200 160" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <!-- Document stack -->
+            <rect x="30" y="40" width="70" height="90" rx="4" fill="#3b82f6" opacity="0.2"/>
+            <rect x="40" y="50" width="70" height="90" rx="4" fill="#3b82f6" opacity="0.4"/>
+            <rect x="50" y="60" width="70" height="90" rx="4" fill="#3b82f6" opacity="0.6"/>
+            <!-- Main document -->
+            <rect x="60" y="20" width="80" height="100" rx="4" fill="white" stroke="#3b82f6" stroke-width="2"/>
+            <line x1="70" y1="35" x2="130" y2="35" stroke="#3b82f6" stroke-width="2"/>
+            <line x1="70" y1="50" x2="120" y2="50" stroke="#94a3b8" stroke-width="2"/>
+            <line x1="70" y1="60" x2="125" y2="60" stroke="#94a3b8" stroke-width="2"/>
+            <line x1="70" y1="70" x2="115" y2="70" stroke="#94a3b8" stroke-width="2"/>
+            <line x1="70" y1="85" x2="130" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+            <line x1="70" y1="95" x2="125" y2="95" stroke="#94a3b8" stroke-width="1.5"/>
+            <line x1="70" y1="105" x2="120" y2="105" stroke="#94a3b8" stroke-width="1.5"/>
+            <!-- Circular arrows indicating repetition -->
+            <path d="M 150 50 Q 170 30, 170 60" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="168,62 172,62 170,67" fill="#ef4444"/>
+            <path d="M 170 70 Q 170 100, 150 80" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="152,82 148,82 150,77" fill="#ef4444"/>
+          </svg>
         </div>
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
-            1
-          </div>
+         
           <div>
             <h3 class="text-2xl font-semibold mb-3 text-blue-600">
               Repetitive Resume Entry
@@ -376,13 +396,31 @@
       </div>
 
       <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border border-gray-100 scroll-reveal delay-100">
-        <div class="image-zoom rounded-xl overflow-hidden mb-6 h-48">
-          <img src="/ajirika/images/problem-platform.jpg" alt="No Standardized CV Platform" class="w-full h-full object-cover" />
+        <!-- Reduced icon container height from h-48 to h-32 -->
+        <div class="rounded-xl overflow-hidden mb-6 h-32 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center p-6">
+          <svg viewBox="0 0 200 160" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <!-- Multiple disconnected platforms -->
+            <rect x="20" y="20" width="50" height="50" rx="6" fill="#a855f7" opacity="0.8"/>
+            <rect x="130" y="20" width="50" height="50" rx="6" fill="#a855f7" opacity="0.8"/>
+            <rect x="20" y="90" width="50" height="50" rx="6" fill="#a855f7" opacity="0.8"/>
+            <rect x="130" y="90" width="50" height="50" rx="6" fill="#a855f7" opacity="0.8"/>
+            <!-- Question marks on platforms -->
+            <text x="45" y="52" font-size="24" fill="white" text-anchor="middle" font-weight="bold">?</text>
+            <text x="155" y="52" font-size="24" fill="white" text-anchor="middle" font-weight="bold">?</text>
+            <text x="45" y="122" font-size="24" fill="white" text-anchor="middle" font-weight="bold">?</text>
+            <text x="155" y="122" font-size="24" fill="white" text-anchor="middle" font-weight="bold">?</text>
+            <!-- Central unified platform concept -->
+            <circle cx="100" cy="80" r="25" fill="#8b5cf6" stroke="white" stroke-width="3"/>
+            <text x="100" y="90" font-size="28" fill="white" text-anchor="middle" font-weight="bold">1</text>
+            <!-- Connecting lines -->
+            <line x1="70" y1="45" x2="80" y2="65" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="130" y1="45" x2="120" y2="65" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="70" y1="115" x2="80" y2="95" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="130" y1="115" x2="120" y2="95" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
+          </svg>
         </div>
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
-            2
-          </div>
+         
           <div>
             <h3 class="text-2xl font-semibold mb-3 text-purple-600">
               No Standardized CV Platform
@@ -396,13 +434,32 @@
       </div>
 
       <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border border-gray-100 scroll-reveal delay-200">
-        <div class="image-zoom rounded-xl overflow-hidden mb-6 h-48">
-          <img src="/ajirika/images/problem-hr-standard.jpg" alt="HR Standardization in Kenya" class="w-full h-full object-cover" />
+        <!-- Reduced icon container height from h-48 to h-32 -->
+        <div class="rounded-xl overflow-hidden mb-6 h-32 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-6">
+          <svg viewBox="0 0 200 160" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <!-- Kenya map outline (simplified) -->
+            <path d="M 100 30 L 120 40 L 130 60 L 125 80 L 130 100 L 120 120 L 100 130 L 80 120 L 70 100 L 75 80 L 70 60 L 80 40 Z" 
+                  fill="#10b981" opacity="0.3" stroke="#10b981" stroke-width="2"/>
+            <!-- HR professionals icons -->
+            <circle cx="85" cy="60" r="8" fill="#059669"/>
+            <path d="M 85 68 L 85 85 M 78 75 L 85 75 L 92 75" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="115" cy="70" r="8" fill="#059669"/>
+            <path d="M 115 78 L 115 95 M 108 85 L 115 85 L 122 85" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="100" cy="95" r="8" fill="#059669"/>
+            <path d="M 100 103 L 100 120 M 93 110 L 100 110 L 107 110" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+            <!-- Connection lines -->
+            <line x1="85" y1="68" x2="100" y2="87" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3"/>
+            <line x1="115" y1="78" x2="100" y2="87" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3"/>
+            <!-- Standards document -->
+            <rect x="140" y="50" width="40" height="50" rx="3" fill="white" stroke="#10b981" stroke-width="2"/>
+            <line x1="145" y1="60" x2="175" y2="60" stroke="#10b981" stroke-width="2"/>
+            <line x1="145" y1="70" x2="170" y2="70" stroke="#94a3b8" stroke-width="1.5"/>
+            <line x1="145" y1="78" x2="172" y2="78" stroke="#94a3b8" stroke-width="1.5"/>
+            <line x1="145" y1="86" x2="168" y2="86" stroke="#94a3b8" stroke-width="1.5"/>
+          </svg>
         </div>
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
-            3
-          </div>
+          
           <div>
             <h3 class="text-2xl font-semibold mb-3 text-green-600">
               HR Standardization in Kenya
@@ -416,13 +473,44 @@
       </div>
 
       <div class="card-hover bg-white rounded-2xl shadow-lg p-8 border border-gray-100 scroll-reveal delay-300">
-        <div class="image-zoom rounded-xl overflow-hidden mb-6 h-48">
-          <img src="/ajirika/images/problem-opensource.jpg" alt="Open Source Ecosystem" class="w-full h-full object-cover" />
+        <!-- Reduced icon container height from h-48 to h-32 -->
+        <div class="rounded-xl overflow-hidden mb-6 h-32 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-6">
+          <svg viewBox="0 0 200 160" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central code/repository -->
+            <rect x="70" y="50" width="60" height="60" rx="6" fill="#f97316" opacity="0.8"/>
+            <text x="100" y="75" font-size="32" fill="white" text-anchor="middle" font-weight="bold">&lt;/&gt;</text>
+            <text x="100" y="95" font-size="10" fill="white" text-anchor="middle" font-weight="bold">OPEN</text>
+            <!-- Contributors around -->
+            <circle cx="40" cy="40" r="12" fill="#ea580c" opacity="0.9"/>
+            <circle cx="160" cy="40" r="12" fill="#ea580c" opacity="0.9"/>
+            <circle cx="40" cy="120" r="12" fill="#ea580c" opacity="0.9"/>
+            <circle cx="160" cy="120" r="12" fill="#ea580c" opacity="0.9"/>
+            <circle cx="100" cy="20" r="12" fill="#ea580c" opacity="0.9"/>
+            <circle cx="100" cy="140" r="12" fill="#ea580c" opacity="0.9"/>
+            <!-- User icons in circles -->
+            <circle cx="40" cy="37" r="4" fill="white"/>
+            <path d="M 40 41 L 40 48" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="160" cy="37" r="4" fill="white"/>
+            <path d="M 160 41 L 160 48" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="40" cy="117" r="4" fill="white"/>
+            <path d="M 40 121 L 40 128" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="160" cy="117" r="4" fill="white"/>
+            <path d="M 160 121 L 160 128" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="100" cy="17" r="4" fill="white"/>
+            <path d="M 100 21 L 100 28" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="100" cy="137" r="4" fill="white"/>
+            <path d="M 100 141 L 100 148" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Connection lines -->
+            <line x1="52" y1="40" x2="70" y2="60" stroke="#fb923c" stroke-width="2"/>
+            <line x1="148" y1="40" x2="130" y2="60" stroke="#fb923c" stroke-width="2"/>
+            <line x1="52" y1="120" x2="70" y2="100" stroke="#fb923c" stroke-width="2"/>
+            <line x1="148" y1="120" x2="130" y2="100" stroke="#fb923c" stroke-width="2"/>
+            <line x1="100" y1="32" x2="100" y2="50" stroke="#fb923c" stroke-width="2"/>
+            <line x1="100" y1="128" x2="100" y2="110" stroke="#fb923c" stroke-width="2"/>
+          </svg>
         </div>
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
-            4
-          </div>
+         
           <div>
             <h3 class="text-2xl font-semibold mb-3 text-orange-600">
               Need for an Open Source Ecosystem
@@ -663,7 +751,6 @@
     const navbar = document.getElementById('navbar');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-   
     const heroGetInvolvedBtn = document.getElementById('heroGetInvolvedBtn');
     const ctaJoinBtn = document.getElementById('ctaJoinBtn');
     const modal = document.getElementById('hrModal');
@@ -694,34 +781,51 @@
       } else {
         navbar.classList.remove('navbar-scrolled');
       }
+    });
+
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mobileMenu.classList.toggle('hidden');
       
-    });
-
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
       });
-    });
 
-   
+      // Close mobile menu when clicking on links
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          
+        });
+      });
 
-    heroGetInvolvedBtn.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-    });
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    }
 
-    ctaJoinBtn.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-    });
+    // Modal functionality
+    if (heroGetInvolvedBtn) {
+      heroGetInvolvedBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+    }
+
+    if (ctaJoinBtn) {
+      ctaJoinBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+    }
 
     const closeBtn = document.getElementById('closeModal');
-
-    closeBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+    }
 
     window.addEventListener('click', (e) => {
       if (e.target === modal) {
@@ -729,8 +833,7 @@
       }
     });
 
-
-    // ✅ Toast handling (auto-hide after 3s)
+    // Toast handling (auto-hide after 3s)
     if (toast && toast.classList.contains('opacity-100')) {
       setTimeout(() => {
         toast.classList.remove('opacity-100', 'translate-y-0');
@@ -738,14 +841,21 @@
       }, 3000);
     }
 
-    // ✅ Remove ?success=true from URL after showing toast
+    // Remove ?success=true from URL after showing toast
     window.addEventListener('DOMContentLoaded', () => {
       const url = new URL(window.location);
       if (url.searchParams.get("success") === "true") {
-        // Remove the success param from the address bar without reloading
         url.searchParams.delete("success");
         window.history.replaceState({}, document.title, url.pathname);
       }
+    });
+
+    console.log('Section IDs check:', {
+      home: !!document.getElementById('home'),
+      challenges: !!document.getElementById('challenges'),
+      history: !!document.getElementById('history'),
+      actions: !!document.getElementById('actions'),
+      nextSteps: !!document.getElementById('next-steps')
     });
   </script>
 </body>
