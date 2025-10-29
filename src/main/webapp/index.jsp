@@ -739,10 +739,14 @@
             massa in tincidunt aliquam, justo mi aliquet felis, in tempor libero
             sem non lorem.
           </p>
-          <button id="jobSeekersJoinBtn"
-            class="btn-shimmer text-white py-3 px-8 rounded-lg font-semibold text-lg">
-            Join
-          </button>
+          <a href="<%= request.getContextPath() %>/jbseekerlanding.jsp">
+            <button
+               id="jobSeekersJoinBtn"
+               class="btn-shimmer text-white py-3 px-8 rounded-lg font-semibold text-lg">
+               Join
+            </button>
+          </a>
+
         </div>
         <!-- Right Column: Image -->
         <div class="image-zoom rounded-2xl overflow-hidden shadow-2xl scroll-reveal">
