@@ -260,6 +260,25 @@
     .mobile-menu {
       animation: slideDown 0.3s ease-out;
     }
+
+    @keyframes move-dots {
+      0% { transform: translateX(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateX(220px) scale(0.8); opacity: 0; }
+    }
+    .ajirika-dot {
+      animation: move-dots 2.2s linear infinite;
+      will-change: transform, opacity;
+    }
+    .ajirika-dot:nth-child(2) { animation-delay: 0.25s; }
+    .ajirika-dot:nth-child(3) { animation-delay: 0.45s; }
+
+    .ajirika-cv, .ajirika-json { transition: transform .28s ease, box-shadow .28s ease; }
+    .ajirika-cv:hover, .ajirika-json:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.12); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ajirika-dot { animation: none; opacity: 1; transform: translateX(220px); }
+    }
   </style>
 </head>
 
@@ -319,7 +338,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section id="home" class="relative overflow-hidden">
+  <section id="home" class="relative overflow-hidden my-5">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-5 via-purple-50 to-pink-50 opacity-50"></div>
     <div class="relative max-w-7xl mx-auto px-6 py-20">
       <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -341,11 +360,88 @@
             Get Involved
           </button>
         </div>
-          <div class="image-zoom rounded-2xl overflow-hidden shadow-2xl">
-            <img src="/ajirika/images/hero-cv-standard.jpg" alt="CV Standard Illustration" class="w-full h-auto" />
-          
+        <!-- Ajirika Hero Illustration -->
+        <div class="relative flex items-center justify-center">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center w-full max-w-xl">
+            <!-- CV Card -->
+            <div class="ajirika-cv bg-white rounded-2xl p-6 shadow-lg">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-300 to-indigo-400 flex items-center justify-center text-white font-bold">
+                  JD
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-800">John Doe</h3>
+                  <p class="text-sm text-gray-500">Specialist · Nairobi, Kenya</p>
+                </div>
+              </div>
+
+              <div class="mt-5 space-y-3">
+                <div class="h-3 w-5/6 bg-gray-100 rounded-full"></div>
+                <div class="h-3 w-3/4 bg-gray-100 rounded-full"></div>
+                <div class="mt-4">
+                  <div class="flex items-center gap-2">
+                    <span class="inline-block w-12 text-xs text-gray-500">Skills</span>
+                    <div class="flex gap-2 flex-wrap">
+                      <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-md">Java</span>
+                      <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-md">Html</span>
+                      <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-md">Css</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-2 bg-gray-100 rounded w-2/3"></div>
+                  <div class="h-2 bg-gray-100 rounded w-1/2 mt-2"></div>
+                </div>
+              </div>
+              <div class="mt-6 text-sm text-gray-400">Sample CV — human-readable fields</div>
+            </div>
+
+            <!-- JSON Card -->
+            <div class="ajirika-json bg-white text-gray-800 rounded-2xl shadow-lg border border-gray-100 w-full md:w-[120%] p-0 m-0 text-left">
+              <div class="flex items-center justify-between px-4 py-2 border-b border-gray-100">
+                <div class="text-sm font-medium text-gray-700">Ajirika JSON Output</div>
+                <div class="text-xs text-gray-500 px-2 py-1 bg-gray-100 rounded">v1.0</div>
+              </div>
+
+              <div class="text-sm leading-6 whitespace-pre text-left px-4 py-2">
+            {
+              <span class="text-gray-500">"name"</span>: "John Doe",
+              <span class="text-gray-500">"title"</span>: "Specialist",
+              <span class="text-gray-500">"location"</span>: "Nairobi, Kenya",
+              <span class="text-gray-500">"skills"</span>: ["Java", "HTML", "Tailwind"]
+            }
+              </div>
+
+              <div class="text-xs text-gray-400 px-4 py-2 border-t border-gray-100">
+                Machine-readable — ready to export / share
+              </div>
+            </div>
+
+          <!-- Connector Animation -->
+          <svg class="absolute pointer-events-none hidden md:block" width="420" height="160" viewBox="0 0 420 160"
+              style="left:50%; transform:translateX(-50%); top: calc(50% - 8px);">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#A78BFA" stop-opacity="0.95" />
+              </linearGradient>
+            </defs>
+            <g transform="translate(20,20)">
+              <path d="M0 60 Q110 10 220 60" stroke="url(#g1)" stroke-width="3" fill="none" opacity="0.25" />
+              <g>
+                <circle class="ajirika-dot" cx="10" cy="60" r="5" fill="#60A5FA" />
+                <circle class="ajirika-dot" cx="10" cy="60" r="4" fill="#A78BFA" />
+                <circle class="ajirika-dot" cx="10" cy="60" r="3" fill="#C084FC" />
+              </g>
+              <g transform="translate(215,56) rotate(12)">
+                <path d="M0 0 L12 6 L0 12 L3 6 Z" fill="#A78BFA" opacity="0.9" />
+              </g>
+            </g>
+          </svg>
+
+          <span class="sr-only">Illustration showing a CV transforming into a JSON CV format</span>
         </div>
-      </div>
+
     </div>
   </section>
 
@@ -710,10 +806,69 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 text-center py-8">
-    <p class="text-sm">
-      © <script>document.write(new Date().getFullYear());</script> Project Ajirika - Open Source CV Standard Initiative
-    </p>
+  <footer class="px-6 md:px-16 lg:px-24 py-10 bg-[#162441]">
+  <div class="max-w-7xl mx-auto">
+    <div class="border-b border-gray-600 pb-10">
+      
+      <!-- Left section -->
+      <div>
+        <div class="flex items-center space-x-3 mb-4">
+          <img src="https://www.hcm.co.ke/wp-content/uploads/2024/11/baraza-hcm-dewcis-co-brand-dark.png" alt="Baraza HCM Logo" class="h-16">
+        </div>
+        <h3 class="text-white font-semibold">Dew CIS Solutions Limited</h3>
+        <p class="mt-2 text-sm text-white">
+          Haven Court, Unit C2, Waiyaki Way,<br>
+          Westlands, Nairobi Kenya.
+        </p>
+
+        <p class="mt-4 text-sm text-white leading-relaxed">
+          <span class="block">+254 (20) 224 3097 / +254 (20) 222 7100</span>
+          <span class="block">+254 (738) 819 505 / +254 (726) 209 214</span>
+          <span class="block">Email: <a href="mailto:info@hcm.co.ke" class="hover:text-blue-500 hover:underline">info@hcm.co.ke</a></span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom section -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-8 text-sm space-y-4 md:space-y-0">
+      <p class="text-center md:text-left text-white">
+        © <script>document.write(new Date().getFullYear());</script> Project Ajirika –
+        <a href="#" class="hover:text-blue-400 hover:underline">Privacy Policy</a> –
+        <a href="#" class="hover:text-blue-400 hover:underline">Terms of Use</a>
+      </p>
+      
+      <!-- Social Icons -->
+      <div class="flex space-x-3">
+        <!-- Facebook -->
+        <a href="#" class="bg-gray-200 text-[#162441] rounded-md p-2 hover:bg-[#5bc0de] hover:text-white transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" class="h-4 w-4">
+            <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H295V6.26S270.43 0 246.36 0c-73.22 0-121.09 44.38-121.09 124.72v70.62H56.89V288h68.38v224h100.17V288z"/>
+          </svg>
+        </a>
+
+        <!-- X (Twitter) -->
+        <a href="#" class="bg-gray-200 text-[#162441] rounded-md p-2 hover:bg-black hover:text-white transition">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" fill="currentColor" class="h-4 w-4">
+            <path d="M714.163 519.284 1160.89 0H1055.3L667.137 450.887 359.333 0H0l466.317 682.222L0 1226.37h105.584l409.921-476.373L840.667 1226.37H1200L714.137 519.284h.026ZM565.083 693.88l-47.466-67.934L144.02 80.089h162.314l305.138 436.744 47.466 67.934 395.144 564.144H891.769L565.083 693.88Z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="#" class="bg-gray-200 text-[#162441] rounded-md p-2 hover:bg-blue-700 hover:text-white transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512" class="h-4 w-4">
+            <path d="M100.28 448H7.4V148.9h92.88zm-46.44-338C24.28 110 0 85.7 0 56.5A56.52 56.52 0 0 1 56.5 0C87.1 0 112 24.9 112 55.5s-24.9 54.5-58.16 54.5zM447.9 448h-92.68V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.8-43.8 31.1-2.3 5.5-2.8 13.1-2.8 20.8V448h-92.78s1.2-239.6 0-264.1h92.78v37.4c-.2.3-.5.7-.7 1h.7v-1c12.3-19 34.4-46.2 83.7-46.2 61.2 0 107.1 40 107.1 125.9z"/>
+          </svg>
+        </a>
+
+        <!-- YouTube -->
+        <a href="#" class="bg-gray-200 text-[#162441] rounded-md p-2 hover:bg-[#5bc0de] hover:text-red-500 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 576 512" class="h-4 w-4">
+            <path d="M549.65 124.08c-6.28-23.7-24.86-42.28-48.56-48.56C458.4 64 288 64 288 64s-170.4 0-213.09 11.52c-23.7 6.28-42.28 24.86-48.56 48.56C16.8 166.77 16.8 256 16.8 256s0 89.23 9.55 131.92c6.28 23.7 24.86 42.28 48.56 48.56C117.6 448 288 448 288 448s170.4 0 213.09-11.52c23.7-6.28 42.28-24.86 48.56-48.56C559.2 345.23 559.2 256 559.2 256s0-89.23-9.55-131.92zM232 338.55V173.45L374.6 256z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    </div>
   </footer>
 
   <!-- Modal -->
