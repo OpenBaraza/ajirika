@@ -524,6 +524,44 @@
     </div>
   </section>
 
+    <!-- Job Seekers Section -->
+  <section id="job-seekers" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="scroll-reveal">
+        <h2 class="text-4xl font-bold mb-6 text-center">Job
+          <span class="gradient-text-blue"> Seekers</span>
+        </h2>
+        <p class="text-xl text-gray-600 mb-12 text-center leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left Column: Text -->
+        <div class="scroll-reveal">
+          <p class="text-gray-700 leading-relaxed mb-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+            habitant morbi tristique senectus et netus et malesuada fames ac turpis
+            egestas. Fusce sed erat vel mi efficitur sodales. Curabitur interdum,
+            massa in tincidunt aliquam, justo mi aliquet felis, in tempor libero
+            sem non lorem.
+          </p>
+          <button id="jobSeekersJoinBtn"
+            class="btn-shimmer text-white py-3 px-8 rounded-lg font-semibold text-lg">
+            Join
+          </button>
+        </div>
+        <!-- Right Column: Image -->
+        <div class="image-zoom rounded-2xl overflow-hidden shadow-2xl scroll-reveal">
+          <img src="https://asianlinkconsultancy.com/wp-content/uploads/2023/04/960x0.jpg"
+            alt="Person making job applications"
+            class="w-full h-auto object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- History Section -->
   <section id="history" class="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
     <div class="max-w-5xl mx-auto px-6">
