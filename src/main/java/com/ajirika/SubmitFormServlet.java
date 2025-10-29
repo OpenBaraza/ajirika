@@ -1,7 +1,11 @@
 package com.ajirika;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,9 +21,9 @@ public class SubmitFormServlet extends HttpServlet {
     private static final String PASSWORD = "Invent2k";
 
     // example db configurations for local usage
-    // private static final String URL = "jdbc:postgresql://localhost:5432/ajirika_db";
-    // private static final String USER = "andrew_ajirika";
-    // private static final String PASSWORD = "";
+    // private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
+    // private static final String USER = "your_username";
+    // private static final String PASSWORD = "your_password";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

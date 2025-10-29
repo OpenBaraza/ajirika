@@ -691,12 +691,24 @@
       }
     });
 
-    if (toast.classList.contains('opacity-100')) {
+
+    // ✅ Toast handling (auto-hide after 3s)
+    if (toast && toast.classList.contains('opacity-100')) {
       setTimeout(() => {
         toast.classList.remove('opacity-100', 'translate-y-0');
         toast.classList.add('opacity-0', '-translate-y-4');
       }, 3000);
     }
+
+    // ✅ Remove ?success=true from URL after showing toast
+    window.addEventListener('DOMContentLoaded', () => {
+      const url = new URL(window.location);
+      if (url.searchParams.get("success") === "true") {
+        // Remove the success param from the address bar without reloading
+        url.searchParams.delete("success");
+        window.history.replaceState({}, document.title, url.pathname);
+      }
+    });
   </script>
 </body>
 
