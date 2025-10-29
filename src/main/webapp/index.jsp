@@ -437,41 +437,6 @@
     </div>
   </section>
 
-  <!-- History Section -->
-  <section id="history" class="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16 scroll-reveal">
-        <h2 class="text-4xl font-bold mb-4">Project <span class="gradient-text-blue">History</span></h2>
-        <p class="text-xl text-gray-600">A chronological overview of Project Ajirika's journey and milestones</p>
-      </div>
-
-      <!-- Timeline Graphic -->
-      <div class="relative border-l-4 border-blue-500 ml-4">
-        <div class="mb-12 ml-8 scroll-reveal">
-          <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
-          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-            <h3 class="text-xl font-semibold mb-2 text-blue-600">October 2025</h3>
-            <p class="text-gray-700 leading-relaxed">Initial concept meeting held to explore the idea of a standardized data CV format.</p>
-          </div>
-        </div>
-        <div class="mb-12 ml-8 scroll-reveal delay-100">
-          <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
-          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-            <h3 class="text-xl font-semibold mb-2 text-blue-600">October 2025</h3>
-            <p class="text-gray-700 leading-relaxed">Brainstorming and drafting of the problem statement and project goals.</p>
-          </div>
-        </div>
-        <div class="ml-8 scroll-reveal delay-200">
-          <div class="absolute w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
-          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-            <h3 class="text-xl font-semibold mb-2 text-purple-600">Ongoing</h3>
-            <p class="text-gray-700 leading-relaxed">Research phase to understand global standards and similar projects like JSON Resume and HR Open Standards.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Action Items Section -->
   <section id="actions" class="max-w-7xl mx-auto px-6 py-20">
     <div class="text-center mb-16 scroll-reveal">
@@ -554,6 +519,41 @@
             Incorporate <strong>Kenyan education and certification standards</strong> to make the schema locally relevant
             while maintaining global interoperability.
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- History Section -->
+  <section id="history" class="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl font-bold mb-4">Project <span class="gradient-text-blue">History</span></h2>
+        <p class="text-xl text-gray-600">A chronological overview of Project Ajirika's journey and milestones</p>
+      </div>
+
+      <!-- Timeline Graphic -->
+      <div class="relative border-l-4 border-blue-500 ml-4">
+        <div class="mb-12 ml-8 scroll-reveal">
+          <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
+          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h3 class="text-xl font-semibold mb-2 text-blue-600">October 2025</h3>
+            <p class="text-gray-700 leading-relaxed">Initial concept meeting held to explore the idea of a standardized data CV format.</p>
+          </div>
+        </div>
+        <div class="mb-12 ml-8 scroll-reveal delay-100">
+          <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
+          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h3 class="text-xl font-semibold mb-2 text-blue-600">October 2025</h3>
+            <p class="text-gray-700 leading-relaxed">Brainstorming and drafting of the problem statement and project goals.</p>
+          </div>
+        </div>
+        <div class="ml-8 scroll-reveal delay-200">
+          <div class="absolute w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
+          <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h3 class="text-xl font-semibold mb-2 text-purple-600">Ongoing</h3>
+            <p class="text-gray-700 leading-relaxed">Research phase to understand global standards and similar projects like JSON Resume and HR Open Standards.</p>
+          </div>
         </div>
       </div>
     </div>
