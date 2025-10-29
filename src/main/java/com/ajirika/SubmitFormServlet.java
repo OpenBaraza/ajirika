@@ -21,9 +21,9 @@ public class SubmitFormServlet extends HttpServlet {
     private static final String PASSWORD = "Invent2k";
 
     // example db configurations for local usage
-    /*private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
-    private static final String USER = "your_username";
-    private static final String PASSWORD = "your_password";*/
+    //private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
+    //private static final String USER = "your_username";
+    //private static final String PASSWORD = "your_password";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
