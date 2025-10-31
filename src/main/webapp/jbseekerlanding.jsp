@@ -17,7 +17,7 @@
   <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items center justify-between">
         <!-- Logo -->
-        <a href="#home" class="flex items-center gap-2 group">
+        <a href="index.jsp" class="flex items-center gap-2 group">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
             <span class="text-white font-bold text-xl">A</span>
           </div>
