@@ -1,10 +1,15 @@
 <!-- Footer -->
 <footer class="px-6 md:px-16 lg:px-24 py-8 bg-[#162441]">
   <div class="max-w-7xl mx-auto">
-    <div class="border-b border-gray-600 pb-6">
-      <!-- Left section -->
+    <div class="border-b border-gray-600 pb-6 flex items-center space-x-6">
+      <!-- Logo (Left section) -->
+      <div class="flex-shrink-0">
+        <img src="/ajirika/images/dewcis-logo.png" alt="Dew CIS Solutions Logo" class="w-20 h-auto object-contain" />
+      </div>
+
+      <!-- Text (Right section) -->
       <div>
-        <h3 class="text-white font-semibold">Dew CIS Solutions Limited</h3>
+        <h3 class="text-white font-semibold text-lg">Dew CIS Solutions Limited</h3>
         <p class="mt-2 text-sm text-white">
           Haven Court, Unit C2, Waiyaki Way,<br>
           Westlands, Nairobi Kenya.
@@ -13,7 +18,11 @@
         <p class="mt-4 text-sm text-white leading-relaxed">
           <span class="block">+254 (20) 224 3097 / +254 (20) 222 7100</span>
           <span class="block">+254 (738) 819 505 / +254 (726) 209 214</span>
-          <span class="block">Email: <a href="mailto:info@hcm.co.ke" class="hover:text-blue-500 hover:underline">info@hcm.co.ke</a></span>
+          <span class="block">Email: 
+            <a href="mailto:info@hcm.co.ke" class="hover:text-blue-500 hover:underline">
+              info@hcm.co.ke
+            </a>
+          </span>
         </p>
       </div>
     </div>

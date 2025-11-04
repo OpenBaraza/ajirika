@@ -73,7 +73,7 @@
   <!-- Hero Section -->
   <section id="home" class="relative overflow-hidden my-5">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-5 via-purple-50 to-pink-50 opacity-50"></div>
-    <div class="relative max-w-7xl mx-auto px-6 py-20">
+    <div class="relative max-w-7xl mx-auto px-6 pb-8 pt-16">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="animate-fade-in-up">
           <div class="inline-block mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold animate-scale-in">
@@ -188,7 +188,7 @@
   </section>
 
   <!-- Problem Statements -->
-  <section class="max-w-7xl mx-auto px-6 py-20">
+  <section class="max-w-7xl mx-auto px-6 py-8">
     <div id="challenges" class="text-center mb-16 scroll-reveal">
       <h2 class="text-4xl font-bold mb-4">The <span class="gradient-text-blue">Challenges</span> We're Solving</h2>
       <p class="text-xl text-gray-600">Four key problems in the current recruitment ecosystem</p>
@@ -364,7 +364,7 @@
   </section>
 
   <!-- Action Items Section -->
-  <section id="actions" class="max-w-7xl mx-auto px-6 py-20">
+  <section id="actions" class="max-w-7xl mx-auto px-6 py-8">
     <div class="text-center mb-16 scroll-reveal">
       <h2 class="text-4xl font-bold mb-4">Current <span class="gradient-text-blue">Action Items</span></h2>
       <p class="text-xl text-gray-600">The steps currently underway to drive Project Ajirika forward</p>
@@ -406,7 +406,7 @@
   </section>
 
   <!-- Next Steps Section -->
-  <section id="next-steps" class="bg-gradient-to-br from-blue-50 to-purple-50 py-20">
+  <section id="next-steps" class="bg-gradient-to-br from-blue-50 to-purple-50 py-8">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16 scroll-reveal">
         <h2 class="text-4xl font-bold mb-4">Next <span class="gradient-text-blue">Steps</span></h2>
@@ -451,7 +451,7 @@
   </section>
 
     <!-- Job Seekers Section -->
-  <section id="job-seekers" class="py-20 bg-white">
+  <section id="job-seekers" class="py-8 bg-white">
     <div class="max-w-7xl mx-auto px-6">
       <div class="scroll-reveal">
         <h2 class="text-4xl font-bold mb-6 text-center">Job
@@ -493,7 +493,7 @@
 
 
   <!-- History Section -->
-  <section id="history" class="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
+  <section id="history" class="bg-gradient-to-br from-gray-50 to-blue-50 py-8">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-16 scroll-reveal">
         <h2 class="text-4xl font-bold mb-4">Project <span class="gradient-text-blue">History</span></h2>
@@ -528,7 +528,7 @@
   </section>
 
   <!-- Call to Action -->
-  <section class="max-w-5xl mx-auto px-6 py-20">
+  <section class="max-w-5xl mx-auto px-6 py-8">
     <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl shadow-2xl p-12 text-center text-white scroll-reveal">
       <h2 class="text-4xl font-bold mb-6">Join the Conversation</h2>
       <p class="text-xl mb-8 leading-relaxed opacity-90">
