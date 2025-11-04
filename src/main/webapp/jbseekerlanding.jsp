@@ -109,34 +109,41 @@
       <div class="max-h-[calc(90vh-2rem)] overflow-y-auto p-6 md:p-8">
         <button id="closeSignup" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
-        <form class="space-y-5">
+        <form id="signupForm" method="post" action="signupForm" class="space-y-5" novalidate>
            <div>
               <label class="block text-gray-700 mb-1">First Name</label>
-              <input type="text" name="firstName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <input type="text" name="firstname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">First name is required.</p>
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Middle Name</label>
-              <input type="text" name="middleName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <input type="text" name="middlename" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Last Name</label>
-              <input type="text" name="lastName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <input type="text" name="lastname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">Last name is required.</p>
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Phone Number</label>
-              <input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <input type="tel" name="phonenumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">Phone number is required.</p>
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Email Address</label>
               <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">Email address is required.</p>
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Password</label>
               <input type="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">Password is required.</p>
             </div>
             <div>
               <label class="block text-gray-700 mb-1">Confirm Password</label>
               <input type="password" name="confirmPassword" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <p class="text-red-500 text-sm mt-1 hidden">Please confirm password</p>
+              <p class="text-red-500 text-sm mt-1 hidden">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>
             </div>
             <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">Create Account</button>
         </form>
@@ -192,5 +199,6 @@
     </div>
   </footer>
   <script src="<%= request.getContextPath() %>/javascript/jbseekerlandingscript.js"></script>
+  <script src="<%= request.getContextPath() %>/javascript/signup.js"></script>
 </body>
 </html>
