@@ -131,22 +131,17 @@
           <p class="text-red-500 text-sm mt-1 hidden">Last name is required.</p>
         </div>
 
-        <!-- Phone Number -->
+        <!-- Phone Number Input with Country Code -->
         <div>
           <label class="block text-gray-700 mb-1">Phone Number</label>
           <div class="flex">
-            <!-- Country Code Dropdown -->
             <select id="countryCode" name="countryCode"
-              class="px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:outline-none w-1/3 text-sm">
-              <option value="">Select Code</option>
+              class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
             </select>
-
-            <!-- Phone Number Input -->
             <input type="tel" name="phonenumber" required
-              class="w-2/3 px-4 py-2 border-t border-b border-r border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="712345678" />
+              class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter phone number" />
           </div>
-
           <p class="text-red-500 text-sm mt-1 hidden">Phone number is required.</p>
         </div>
 
