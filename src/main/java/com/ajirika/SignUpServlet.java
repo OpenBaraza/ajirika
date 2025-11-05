@@ -20,10 +20,10 @@ public class SignUpServlet extends HttpServlet {
     private static final String USER = "postgres";
     private static final String PASSWORD = "Invent2k";
 
-    // example db configurations for local usage
     //private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
     //private static final String USER = "your_username";
     //private static final String PASSWORD = "your_password";
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,12 +31,19 @@ public class SignUpServlet extends HttpServlet {
         String middlename = request.getParameter("middlename");
         String lastname = request.getParameter("lastname");
         String phonenumber = request.getParameter("phonenumber");
-        String email = request.getParameter("email");
+        String email = request.getParameter("email").trim().toLowerCase();
         String password = request.getParameter("password");
+
+        // Basic null/empty check
+        if (firstname == null || email == null || password == null ||
+            firstname.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty()) {
+            response.sendRedirect("jbseekerlanding.jsp?error=missing_fields");
+            return;
+        }
+
         String sql = "INSERT INTO signup_details (firstname, middlename, lastname, phonenumber, email, password) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
-            // Load PostgreSQL JDBC driver before creating the connection
             Class.forName("org.postgresql.Driver");
 
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -48,17 +55,23 @@ public class SignUpServlet extends HttpServlet {
                 stmt.setString(4, phonenumber);
                 stmt.setString(5, email);
                 stmt.setString(6, password);
+
                 stmt.executeUpdate();
 
-                System.out.println("Data inserted successfully!");
+                response.sendRedirect("jbseekerlanding.jsp?success=true");
+
+            } catch (SQLException e) {
+                // Check for duplicate email (UNIQUE violation)
+                if (e.getSQLState() != null && e.getSQLState().startsWith("23")) { // 23 = integrity constraint violation
+                    response.sendRedirect("jbseekerlanding.jsp?error=email_exists");
+                } else {
+                    e.printStackTrace();
+                    response.sendRedirect("jbseekerlanding.jsp?error=signup_failed");
+                }
             }
         } catch (ClassNotFoundException e) {
-            System.out.println("PostgreSQL JDBC Driver not found!");
             e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            response.sendRedirect("jbseekerlanding.jsp?error=db_driver_missing");
         }
-
-        response.sendRedirect("jbseekerlanding.jsp?success=true");
     }
 }
