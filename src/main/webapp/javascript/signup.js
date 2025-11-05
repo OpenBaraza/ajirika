@@ -49,18 +49,63 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 600);
   });
 
-  fetch("/ajirika/javascript/CountryCodes.json") // adjust path if needed
+  const countrySelect = document.getElementById("countryCode");
+
+  fetch("/ajirika/javascript/CountryCodes.json")
     .then((response) => response.json())
     .then((data) => {
-      const select = document.getElementById("countryCode");
+      // Populate select dropdown
       data.forEach((country) => {
         const option = document.createElement("option");
         option.value = country.dial_code;
-        option.textContent = `${country.name} (${country.dial_code})`;
-        select.appendChild(option);
+        // Default display (short)
+        option.textContent = `${country.code} (${country.dial_code})`;
+        // Store full text for when dropdown opens
+        option.setAttribute(
+          "data-full-text",
+          `${country.name} (${country.dial_code})`
+        );
+        countrySelect.appendChild(option);
       });
-      // Optional: set default to Kenya
-      select.value = "+254";
+
+      // Set default to Kenya
+      countrySelect.value = "+254";
+
+      // Handle open/close behavior
+      countrySelect.addEventListener("mousedown", function () {
+        // When opening dropdown, show full text
+        Array.from(countrySelect.options).forEach((opt) => {
+          opt.textContent = opt.getAttribute("data-full-text");
+        });
+      });
+
+      countrySelect.addEventListener("change", function () {
+        // After selection, revert to short format
+        const selected = data.find((c) => c.dial_code === countrySelect.value);
+        if (selected) {
+          Array.from(countrySelect.options).forEach((opt) => {
+            opt.textContent = `${
+              opt.value === selected.dial_code
+                ? selected.code
+                : opt.getAttribute("data-full-text").split(" ")[0]
+            } (${opt.value})`;
+          });
+        }
+      });
+
+      // When focus leaves dropdown, revert to short format
+      countrySelect.addEventListener("blur", function () {
+        const selected = data.find((c) => c.dial_code === countrySelect.value);
+        if (selected) {
+          Array.from(countrySelect.options).forEach((opt) => {
+            opt.textContent = `${
+              opt.value === selected.dial_code
+                ? selected.code
+                : opt.getAttribute("data-full-text").split(" ")[0]
+            } (${opt.value})`;
+          });
+        }
+      });
     })
     .catch((error) => console.error("Error loading country codes:", error));
 
