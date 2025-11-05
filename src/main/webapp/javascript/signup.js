@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirm = form.querySelector("input[name='confirmPassword']");
 
   // Locate or create the email error paragraph
-  const emailError = emailInput.parentElement.querySelector("p.text-red-500") || (() => {
-    const p = document.createElement("p");
-    p.className = "text-red-500 text-sm mt-1 hidden";
-    emailInput.parentElement.appendChild(p);
-    return p;
-  })();
+  const emailError =
+    emailInput.parentElement.querySelector("p.text-red-500") ||
+    (() => {
+      const p = document.createElement("p");
+      p.className = "text-red-500 text-sm mt-1 hidden";
+      emailInput.parentElement.appendChild(p);
+      return p;
+    })();
 
   // Check if email exists ===
   async function checkEmailAvailability(value) {
@@ -18,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!value) return false;
 
     try {
-      const res = await fetch(`${window.CTX}/checkEmail?email=${encodeURIComponent(value)}`);
+      const res = await fetch(
+        `${window.CTX}/checkEmail?email=${encodeURIComponent(value)}`
+      );
       const text = await res.text();
       return text.trim() === "exists";
     } catch (err) {
@@ -45,19 +49,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 600);
   });
 
+  fetch("/ajirika/javascript/CountryCodes.json") // adjust path if needed
+    .then((response) => response.json())
+    .then((data) => {
+      const select = document.getElementById("countryCode");
+      data.forEach((country) => {
+        const option = document.createElement("option");
+        option.value = country.dial_code;
+        option.textContent = `${country.name} (${country.dial_code})`;
+        select.appendChild(option);
+      });
+      // Optional: set default to Kenya
+      select.value = "+254";
+    })
+    .catch((error) => console.error("Error loading country codes:", error));
+
   // Form Submit Handler
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     let valid = true;
 
     // Reset all error messages and styles
-    form.querySelectorAll("p.text-red-500").forEach(p => p.classList.add("hidden"));
-    form.querySelectorAll("input").forEach(input => {
+    form
+      .querySelectorAll("p.text-red-500")
+      .forEach((p) => p.classList.add("hidden"));
+    form.querySelectorAll("input").forEach((input) => {
       input.classList.remove("border-red-500", "focus:ring-red-500");
     });
 
-    //Validate required fields 
-    form.querySelectorAll("input[required]").forEach(input => {
+    //Validate required fields
+    form.querySelectorAll("input[required]").forEach((input) => {
       if (!input.value.trim()) {
         valid = false;
         const error = input.parentElement.querySelector("p.text-red-500");
@@ -78,7 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //Validate password strength
     const strongPasswordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    const passwordError = password.parentElement.querySelector("p.text-red-500");
+    const passwordError =
+      password.parentElement.querySelector("p.text-red-500");
     if (!strongPasswordPattern.test(password.value)) {
       valid = false;
       passwordError.textContent =
@@ -98,7 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Final email existence check
     if (valid) {
-      const isEmailTaken = await checkEmailAvailability(emailInput.value.trim());
+      const isEmailTaken = await checkEmailAvailability(
+        emailInput.value.trim()
+      );
       if (isEmailTaken) {
         valid = false;
         emailError.textContent = "This email is already registered.";

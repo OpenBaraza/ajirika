@@ -19,8 +19,8 @@
           <span class="block">+254 (20) 224 3097 / +254 (20) 222 7100</span>
           <span class="block">+254 (738) 819 505 / +254 (726) 209 214</span>
           <span class="block">Email: 
-            <a href="mailto:info@hcm.co.ke" class="hover:text-blue-500 hover:underline">
-              info@hcm.co.ke
+            <a href="mailto:info@dewcis.com " class="hover:text-blue-500 hover:underline">
+              info@dewcis.com
             </a>
           </span>
         </p>
