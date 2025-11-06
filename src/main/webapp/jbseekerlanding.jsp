@@ -104,84 +104,97 @@
   </div>
 
   <!-- ====== SIGNUP MODAL ====== -->
-<div id="signupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
-  <div class="bg-white rounded-xl shadow-lg w-full max-w-md max-h-[90vh] relative">
-    <div class="max-h-[calc(90vh-2rem)] overflow-y-auto p-6 md:p-8">
-      <button id="closeSignup" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+  <!-- ====== SIGNUP MODAL ====== -->
+<div id="signupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50 p-4">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[90vh] flex flex-col">
+    <div class="p-6 md:p-8 overflow-hidden flex-grow flex flex-col">
+      <button id="closeSignup" class="self-end text-gray-500 hover:text-gray-800 text-2xl mb-2">&times;</button>
       <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
-      
-      <form id="signupForm" method="post" action="signupForm" class="grid grid-cols-1 gap-5" novalidate>
-        <!-- First Name -->
-        <div>
-          <label class="block text-gray-700 mb-1">First Name</label>
-          <input type="text" name="firstname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <p class="text-red-500 text-sm mt-1 hidden">First name is required.</p>
-        </div>
 
-        <!-- Middle Name -->
-        <div>
-          <label class="block text-gray-700 mb-1">Middle Name</label>
-          <input type="text" name="middlename" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-        </div>
+      <!-- Two-column form -->
+      <form id="signupForm" method="post" action="signupForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 flex-grow" novalidate>
 
-        <!-- Last Name -->
-        <div>
-          <label class="block text-gray-700 mb-1">Last Name</label>
-          <input type="text" name="lastname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <p class="text-red-500 text-sm mt-1 hidden">Last name is required.</p>
-        </div>
-
-        <!-- Phone Number Input with Country Code -->
-        <div>
-          <label class="block text-gray-700 mb-1">Phone Number</label>
-          <div class="flex">
-            <select id="countryCode" name="countryCode"
-              class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
-            </select>
-            <input type="tel" name="phonenumber" required
-              class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Enter phone number" />
+        <!-- Left Column -->
+        <div class="space-y-5">
+          <div>
+            <label class="block text-gray-700 mb-1">First Name</label>
+            <input type="text" name="firstname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <p class="text-red-500 text-sm mt-1 hidden">First name is required.</p>
           </div>
-          <p class="text-red-500 text-sm mt-1 hidden">Phone number is required.</p>
+
+          <div>
+            <label class="block text-gray-700 mb-1">Last Name</label>
+            <input type="text" name="lastname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <p class="text-red-500 text-sm mt-1 hidden">Last name is required.</p>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 mb-1">Email Address</label>
+            <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <p class="text-red-500 text-sm mt-1 hidden">Email address is required.</p>
+          </div>
         </div>
 
-        <!-- Email Address -->
-        <div>
-          <label class="block text-gray-700 mb-1">Email Address</label>
-          <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <p class="text-red-500 text-sm mt-1 hidden">Email address is required.</p>
+        <!-- Right Column -->
+        <div class="flex flex-col space-y-5">
+          <div>
+            <label class="block text-gray-700 mb-1">Middle Name</label>
+            <input type="text" name="middlename" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-gray-700 mb-1">Phone Number</label>
+            <div class="flex">
+              <select id="countryCode" name="countryCode"
+                class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
+              </select>
+              <input type="tel" name="phonenumber" required
+                class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Enter phone number" />
+            </div>
+            <p class="text-red-500 text-sm mt-1 hidden">Phone number is required.</p>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 mb-1">Password</label>
+            <input type="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <p class="text-red-500 text-sm mt-1 hidden">Password is required.</p>
+          </div>
         </div>
 
-        <!-- Password -->
-        <div>
-          <label class="block text-gray-700 mb-1">Password</label>
-          <input type="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <p class="text-red-500 text-sm mt-1 hidden">Password is required.</p>
+        <!-- Confirm Password + Create Account Button (Side-by-Side) -->
+        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div>
+            <label class="block text-gray-700 mb-1">Confirm Password</label>
+            <input type="password" name="confirmPassword" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <p class="text-red-500 text-sm mt-1 hidden">Please confirm password</p>
+            <p class="text-red-500 text-sm mt-1 hidden">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>
+          </div>
+
+          <div class="flex items-end">
+            <button type="submit"
+              class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
+              Create Account
+            </button>
+          </div>
+
         </div>
 
-        <!-- Confirm Password -->
-        <div>
-          <label class="block text-gray-700 mb-1">Confirm Password</label>
-          <input type="password" name="confirmPassword" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <p class="text-red-500 text-sm mt-1 hidden">Please confirm password</p>
-          <p class="text-red-500 text-sm mt-1 hidden">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>
+        <!-- Login Redirect Link (Full Width Inside Form) -->
+        <div class="md:col-span-2 text-center">
+          <p class="text-gray-600 text-base mt-1">
+            Already have an account?
+            <a href="#" id="openLoginFromSignup" class="text-blue-600 hover:underline font-medium">Log In</a>
+          </p>
         </div>
 
-        <!-- Submit Button -->
-        <div>
-          <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
-            Create Account
-          </button>
-        </div>
       </form>
-
-      <p class="text-center text-gray-600 mt-4">
-        Already have an account?
-        <a href="#" id="openLoginFromSignup" class="text-blue-600 hover:underline font-medium">Log In</a>
-      </p>
     </div>
   </div>
 </div>
+
 
   <jsp:include page="/includes/footer.jsp" />
   <script>
