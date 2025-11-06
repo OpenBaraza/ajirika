@@ -4,17 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const password = form.querySelector("input[name='password']");
   const confirm = form.querySelector("input[name='confirmPassword']");
 
-  // Locate or create the email error paragraph
-  const emailError =
-    emailInput.parentElement.querySelector("p.text-red-500") ||
-    (() => {
-      const p = document.createElement("p");
-      p.className = "text-red-500 text-sm mt-1 hidden";
-      emailInput.parentElement.appendChild(p);
-      return p;
-    })();
+  // Email live check debounce
+  let debounceTimer;
 
-  // Check if email exists ===
   async function checkEmailAvailability(value) {
     value = value.trim();
     if (!value) return false;
@@ -27,159 +19,153 @@ document.addEventListener("DOMContentLoaded", function () {
       return text.trim() === "exists";
     } catch (err) {
       console.error("Email check error:", err);
-      // If the service fails, assume email is available to avoid blocking signup
-      return false;
+      return false; // Assume available if error occurs
     }
   }
 
-  // Email live check with debounce
-  let debounceTimer;
   emailInput.addEventListener("input", () => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async () => {
       const isTaken = await checkEmailAvailability(emailInput.value);
+      const emailTakenError = form.querySelector(
+        `p[data-error-for="email"][data-error-type="taken"]`
+      );
+
       if (isTaken) {
-        emailError.textContent = "This email is already registered.";
-        emailError.classList.remove("hidden");
+        if (emailTakenError) emailTakenError.classList.remove("hidden");
         emailInput.classList.add("border-red-500", "focus:ring-red-500");
       } else {
-        emailError.classList.add("hidden");
+        if (emailTakenError) emailTakenError.classList.add("hidden");
         emailInput.classList.remove("border-red-500", "focus:ring-red-500");
       }
     }, 600);
   });
 
-  const countrySelect = document.getElementById("countryCode");
+  // Hide error messages when user types
+  form.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const errors = form.querySelectorAll(
+        `p[data-error-for="${input.name}"]`
+      );
+      errors.forEach((p) => p.classList.add("hidden"));
+      input.classList.remove("border-red-500", "focus:ring-red-500");
+    });
+  });
 
+
+  // Populate country codes
+  const countrySelect = document.getElementById("countryCode");
   fetch("/ajirika/javascript/CountryCodes.json")
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
-      // Populate select dropdown
       data.forEach((country) => {
         const option = document.createElement("option");
         option.value = country.dial_code;
-        // Default display (short)
         option.textContent = `${country.code} (${country.dial_code})`;
-        // Store full text for when dropdown opens
         option.setAttribute(
           "data-full-text",
           `${country.name} (${country.dial_code})`
         );
         countrySelect.appendChild(option);
       });
-
-      // Set default to Kenya
       countrySelect.value = "+254";
 
-      // Handle open/close behavior
+      // Full text on open
       countrySelect.addEventListener("mousedown", function () {
-        // When opening dropdown, show full text
         Array.from(countrySelect.options).forEach((opt) => {
           opt.textContent = opt.getAttribute("data-full-text");
         });
       });
 
-      countrySelect.addEventListener("change", function () {
-        // After selection, revert to short format
+      // Revert to short format on change/blur
+      const revertShort = () => {
         const selected = data.find((c) => c.dial_code === countrySelect.value);
-        if (selected) {
-          Array.from(countrySelect.options).forEach((opt) => {
-            opt.textContent = `${
-              opt.value === selected.dial_code
-                ? selected.code
-                : opt.getAttribute("data-full-text").split(" ")[0]
+        if (!selected) return;
+        Array.from(countrySelect.options).forEach((opt) => {
+          opt.textContent = `${opt.value === selected.dial_code
+            ? selected.code
+            : opt.getAttribute("data-full-text").split(" ")[0]
             } (${opt.value})`;
-          });
-        }
-      });
-
-      // When focus leaves dropdown, revert to short format
-      countrySelect.addEventListener("blur", function () {
-        const selected = data.find((c) => c.dial_code === countrySelect.value);
-        if (selected) {
-          Array.from(countrySelect.options).forEach((opt) => {
-            opt.textContent = `${
-              opt.value === selected.dial_code
-                ? selected.code
-                : opt.getAttribute("data-full-text").split(" ")[0]
-            } (${opt.value})`;
-          });
-        }
-      });
+        });
+      };
+      countrySelect.addEventListener("change", revertShort);
+      countrySelect.addEventListener("blur", revertShort);
     })
-    .catch((error) => console.error("Error loading country codes:", error));
+    .catch((err) => console.error("Error loading country codes:", err));
 
   // Form Submit Handler
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     let valid = true;
 
-    // Reset all error messages and styles
-    form
-      .querySelectorAll("p.text-red-500")
-      .forEach((p) => p.classList.add("hidden"));
+    // Reset all errors and input styles
+    form.querySelectorAll("p.text-red-500").forEach((p) => p.classList.add("hidden"));
     form.querySelectorAll("input").forEach((input) => {
       input.classList.remove("border-red-500", "focus:ring-red-500");
     });
 
-    //Validate required fields
+    // Required fields
     form.querySelectorAll("input[required]").forEach((input) => {
       if (!input.value.trim()) {
         valid = false;
-        const error = input.parentElement.querySelector("p.text-red-500");
-        if (error) error.classList.remove("hidden");
+        const requiredError = form.querySelector(
+          `p[data-error-for="${input.name}"][data-error-type="required"]`
+        );
+        if (requiredError) requiredError.classList.remove("hidden");
         input.classList.add("border-red-500", "focus:ring-red-500");
       }
     });
 
-    //Validate email format
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(emailInput.value.trim())) {
-      valid = false;
-      emailError.textContent = "Enter a valid email (example: user@mail.com)";
-      emailError.classList.remove("hidden");
-      emailInput.classList.add("border-red-500", "focus:ring-red-500");
+    // Email format check (only if not empty)
+    if (emailInput.value.trim()) {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(emailInput.value.trim())) {
+        valid = false;
+        const emailFormatError = form.querySelector(
+          `p[data-error-for="email"][data-error-type="format"]`
+        );
+        if (emailFormatError) emailFormatError.classList.remove("hidden");
+        emailInput.classList.add("border-red-500", "focus:ring-red-500");
+      }
     }
 
-    //Validate password strength
-    const strongPasswordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    const passwordError =
-      password.parentElement.querySelector("p.text-red-500");
-    if (!strongPasswordPattern.test(password.value)) {
-      valid = false;
-      passwordError.textContent =
-        "Password must include uppercase, lowercase, number, special char, min 8 chars.";
-      passwordError.classList.remove("hidden");
-      password.classList.add("border-red-500", "focus:ring-red-500");
+    // Password strength check (only if not empty)
+    if (password.value.trim()) {
+      const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      if (!strongPasswordPattern.test(password.value)) {
+        valid = false;
+        const passwordStrengthError = form.querySelector(
+          `p[data-error-for="password"][data-error-type="strength"]`
+        );
+        if (passwordStrengthError) passwordStrengthError.classList.remove("hidden");
+        password.classList.add("border-red-500", "focus:ring-red-500");
+      }
     }
 
-    //Validate password match
-    const confirmError = confirm.parentElement.querySelector("p.text-red-500");
-    if (password.value !== confirm.value) {
+    // Confirm password mismatch (only if both not empty)
+    if (confirm.value.trim() && password.value.trim() && password.value !== confirm.value) {
       valid = false;
-      confirmError.textContent = "Passwords do not match.";
-      confirmError.classList.remove("hidden");
+      const confirmMismatchError = form.querySelector(
+        `p[data-error-for="confirmPassword"][data-error-type="mismatch"]`
+      );
+      if (confirmMismatchError) confirmMismatchError.classList.remove("hidden");
       confirm.classList.add("border-red-500", "focus:ring-red-500");
     }
 
-    //Final email existence check
-    if (valid) {
-      const isEmailTaken = await checkEmailAvailability(
-        emailInput.value.trim()
-      );
+    // Final email availability check (only if field not empty)
+    if (emailInput.value.trim()) {
+      const isEmailTaken = await checkEmailAvailability(emailInput.value.trim());
       if (isEmailTaken) {
         valid = false;
-        emailError.textContent = "This email is already registered.";
-        emailError.classList.remove("hidden");
+        const emailTakenError = form.querySelector(
+          `p[data-error-for="email"][data-error-type="taken"]`
+        );
+        if (emailTakenError) emailTakenError.classList.remove("hidden");
         emailInput.classList.add("border-red-500", "focus:ring-red-500");
         emailInput.focus();
       }
     }
 
-    // Submit if all inputs are valid
-    if (valid) {
-      form.submit();
-    }
+    if (valid) form.submit();
   });
 });

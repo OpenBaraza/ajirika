@@ -104,34 +104,34 @@
   </div>
 
   <!-- ====== SIGNUP MODAL ====== -->
-  <!-- ====== SIGNUP MODAL ====== -->
 <div id="signupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50 p-4">
   <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[90vh] flex flex-col">
-    <div class="p-6 md:p-8 overflow-hidden flex-grow flex flex-col">
-      <button id="closeSignup" class="self-end text-gray-500 hover:text-gray-800 text-2xl mb-2">&times;</button>
-      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
-
-      <!-- Two-column form -->
-      <form id="signupForm" method="post" action="signupForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 flex-grow" novalidate>
+    <div class="p-6 md:p-8 flex-grow overflow-y-auto relative">
+      <button id="closeSignup" class="absolute top-6 right-6 text-gray-500 hover:text-gray-800 text-2xl z-10">&times;</button>
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6 mt-4">Create Account</h2>
+      
+      <form id="signupForm" method="post" action="signupForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 flex-grow rounded-xl overflow-hidden bg-white p-6" novalidate>
 
         <!-- Left Column -->
         <div class="space-y-5">
           <div>
             <label class="block text-gray-700 mb-1">First Name</label>
             <input type="text" name="firstname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-            <p class="text-red-500 text-sm mt-1 hidden">First name is required.</p>
+            <p class="text-red-500 text-sm mt-1 hidden" data-error-for="firstname" data-error-type="required">First name is required.</p>
           </div>
 
           <div>
             <label class="block text-gray-700 mb-1">Last Name</label>
             <input type="text" name="lastname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-            <p class="text-red-500 text-sm mt-1 hidden">Last name is required.</p>
+            <p class="text-red-500 text-sm mt-1 hidden" data-error-for="lastname" data-error-type="required">Last name is required.</p>
           </div>
 
           <div>
             <label class="block text-gray-700 mb-1">Email Address</label>
             <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-            <p class="text-red-500 text-sm mt-1 hidden">Email address is required.</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="required">Email address is required.</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="format">Enter a valid email (example: user@mail.com)</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="taken">This email is already registered.</p>
           </div>
         </div>
 
@@ -152,13 +152,14 @@
                 class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="Enter phone number" />
             </div>
-            <p class="text-red-500 text-sm mt-1 hidden">Phone number is required.</p>
+              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="phonenumber" data-error-type="required">Phone number is required.</p>
           </div>
 
           <div>
             <label class="block text-gray-700 mb-1">Password</label>
             <input type="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-            <p class="text-red-500 text-sm mt-1 hidden">Password is required.</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="password" data-error-type="required">Password is required.</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="password" data-error-type="strength">Password must include uppercase, lowercase, number, special char, min 8 chars.</p>
           </div>
         </div>
 
@@ -169,8 +170,8 @@
             <label class="block text-gray-700 mb-1">Confirm Password</label>
             <input type="password" name="confirmPassword" required
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-            <p class="text-red-500 text-sm mt-1 hidden">Please confirm password</p>
-            <p class="text-red-500 text-sm mt-1 hidden">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="confirmPassword" data-error-type="required">Please confirm password</p>
+             <p class="text-red-500 text-sm mt-1 hidden" data-error-for="confirmPassword" data-error-type="mismatch">Passwords do not match.</p>
           </div>
 
           <div class="flex items-end">
@@ -184,7 +185,7 @@
 
         <!-- Login Redirect Link (Full Width Inside Form) -->
         <div class="md:col-span-2 text-center">
-          <p class="text-gray-600 text-base mt-1">
+          <p class="text-gray-600 text-base">
             Already have an account?
             <a href="#" id="openLoginFromSignup" class="text-blue-600 hover:underline font-medium">Log In</a>
           </p>
