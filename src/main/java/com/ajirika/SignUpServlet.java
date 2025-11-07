@@ -10,6 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.UUID;
+
 
 @WebServlet("/signupForm")
 public class SignUpServlet extends HttpServlet {
@@ -32,7 +34,8 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String token = UUID.randomUUID().toString();
+        String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password, verification_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
 
@@ -46,10 +49,20 @@ public class SignUpServlet extends HttpServlet {
                 stmt.setString(5, phonenumber);
                 stmt.setString(6, email);
                 stmt.setString(7, password);
+                stmt.setString(8, token);
 
                 stmt.executeUpdate();
 
-                response.sendRedirect("jbseekerlanding.jsp?success=true");
+                String verificationLink = "http://localhost:8080/ajirika/verify?token="+ token;
+
+                EmailUtil.sendEmail(email, "Confirm Your Account Creation",
+                    "Hello " + firstname + ",\n\n" +
+                            "Thank you for signing up.\n" +
+                            "Click the link below to verify your email:\n" +
+                            verificationLink + "\n\n" +
+                            "Ajirika Team");
+
+                response.sendRedirect("jbseekerlanding.jsp?success=verification_sent");
 
             } catch (SQLException e) {
                 // Check for duplicate email (UNIQUE violation)
