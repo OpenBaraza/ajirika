@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,9 +14,16 @@ import jakarta.servlet.http.HttpServletResponse;
 public class VerifyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         String token = request.getParameter("token");
 
-        String sql = "UPDATE signup_details SET is_active = TRUE WHERE verification_token = ?";
+        // ✅ Updated SQL to clear token and expiry after successful verification
+        String sql = "UPDATE signup_details SET is_active = TRUE, "
+                   + "verification_token = NULL, "
+                   + "token_expires_at = NULL "
+                   + "WHERE verification_token = ? "
+                   + "AND token_expires_at > NOW()";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -27,9 +33,11 @@ public class VerifyServlet extends HttpServlet {
             if (updated > 0) {
                 response.sendRedirect("verification_success.jsp");
             } else {
-                response.sendRedirect("verification_failed.jsp");
+                response.sendRedirect("verification_failed.jsp?reason=expired_or_invalid");
             }
+
         } catch (SQLException e) {
+            e.printStackTrace();
             response.sendRedirect("verification_failed.jsp");
         }
     }

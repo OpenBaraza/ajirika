@@ -13,6 +13,12 @@
             The verification link may be invalid or already used.
         </p>
 
+        <form action="resendVerification" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Resend Verification Email</button>
+        </form>
+
+
         <a href="jbseekerlanding.jsp" 
            class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
            Return to Home

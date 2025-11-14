@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 
 @WebServlet("/signupForm")
@@ -35,7 +36,10 @@ public class SignUpServlet extends HttpServlet {
         }
 
         String token = UUID.randomUUID().toString();
-        String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password, verification_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        Timestamp expiry = new Timestamp(System.currentTimeMillis() + 5 * 60 * 1000); // +5 minutes
+
+        String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password, verification_token, token_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         try {
 
@@ -50,10 +54,19 @@ public class SignUpServlet extends HttpServlet {
                 stmt.setString(6, email);
                 stmt.setString(7, password);
                 stmt.setString(8, token);
+                stmt.setTimestamp(9, expiry);
+
 
                 stmt.executeUpdate();
 
-                String verificationLink = "http://localhost:8080/ajirika/verify?token="+ token;
+                // 🔹 Dynamically build the base URL (works in dev & production)
+                String baseUrl = request.getScheme() + "://" + request.getServerName()
+                        + (request.getServerPort() != 80 && request.getServerPort() != 443
+                        ? ":" + request.getServerPort()
+                        : "")
+                        + request.getContextPath();
+
+                String verificationLink = baseUrl + "/verify?token=" + token;
 
                 EmailUtil.sendEmail(email, "Confirm Your Account Creation",
                     "Hello " + firstname + ",\n\n" +

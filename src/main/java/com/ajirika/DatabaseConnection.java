@@ -11,9 +11,9 @@ public class DatabaseConnection {
     private static final String PASSWORD = "Invent2k";
 
     // For local usage
-    //private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
-    //private static final String USER = "your_username";
-    //private static final String PASSWORD = "your_password";
+    // private static final String URL = "jdbc:postgresql://localhost:5432/your_database_name";
+    // private static final String USER = "your_username";
+    // private static final String PASSWORD = "your_password";
 
     // Optional: Load driver once
     static {
