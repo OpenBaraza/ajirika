@@ -458,7 +458,7 @@
           <span class="gradient-text-blue"> Seekers</span>
         </h2>
         <p class="text-xl text-gray-600 mb-12 text-center leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          Want to create an easy digitized CV?
         </p>
       </div>
 
@@ -466,17 +466,13 @@
         <!-- Left Column: Text -->
         <div class="scroll-reveal">
           <p class="text-gray-700 leading-relaxed mb-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac turpis
-            egestas. Fusce sed erat vel mi efficitur sodales. Curabitur interdum,
-            massa in tincidunt aliquam, justo mi aliquet felis, in tempor libero
-            sem non lorem.
+            Ajirika is a simple tool that helps you build your CV once and use it anywhere. No more filling out the same forms on every job site. Just create your CV inside Ajirika and it becomes a smart file that any employer can read. It’s like carrying your CV in your pocket, ready to share whenever you find a new job.
           </p>
           <a href="<%= request.getContextPath() %>/jbseekerlanding.jsp">
             <button
                id="jobSeekersJoinBtn"
                class="btn-shimmer text-white py-3 px-8 rounded-lg font-semibold text-lg">
-               Join
+               CREATE
             </button>
           </a>
 
