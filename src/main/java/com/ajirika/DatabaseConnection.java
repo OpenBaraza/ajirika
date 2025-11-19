@@ -5,10 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    // For remote usage
+    // For remote use on sandbox
     private static final String URL = "jdbc:postgresql://sandbox:5432/ajirika";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Invent2k";
+
+    // For remote use on live
+    // private static final String URL = "jdbc:postgresql://kifaru:5432/ajirika";
+    // private static final String USER = "postgres";
+    // private static final String PASSWORD = "Invent2k";
 
     // For local usage
     // private static final String URL = "jdbc:postgresql://localhost:5432/your_database_name";
