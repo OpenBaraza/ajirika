@@ -17,15 +17,15 @@ public class VerifyServlet extends HttpServlet {
 
         String token = request.getParameter("token");
 
-        // ✅ Updated SQL to clear token and expiry after successful verification
+        // Clear token and expiry after successful verification
         String sql = "UPDATE signup_details SET is_active = TRUE, "
-                   + "verification_token = NULL, "
-                   + "token_expires_at = NULL "
-                   + "WHERE verification_token = ? "
-                   + "AND token_expires_at > NOW()";
+                + "verification_token = NULL, "
+                + "token_expires_at = NULL "
+                + "WHERE verification_token = ? "
+                + "AND token_expires_at > NOW()";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, token);
             int updated = stmt.executeUpdate();

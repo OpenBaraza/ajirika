@@ -32,10 +32,10 @@ public class EmailUtil {
             message.setText(messageBody);
 
             Transport.send(message);
-            System.out.println("✅ Email sent successfully");
+            System.out.println("Email sent successfully");
 
         } catch (Exception e) {
-            System.out.println("❌ Failed to send: " + e.getMessage());
+            System.out.println("Failed to send: " + e.getMessage());
         }
     }
 }

@@ -85,7 +85,7 @@
     <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative">
       <button id="closeLogin" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
       <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Log In</h2>
-      <form class="space-y-5">
+      <form class="space-y-5" method="POST" action="loginForm">
         <div>
           <label class="block text-gray-700 mb-1">Email</label>
           <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
