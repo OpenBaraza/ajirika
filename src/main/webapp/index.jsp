@@ -675,126 +675,33 @@
               &times;
           </button>
           <h2 class="text-2xl font-bold mb-6 text-center gradient-text-blue">Event Registration</h2>
-          <form id="registrationForm" class="space-y-4">
+          <form id="registrationForm" class="space-y-4" action="addAttendee" method="post">
               <div>
                 <label class="block mb-2 font-semibold text-gray-700">Full Name</label>
-                <input type="text" name="name" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="Your Name" required>
+                <input type="text" id="fullName" name="full_name" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="Your Name" required>
               </div>
               <div>
                 <label class="block mb-2 font-semibold text-gray-700">Email Address</label>
-                <input type="email" name="email" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="you@example.com" required>
+                <input type="email" id="email" name="email_address" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="you@example.com" required>
               </div>
               <div>
                 <label class="block text-gray-700 mb-1">Phone Number</label>
                 <div class="flex">
-                  <select id="countryCode" name="countryCode"
+                  <select id="countryCode" name="country_code"
                     class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
                   </select>
-                  <input type="tel" name="phonenumber" required
+                  <input type="tel" id="phone" name="phone_number" required
                     class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     placeholder="Enter phone number" />
                 </div>
                   <p class="text-red-500 text-sm mt-1 hidden" data-error-for="phonenumber" data-error-type="required">Phone number is required.</p>
               </div>
               <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg">Submit</button>
-          </form>
+            </form>
       </div>
   </div>
   <script src="<%= request.getContextPath() %>/javascript/signup.js"></script>
   <script src="<%= request.getContextPath() %>/javascript/indexscript.js"></script>
-  <script>
-    // Add this function after your existing registration code
-    function initializeCountryCodes() {
-      const countrySelect = document.getElementById("countryCode");
-      fetch("/ajirika/javascript/CountryCodes.json")
-        .then((res) => res.json())
-        .then((data) => {
-          data.forEach((country) => {
-            const option = document.createElement("option");
-            option.value = country.dial_code;
-            option.textContent = country.code + " (" + country.dial_code + ")";
-            option.setAttribute(
-              "data-full-text",
-              country.name + " (" + country.dial_code + ")"
-            );
-            countrySelect.appendChild(option);
-          });
-          countrySelect.value = "+254";
-
-          // Full text on open
-          countrySelect.addEventListener("mousedown", function () {
-            Array.from(countrySelect.options).forEach((opt) => {
-              opt.textContent = opt.getAttribute("data-full-text");
-            });
-          });
-
-          // Revert to short format on change/blur
-          const revertShort = () => {
-            const selected = data.find((c) => c.dial_code === countrySelect.value);
-            if (!selected) return;
-            Array.from(countrySelect.options).forEach((opt) => {
-              const optionText = opt.value === selected.dial_code 
-                ? selected.code 
-                : opt.getAttribute("data-full-text").split(" ")[0];
-              opt.textContent = optionText + " (" + opt.value + ")";
-            });
-          };
-          countrySelect.addEventListener("change", revertShort);
-          countrySelect.addEventListener("blur", revertShort);
-        })
-        .catch((err) => console.error("Error loading country codes:", err));
-    }
-
-    // Get DOM elements
-    const registerBtn = document.getElementById("registerBtn");
-    const registerModal = document.getElementById("registrationModal");
-    const registerCloseBtn = document.getElementById("registrationCloseModal");
-    const registerForm = document.getElementById("registrationForm");
-
-    // Initialize when modal opens
-    document.getElementById("registerBtn").addEventListener("click", () => {
-      setTimeout(initializeCountryCodes, 100); // Delay to ensure DOM is ready
-    });
-    // Show modal
-    registerBtn.addEventListener("click", () => {
-      registerModal.classList.remove("hidden");
-    });
-
-    // Close modal (X button)
-    registerCloseBtn.addEventListener("click", () => {
-      registerModal.classList.add("hidden");
-    });
-
-    // Close modal when clicking outside content
-    registerModal.addEventListener("click", (e) => {
-      if (e.target === registerModal) {
-        registerModal.classList.add("hidden");
-      }
-    });
-
-    // Form submission
-    registerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      // Get form values
-      const fullName = document.getElementById("fullName").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
-
-      // In a real app, you would send this data to a server here
-      console.log("Registration data:", { fullName, email, phone });
-
-      // Show success message (replace with actual API call)
-      alert(
-        `Thank you, ${fullName}! You're registered for the Ajirika launch event.`
-      );
-
-      // Reset and close form
-      registerForm.reset();
-      registerModal.classList.add("hidden");
-    });
-  </script>
-  
-
+  <script src="<%= request.getContextPath() %>/javascript/launchEvent.js"></script>
 </body>
 </html>
