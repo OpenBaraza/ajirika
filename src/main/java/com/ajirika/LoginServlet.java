@@ -14,18 +14,17 @@ public class LoginServlet extends HttpServlet {
     String email = request.getParameter("email");
     String password = request.getParameter("password");
 
-    // Assume you have a method to get user by email
     User user = Database.getUserByEmail(email);
 
     if (user != null && password.equals(user.getPassword())) {
       // Set session
       HttpSession session = request.getSession();
       session.setAttribute("user", user);
-      response.sendRedirect("profile.jsp");
+      response.getWriter().write("success");
     } else {
       // Invalid login
-      request.setAttribute("loginError", "Invalid email or password");
-      request.getRequestDispatcher("error.jsp").forward(request, response);
+      request.setAttribute("loginError", true);
+      response.getWriter().write("fail");
     }
   }
 }
