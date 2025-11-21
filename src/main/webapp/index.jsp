@@ -188,13 +188,92 @@
   </section>
 
   <!-- Announcement Banner -->
-  <div class="announcement-banner bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-xl p-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">🎉 Ajirika Project Launch 🎉</h2>
-      <p class="text-lg mb-2">Be the first to experience our innovative platform designed to transform your workflow</p>
-      <p class="text-xl font-semibold mb-6">Exclusive launch event - Register now!</p>
-      <button id="registerBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-          Register for Launch Event
-      </button>
+  <div class="announcement-banner bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-xl p-8 md:p-12 text-center relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <!-- Floating Particles -->
+        <div class="absolute top-10 left-5 w-16 h-16 rounded-full bg-white bg-opacity-10 animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-10 h-10 rounded-full bg-white bg-opacity-20 animate-float animation-delay-2000"></div>
+        <div class="absolute top-1/3 right-1/4 w-8 h-8 rounded-full bg-white bg-opacity-15 animate-float animation-delay-3000"></div>
+
+        <!-- Flowing Lines (Full Width) -->
+        <svg class="absolute top-0 left-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+            </defs>
+            <!-- Horizontal flowing lines -->
+            <path d="M0,50 C200,10 400,90 600,50 S1000,10 1200,50" stroke="url(#grad1)" stroke-width="2" fill="none" class="animate-flow"></path>
+            <path d="M0,150 C200,110 400,190 600,150 S1000,110 1200,150" stroke="url(#grad1)" stroke-width="2" fill="none" class="animate-flow animation-delay-1000"></path>
+            <path d="M0,250 C200,210 400,290 600,250 S1000,210 1200,250" stroke="url(#grad1)" stroke-width="2" fill="none" class="animate-flow animation-delay-2000"></path>
+        </svg>
+
+        <!-- Glowing Orbs -->
+        <div class="absolute top-1/4 left-1/5 w-32 h-32 rounded-full bg-yellow-300 opacity-10 blur-xl animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/5 w-24 h-24 rounded-full bg-blue-300 opacity-10 blur-xl animate-pulse-slow animation-delay-1500"></div>
+
+        <!-- Subtle Grid Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="w-full h-full" style="background: linear-gradient(to right, transparent 1px, rgba(255,255,255,0.05) 1px), linear-gradient(to bottom, transparent 1px, rgba(255,255,255,0.05) 1px); background-size: 40px 40px;"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Left Column - Main Content -->
+            <div>
+                <h2 class="text-xl md:text-3xl xl:text-4xl font-bold mb-4 animate-fade-in-down">🎉Ajirika Project Launch 🎉</h2>
+                <p class="text-lg mb-2 animate-fade-in-up animation-delay-300">
+                    Be the first to experience our innovative platform designed to transform your workflow
+                </p>
+                <p class="text-xl font-semibold mb-6 animate-fade-in-up animation-delay-500">Exclusive launch event - Register now!</p>
+                
+                <!-- Animated Button -->
+                <button id="registerBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg animate-fade-in-up animation-delay-700">
+                    Register for Launch Event
+                </button>
+            </div>
+
+            <!-- Right Column - Event Details -->
+            <div class="animate-fade-in-up animation-delay-900 flex justify-center items-center">
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+                    <h3 class="text-xl font-bold mb-4">Event Details</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-2 mr-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm opacity-80">Date & Time</p>
+                                <p class="font-semibold">Thursday, 11th December 2025</p>
+                                <p class="text-sm">3:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-2 mr-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm opacity-80">Venue</p>
+                                <p class="font-semibold">Parklands Sports Club</p>
+                                <p class="text-sm">Nairobi, Kenya</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 
   <!-- Problem Statements -->
@@ -592,7 +671,7 @@
   <!-- Registration Modal -->
   <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 transition-opacity duration-300">
       <div class="modal-content bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-8 relative">
-          <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">
+          <button id="registrationCloseModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">
               &times;
           </button>
           <h2 class="text-2xl font-bold mb-6 text-center gradient-text-blue">Event Registration</h2>
@@ -669,7 +748,7 @@
     // Get DOM elements
     const registerBtn = document.getElementById("registerBtn");
     const registerModal = document.getElementById("registrationModal");
-    const registerCloseBtn = document.getElementById("closeModal");
+    const registerCloseBtn = document.getElementById("registrationCloseModal");
     const registerForm = document.getElementById("registrationForm");
 
     // Initialize when modal opens
