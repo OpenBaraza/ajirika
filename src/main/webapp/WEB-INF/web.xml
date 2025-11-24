@@ -7,5 +7,52 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
   <display-name>Archetype Created Web Application</display-name>
+
+  	<security-constraint>
+		<display-name>Users Security Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Users Protected Area</web-resource-name>
+			<url-pattern>/profile.jsp</url-pattern>
+    </web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- Default login configuration uses form-based authentication -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>Form-Based Authentication Area</realm-name>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/loginError.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<!-- Security roles referenced by this web application -->
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+
+	<error-page>
+		<error-code>401</error-code>
+		<location>/assets/error/401.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/logonError.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/assets/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>408</error-code>
+		<location>/assets/error/408.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/assets/error/500.jsp</location>
+	</error-page>
   
 </web-app>
