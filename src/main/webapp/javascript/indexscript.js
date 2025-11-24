@@ -3,8 +3,8 @@ const mobileMenuBtn = document.getElementById("mobileMenuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 const heroGetInvolvedBtn = document.getElementById("heroGetInvolvedBtn");
 const ctaJoinBtn = document.getElementById("ctaJoinBtn");
-const modal = document.getElementById("hrModal");
-const toast = document.getElementById("toast");
+const hrModal = document.getElementById("hrModal");
+const hrToast = document.getElementById("toast");
 const mobileLinks = mobileMenu.querySelectorAll("a");
 const observerOptions = {
   threshold: 0.1,
@@ -58,34 +58,34 @@ if (mobileMenuBtn && mobileMenu) {
 // Modal functionality
 if (heroGetInvolvedBtn) {
   heroGetInvolvedBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
+    hrModal.classList.remove("hidden");
   });
 }
 
 if (ctaJoinBtn) {
   ctaJoinBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
+    hrModal.classList.remove("hidden");
   });
 }
 
-const closeBtn = document.getElementById("closeModal");
-if (closeBtn) {
-  closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
+const hrCloseBtn = document.getElementById("hrCloseBtn");
+if (hrCloseBtn) {
+  hrCloseBtn.addEventListener("click", () => {
+    hrModal.classList.add("hidden");
   });
 }
 
 window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.classList.add("hidden");
+  if (e.target === hrModal) {
+    hrModal.classList.add("hidden");
   }
 });
 
 // Toast handling (auto-hide after 3s)
-if (toast && toast.classList.contains("opacity-100")) {
+if (hrToast && hrToast.classList.contains("opacity-100")) {
   setTimeout(() => {
-    toast.classList.remove("opacity-100", "translate-y-0");
-    toast.classList.add("opacity-0", "-translate-y-4");
+    hrToast.classList.remove("opacity-100", "translate-y-0");
+    hrToast.classList.add("opacity-0", "-translate-y-4");
   }, 3000);
 }
 

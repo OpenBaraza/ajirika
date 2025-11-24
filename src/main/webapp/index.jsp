@@ -641,7 +641,7 @@
   <!-- Modal -->
   <div id="hrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 transition-opacity duration-300">
     <div class="modal-content bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-8 relative">
-      <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold transition-colors">&times;</button>
+      <button id="hrCloseBtn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold transition-colors">&times;</button>
       <h2 class="text-2xl font-bold mb-6 text-center gradient-text-blue">Join the Community</h2>
       <form action="submitForm" method="post" class="space-y-4">
         <div>
@@ -670,35 +670,79 @@
 
   <!-- Registration Modal -->
   <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 transition-opacity duration-300">
-      <div class="modal-content bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-8 relative">
-          <button id="registrationCloseModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">
-              &times;
-          </button>
-          <h2 class="text-2xl font-bold mb-6 text-center gradient-text-blue">Event Registration</h2>
-          <form id="registrationForm" class="space-y-4" action="addAttendee" method="post">
-              <div>
-                <label class="block mb-2 font-semibold text-gray-700">Full Name</label>
-                <input type="text" id="fullName" name="full_name" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="Your Name" required>
-              </div>
-              <div>
-                <label class="block mb-2 font-semibold text-gray-700">Email Address</label>
-                <input type="email" id="email" name="email_address" class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" placeholder="you@example.com" required>
-              </div>
-              <div>
-                <label class="block text-gray-700 mb-1">Phone Number</label>
-                <div class="flex">
-                  <select id="countryCode" name="country_code"
-                    class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
-                  </select>
-                  <input type="tel" id="phone" name="phone_number" required
-                    class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Enter phone number" />
-                </div>
-                  <p class="text-red-500 text-sm mt-1 hidden" data-error-for="phonenumber" data-error-type="required">Phone number is required.</p>
-              </div>
-              <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg">Submit</button>
-            </form>
-      </div>
+    <div class="modal-content bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-8 relative">
+      <button id="registrationCloseModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">
+        &times;
+      </button>
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text-blue">Event Registration</h2>
+      <form id="registrationForm" class="space-y-4" action="addAttendee" method="post">
+        
+        <!-- Full Name -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Full Name</label>
+          <input 
+            type="text" 
+            id="fullName" 
+            name="full_name" 
+            class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" 
+            placeholder="Your Name" 
+            required>
+          <p class="text-red-500 text-sm mt-1 hidden" data-error-for="fullName" data-error-type="required">
+            Full name is required.
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email_address" 
+            class="w-full border-2 border-gray-200 rounded-lg p-3 focus:border-blue-500 focus:outline-none transition-colors" 
+            placeholder="you@example.com" 
+            required>
+          <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="required">
+            Email is required.
+          </p>
+          <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="format">
+            Please enter a valid email address.
+          </p>
+          <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="taken">
+            This email is already registered.
+          </p>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">Phone Number</label>
+          <div class="flex">
+            <select 
+              id="countryCode" 
+              name="country_code"
+              class="border border-gray-300 rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-1/3">
+            </select>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone_number" 
+              required
+              class="w-2/3 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter phone number" />
+          </div>
+          <p class="text-red-500 text-sm mt-1 hidden" data-error-for="phone" data-error-type="required">
+            Phone number is required.
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg">
+          Submit
+        </button>
+      </form>
+    </div>
   </div>
   <script src="<%= request.getContextPath() %>/javascript/signup.js"></script>
   <script src="<%= request.getContextPath() %>/javascript/indexscript.js"></script>

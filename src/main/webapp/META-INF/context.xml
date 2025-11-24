@@ -3,7 +3,7 @@
 	<Resource maxTotal="150" maxIdle="15" maxWaitMillis="10000" removeAbandonedTimeout="100" 
 		removeAbandonedOnBorrow="true" auth="Container" type="javax.sql.DataSource"
 		name="jdbc/database" driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost/ajirika" 
-		username="postgres" password="skibs8155">
+		username="postgres" password="Invent2k">
 	</Resource>
 
 	<Realm className="org.apache.catalina.realm.LockOutRealm" failureCount="5" lockOutTime="600">
