@@ -1,0 +1,18 @@
+<Context crossContext="true" reloadable="true">
+		
+	<Resource maxTotal="150" maxIdle="15" maxWaitMillis="10000" removeAbandonedTimeout="100" 
+		removeAbandonedOnBorrow="true" auth="Container" type="javax.sql.DataSource"
+		name="jdbc/database" driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost/ajirika" 
+		username="postgres" password="Baraza2011">
+	</Resource>
+
+	<Realm className="org.apache.catalina.realm.LockOutRealm" failureCount="5" lockOutTime="600">
+		<Realm className="org.baraza.server.tomcat.BJDBCRealm"
+			dataSourceName="jdbc/database" localDataSource="true"
+			userTable="tomcat_users" userNameCol="user_name" userCredCol="entity_password"
+			userRoleTable="tomcat_users"  roleNameCol="entity_role">
+			<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="md5"/>
+		</Realm>
+	</Realm>
+
+</Context>
