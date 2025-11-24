@@ -24,9 +24,13 @@ public class SubmitFormServlet extends HttpServlet {
 
         String sql = "INSERT INTO submissions (role, name, email, comment) VALUES (?, ?, ?, ?)";
 
+        String dbConfig = "java:/comp/env/jdbc/database";
+        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+        Connection conn = dbConn.getConnection();
+
         try {
-            try (Connection conn = DatabaseConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, role);
                 stmt.setString(2, name);

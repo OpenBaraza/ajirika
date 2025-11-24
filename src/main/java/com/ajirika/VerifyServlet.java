@@ -24,8 +24,12 @@ public class VerifyServlet extends HttpServlet {
                 + "WHERE verification_token = ? "
                 + "AND token_expires_at > NOW()";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String dbConfig = "java:/comp/env/jdbc/database";
+        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+        Connection conn = dbConn.getConnection();
+
+        try (
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, token);
             int updated = stmt.executeUpdate();

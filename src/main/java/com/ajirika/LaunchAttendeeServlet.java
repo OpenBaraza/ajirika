@@ -3,7 +3,6 @@ package com.ajirika;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,8 +22,12 @@ public class LaunchAttendeeServlet extends HttpServlet {
     String countryCode = request.getParameter("country_code");
     String phoneNumber = request.getParameter("phone_number");
 
-    try (Connection conn = DatabaseConnection.getConnection()) {
-      String sql = "INSERT INTO launch_attendees (full_name, email, country_code, phone_number) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO launch_attendees (full_name, email, country_code, phone_number) VALUES (?, ?, ?, ?)";
+    String dbConfig = "java:/comp/env/jdbc/database";
+    DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+    Connection conn = dbConn.getConnection();
+
+    try{
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, fullName);
       stmt.setString(2, email);

@@ -39,12 +39,14 @@ public class SignUpServlet extends HttpServlet {
         Timestamp expiry = new Timestamp(System.currentTimeMillis() + 5 * 60 * 1000); // +5 minutes
 
         String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password, verification_token, token_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        String dbConfig = "java:/comp/env/jdbc/database";
+        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+        Connection conn = dbConn.getConnection();
 
         try {
 
-            try (Connection conn = DatabaseConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, firstname);
                 stmt.setString(2, middlename);

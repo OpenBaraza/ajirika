@@ -29,9 +29,12 @@ public class ResendVerificationServlet extends HttpServlet {
         }
 
         String checkSql = "SELECT id, firstname, is_active FROM signup_details WHERE email = ?";
+        String dbConfig = "java:/comp/env/jdbc/database";
+        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+        Connection conn = dbConn.getConnection();
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+        try (
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
 
             checkStmt.setString(1, email);
             ResultSet rs = checkStmt.executeQuery();
