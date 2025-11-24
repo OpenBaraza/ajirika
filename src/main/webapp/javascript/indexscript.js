@@ -92,18 +92,8 @@ if (toast && toast.classList.contains("opacity-100")) {
 // Remove ?success=true from URL after showing toast
 window.addEventListener("DOMContentLoaded", () => {
   const url = new URL(window.location);
-  if (url.searchPfarams.get("success") === "true") {
+  if (url.searchParams.get("success") === "true") {
     url.searchParams.delete("success");
     window.history.replaceState({}, document.title, url.pathname);
   }
 });
-
-console.log("Section IDs check:", {
-  home: !!document.getElementById("home"),
-  challenges: !!document.getElementById("challenges"),
-  history: !!document.getElementById("history"),
-  actions: !!document.getElementById("actions"),
-  nextSteps: !!document.getElementById("next-steps"),
-});
-
-
