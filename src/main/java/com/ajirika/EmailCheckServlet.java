@@ -22,9 +22,13 @@ public class EmailCheckServlet extends HttpServlet {
         boolean exists = false;
 
         if (email != null && !email.trim().isEmpty()) {
+
+            String dbConfig = "java:/comp/env/jdbc/database";
+            DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+            Connection conn = dbConn.getConnection();
+
             try {
-                try (Connection conn = DatabaseConnection.getConnection();
-                     PreparedStatement ps = conn.prepareStatement(
+                try (PreparedStatement ps = conn.prepareStatement(
                         "SELECT 1 FROM signup_details WHERE email = ? LIMIT 1")) {
                     ps.setString(1, email.trim().toLowerCase());
                     try (ResultSet rs = ps.executeQuery()) {

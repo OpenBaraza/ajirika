@@ -8,8 +8,11 @@ public class Database {
 
     String sql = "SELECT id, email, password, firstname FROM signup_details WHERE email = ?";
 
-    try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+    String dbConfig = "java:/comp/env/jdbc/database";
+    DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
+    Connection conn = dbConn.getConnection();
+
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
       stmt.setString(1, email);
 

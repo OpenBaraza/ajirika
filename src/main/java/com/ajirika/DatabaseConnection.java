@@ -1,36 +1,34 @@
 package com.ajirika;
 
+import java.util.logging.Logger;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    // For remote use on sandbox
-    // private static final String URL = "jdbc:postgresql://sandbox:5432/ajirika";
-    // private static final String USER = "postgres";
-    // private static final String PASSWORD = "Invent2k";
+	Logger log = Logger.getLogger(DatabaseConnection.class.getName());
 
-    // For remote use on live
-    private static final String URL = "jdbc:postgresql://kifaru:5432/ajirika";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Invent2k";
+    Connection db = null;
+	DatabaseMetaData dbmd = null;
 
-    // For local usage
-    // private static final String URL =
-    // "jdbc:postgresql://localhost:5432/your_database";
-    // private static final String USER = "your_username";
-    // private static final String PASSWORD = "your_password";
-
-    // Optional: Load driver once
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+    public DatabaseConnection(String datasource) {
+		try {
+			InitialContext cxt = new InitialContext();
+			DataSource ds = (DataSource) cxt.lookup(datasource);
+			db = ds.getConnection();
+			dbmd = db.getMetaData();
+		} catch (SQLException ex) {
+			log.severe("Cannot connect to this database : datasource " + datasource + " : " + ex);
+        } catch (NamingException ex) {
+			log.severe("Cannot pick on the database : datasource " + datasource + " : " + ex);
         }
-    }
+	}
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public Connection getConnection() {
+        return db;
     }
 }
