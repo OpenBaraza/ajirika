@@ -1,4 +1,4 @@
-package com.ajirika;
+package org.ajirika;
 
 import java.sql.*;
 
