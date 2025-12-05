@@ -1,32 +1,4 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="mainPage" value="index.jsp" scope="page" />
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="org.baraza.DB.BQuery" %>
-<%@ page import="org.baraza.web.BWeb" %>
-<%@ page import="org.baraza.xml.BElement" %>
-
-<%
-	ServletContext context = getServletContext();
-	String dbConfig = "java:/comp/env/jdbc/database";
-	String xmlcnf = (String)session.getAttribute("xmlcnf");
-
-	String ps = System.getProperty("file.separator");
-	String xmlfile = context.getRealPath("WEB-INF") + ps + "configs" + ps + xmlcnf;
-	String reportPath = context.getRealPath("reports") + ps;
-	String projectDir = context.getInitParameter("projectDir");
-	if(projectDir != null) xmlfile = projectDir + ps + "configs" + ps + xmlcnf;
-
-	BWeb web = new BWeb(dbConfig, xmlfile, context);
-	web.init(request);
-	web.setMainPage(String.valueOf(pageContext.getAttribute("mainPage")));
-
-	String webLogos = web.getWebLogos();
-	String logoHeader = "./assets/logos" + webLogos + "/logo_header.png";
-%>
 
 <!-- Author: Eric Kariuki -->
 <html lang="en">
@@ -42,88 +14,8 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/fontawesome-web/css/solid.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/fontawesome-web/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-    <link href="./assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css">
-    <!-- END PAGE LEVEL PLUGIN STYLES -->
-    <!-- BEGIN PAGE STYLES -->
-    <link href="./assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/jquery-tags-input/jquery.tagsinput.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css" />
 
-    <link href="./assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-    <link href="./assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet">
-
-    <!-- END PAGE STYLES -->
-    <!-- BEGIN THEME STYLES -->
-    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-
-    <% if(web.isMaterial()) { %>
-        <script>
-            console.info("Material Design")
-        </script>
-        <link href="./assets/global/css/components-md.css" id="style_components" rel="stylesheet" type="text/css" />
-        <link href="./assets/global/css/plugins-md.css" rel="stylesheet" type="text/css" />
-
-<% } else { %>
-    <script>
-        console.info("Default Design")
-    </script>
-    <link href="./assets/global/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css" />
-    <link href="./assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
-<% } %>
-
-
-    <link href="./assets/admin/layout4/css/layout.css" rel="stylesheet" type="text/css" />
-    <link href="./assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color" />
-
-    <!-- END THEME STYLES -->
-    <link rel="shortcut icon" href="./assets/logos/favicon.png" />
-
-    <link href="./assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="./assets/jqgrid/css/ui.jqgrid.css" rel="stylesheet" type="text/css" media="screen" />
-
-    <!-- jsgrid css -->
-    <link type="text/css" rel="stylesheet" href="./assets/jsgrid/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="./assets/jsgrid/jsgrid-theme.min.css" />
-
-
-
-    <!-- tabulator css -->
-    <link type="text/css" rel="stylesheet" href="./assets/tabulator/css/tabulator.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/tabulator/css/tabulator_custom.css">
-
-    <link type="text/css" rel="stylesheet" href="./assets/admin/layout4/css/custom.css" />
-
-    <!--begin::Global Theme Styles -->
-    <link href="assets/canvas/vendor/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/resume/vendor/style.bundle.css" rel="stylesheet" type="text/css" />
-    <!-- <link href="assets/canvas/css/custom.css" rel="stylesheet" type="text/css" /> -->
-    <!--end::Global Theme Styles -->
-
-
 
     <style type="text/css">
         .hidden {
@@ -465,7 +357,7 @@
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="index.jsp">
-					<img src="<%=logoHeader%>" alt="logo" style="margin: 5px 5px 0 10px; height: 50px; max-width: 250px; object-fit: contain;" class="logo-default"/>
+					<img src="logo.jpg" alt="logo" style="margin: 5px 5px 0 10px; height: 50px; max-width: 250px; object-fit: contain;" class="logo-default"/>
 					</a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -488,7 +380,6 @@
                             <li class="dropdown dropdown-user dropdown-dark">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <span class="username username-hide-on-mobile">
-									<%= web.getOrgName() %> | <%= web.getEntityName() %>  </span>
                                     <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
                                     <img alt="" class="img-circle" src="./assets/admin/layout4/img/avatar.png" />
                                 </a>
@@ -1419,7 +1310,6 @@
     <!-- end:: Page -->
 
     <!--begin::Global Theme Bundle -->
-    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="assets/resume/vendor/vendors.bundle.js" type="text/javascript"></script>
     <script src="assets/resume/vendor/scripts.bundle.js" type="text/javascript"></script>
 
@@ -1528,4 +1418,3 @@
 
 </html>
 
-<% 	web.close(); %>

@@ -92,6 +92,46 @@ CREATE INDEX orgs_currency_id ON orgs (currency_id);
 CREATE INDEX orgs_parent_org_id ON orgs (parent_org_id);
 CREATE INDEX orgs_default_country_id ON orgs(default_country_id);
 
+
+CREATE TABLE address_types (
+	address_type_id			serial primary key,
+	org_id					integer references orgs,
+	address_type_name		varchar(50)
+);
+CREATE INDEX address_types_org_id ON address_types (org_id);
+
+CREATE TABLE address (
+	address_id				serial primary key,
+	address_type_id			integer references address_types,
+	sys_country_id			char(2) references sys_countrys,
+	org_id					integer references orgs,
+	address_name			varchar(120),
+	company_name			varchar(320), 
+	position_held			varchar(320),
+	table_name				varchar(32),
+	table_id				integer,
+	post_office_box			varchar(50),
+	postal_code				varchar(12),
+	premises				varchar(120),
+	street					varchar(120),
+	town					varchar(50),
+	phone_number			varchar(150),
+	extension				varchar(15),
+	mobile					varchar(150),
+	fax						varchar(150),
+	email					varchar(120),
+	website					varchar(120),
+	is_default				boolean default false not null,
+	first_password			varchar(32),
+	details					text
+);
+CREATE INDEX address_address_type_id ON address (address_type_id);
+CREATE INDEX address_sys_country_id ON address (sys_country_id);
+CREATE INDEX address_org_id ON address (org_id);
+CREATE INDEX address_table_name ON address (table_name);
+CREATE INDEX address_table_id ON address (table_id);
+
+
 CREATE TABLE entity_types (
 	entity_type_id			serial primary key,
 	use_key_id				integer not null references use_keys,

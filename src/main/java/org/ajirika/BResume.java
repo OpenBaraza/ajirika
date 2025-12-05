@@ -220,7 +220,7 @@ public class BResume extends HttpServlet {
 		System.out.println("Applicant found with email: " + applicantEmail);
 
 		String checkedSql = "SELECT entity_id, person_title, surname, first_name, applicant_email, applicant_phone, "
-			+ "date_of_birth, gender, marital_status, nationality, identity_card, language, currency_id, disability, "
+			+ "date_of_birth, gender, marital_status, nationality, identity_card, language, disability, "
 			+ "home_county, sub_county, previous_salary, expected_salary, cv_data "
 			+ "FROM applicants "
 			+ "WHERE applicant_email = '" + applicantEmail +"'";
@@ -241,7 +241,6 @@ public class BResume extends HttpServlet {
 			jData.put("nationality", rs.getString("nationality"));
 			jData.put("id_number", rs.getString("identity_card"));
 			jData.put("language", rs.getString("language"));
-			jData.put("currency", rs.getString("currency_id"));
 			jData.put("home_county", rs.getString("home_county"));
 			jData.put("sub_county", rs.getString("sub_county"));
 			jData.put("previous_salary", rs.getString("previous_salary"));
@@ -273,14 +272,13 @@ public class BResume extends HttpServlet {
 		mData.put("nationality", request.getParameter("nationality"));
 		mData.put("identity_card", request.getParameter("id_number"));
 		mData.put("language", request.getParameter("language"));
-		mData.put("currency_id", request.getParameter("currency"));
 		mData.put("previous_salary", request.getParameter("previous_salary"));
 		mData.put("expected_salary", request.getParameter("expected_salary"));
 		mData.put("disability", request.getParameter("disability"));
 		
 		String updSql = "UPDATE applicants SET person_title = ?, surname = ?, first_name = ?, applicant_email = ?, "
 			+ "applicant_phone = ?, date_of_birth = ?, gender = ?, marital_status = ?, nationality = ?, "
-			+ "identity_card = ?, language = ?, currency_id = ?, previous_salary = ?, expected_salary = ?, disability = ? "
+			+ "identity_card = ?, language = ?, previous_salary = ?, expected_salary = ?, disability = ? "
 			+ "WHERE applicant_email = '" + request.getParameter("email") +"'";
 		db.saveRec(updSql, mData);
 	
