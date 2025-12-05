@@ -60,7 +60,7 @@
 <div class="login-box">
     <h2>Login</h2>
     <form method="POST" action="j_security_check">
-        <input type="text" name="j_username" placeholder="Username" required />
+        <input type="text" name="j_username" placeholder="Email Address" required />
         <input type="password" name="j_password" placeholder="Password" required />
         <button type="submit">Login</button>
     </form>
