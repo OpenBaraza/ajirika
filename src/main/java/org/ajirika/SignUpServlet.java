@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.baraza.DB.BDB;
 
 @WebServlet("/signupForm")
 public class SignUpServlet extends HttpServlet {
@@ -40,8 +41,8 @@ public class SignUpServlet extends HttpServlet {
 
         String sql = "INSERT INTO signup_details (firstname, middlename, lastname, country_code, phonenumber, email, password, verification_token, token_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String dbConfig = "java:/comp/env/jdbc/database";
-        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
-        Connection conn = dbConn.getConnection();
+        BDB dbConn = new BDB(dbConfig);
+        Connection conn = dbConn.getDB();
 
         try {
 
@@ -58,7 +59,6 @@ public class SignUpServlet extends HttpServlet {
                 stmt.setString(8, token);
                 stmt.setTimestamp(9, expiry);
 
-
                 stmt.executeUpdate();
 
                 // 🔹 Dynamically build the base URL (works in dev & production)
@@ -69,13 +69,6 @@ public class SignUpServlet extends HttpServlet {
                         + request.getContextPath();
 
                 String verificationLink = baseUrl + "/verify?token=" + token;
-
-                EmailUtil.sendEmail(email, "Confirm Your Account Creation",
-                    "Hello " + firstname + ",\n\n" +
-                            "Thank you for signing up.\n" +
-                            "Click the link below to verify your email:\n" +
-                            verificationLink + "\n\n" +
-                            "Ajirika Team");
 
                 response.sendRedirect("jbseekerlanding.jsp?success=verification_sent");
 

@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.baraza.DB.BDB;
+
 @WebServlet("/verify")
 public class VerifyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,8 +27,8 @@ public class VerifyServlet extends HttpServlet {
                 + "AND token_expires_at > NOW()";
 
         String dbConfig = "java:/comp/env/jdbc/database";
-        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
-        Connection conn = dbConn.getConnection();
+        BDB dbConn = new BDB(dbConfig);
+        Connection conn = dbConn.getDB();
 
         try (
             PreparedStatement stmt = conn.prepareStatement(sql)) {

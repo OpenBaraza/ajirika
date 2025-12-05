@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.baraza.DB.BDB;
+
 @WebServlet("/addAttendee")
 public class LaunchAttendeeServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
@@ -24,8 +26,8 @@ public class LaunchAttendeeServlet extends HttpServlet {
 
     String sql = "INSERT INTO launch_attendees (full_name, email, country_code, phone_number) VALUES (?, ?, ?, ?)";
     String dbConfig = "java:/comp/env/jdbc/database";
-    DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
-    Connection conn = dbConn.getConnection();
+    BDB dbConn = new BDB(dbConfig);
+    Connection conn = dbConn.getDB();
 
     try{
       PreparedStatement stmt = conn.prepareStatement(sql);

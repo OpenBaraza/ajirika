@@ -1,4 +1,19 @@
 
+CREATE TABLE sys_countrys (
+	sys_country_id			char(2) primary key,
+	sys_continent_id		char(2),
+	sys_country_code		varchar(3),
+	sys_country_name		varchar(120) not null unique,
+	sys_country_number		varchar(3),
+	sys_country_capital		varchar(64),
+	sys_phone_code			varchar(7),
+	sys_currency_name		varchar(50),
+	sys_currency_code		varchar(3),
+	sys_currency_cents		varchar(50),
+	sys_currency_exchange	real
+);
+CREATE INDEX sys_countrys_sys_continent_id ON sys_countrys (sys_continent_id);
+
 CREATE TABLE sys_audit_trail (
 	sys_audit_trail_id		serial primary key,
 	user_id					varchar(50) not null,
@@ -61,6 +76,7 @@ CREATE TABLE orgs (
 	logo_path				varchar(120),
 
 	created					timestamp default current_timestamp not null,
+	order_first_name		boolean default true not null,
 	password_scheme			integer default 1 not null,
 	no_of_users				integer default 1 not null,
 	lock_phone_login		integer default 1 not null,

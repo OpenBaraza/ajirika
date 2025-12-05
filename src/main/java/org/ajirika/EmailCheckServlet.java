@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.baraza.DB.BDB;
+
 @WebServlet("/checkEmail")
 public class EmailCheckServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -24,8 +26,8 @@ public class EmailCheckServlet extends HttpServlet {
         if (email != null && !email.trim().isEmpty()) {
 
             String dbConfig = "java:/comp/env/jdbc/database";
-            DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
-            Connection conn = dbConn.getConnection();
+            BDB dbConn = new BDB(dbConfig);
+            Connection conn = dbConn.getDB();
 
             try {
                 try (PreparedStatement ps = conn.prepareStatement(

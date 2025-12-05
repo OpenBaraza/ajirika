@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.baraza.DB.BDB;
+
 @WebServlet("/submitForm")
 public class SubmitFormServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -25,8 +27,8 @@ public class SubmitFormServlet extends HttpServlet {
         String sql = "INSERT INTO submissions (role, name, email, comment) VALUES (?, ?, ?, ?)";
 
         String dbConfig = "java:/comp/env/jdbc/database";
-        DatabaseConnection dbConn = new DatabaseConnection(dbConfig);
-        Connection conn = dbConn.getConnection();
+        BDB dbConn = new BDB(dbConfig);
+        Connection conn = dbConn.getDB();
 
         try {
             try (
