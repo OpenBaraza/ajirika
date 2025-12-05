@@ -45,7 +45,7 @@
 <div class="error-box">
     <h2>Login Failed</h2>
     <p>Incorrect username or password.<br>Please try again.</p>
-    <a href="login.html">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>
