@@ -42,6 +42,17 @@
         button:hover {
             background: #005bb5;
         }
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .signup-link a {
+            color: #0078e7;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -53,6 +64,10 @@
         <input type="password" name="j_password" placeholder="Password" required />
         <button type="submit">Login</button>
     </form>
+    <div class="signup-link">
+        Don't have an account? 
+        <a href="jbseekerlanding.jsp" id="openSignupFromLogin">Sign Up</a>
+    </div>
 </div>
 
 </body>
