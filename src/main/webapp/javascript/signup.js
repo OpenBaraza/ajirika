@@ -4,13 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const password = form.querySelector("input[name='password']");
   const confirm = form.querySelector("input[name='confirmPassword']");
 
-  // Email live check debounce
+  // Email availability check
   let debounceTimer;
-
   async function checkEmailAvailability(value) {
     value = value.trim();
     if (!value) return false;
-
     try {
       const res = await fetch(
         `${window.CTX}/checkEmail?email=${encodeURIComponent(value)}`
@@ -19,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return text.trim() === "exists";
     } catch (err) {
       console.error("Email check error:", err);
-      return false; // Assume available if error occurs
+      return false;
     }
   }
 
@@ -30,139 +28,106 @@ document.addEventListener("DOMContentLoaded", function () {
       const emailTakenError = form.querySelector(
         `p[data-error-for="email"][data-error-type="taken"]`
       );
-
       if (isTaken) {
-        if (emailTakenError) emailTakenError.classList.remove("hidden");
+        emailTakenError?.classList.remove("hidden");
         emailInput.classList.add("border-red-500", "focus:ring-red-500");
       } else {
-        if (emailTakenError) emailTakenError.classList.add("hidden");
+        emailTakenError?.classList.add("hidden");
         emailInput.classList.remove("border-red-500", "focus:ring-red-500");
       }
     }, 600);
   });
 
-  // Hide error messages when user types
+  // Clear errors on input
   form.querySelectorAll("input").forEach((input) => {
     input.addEventListener("input", () => {
-      const errors = form.querySelectorAll(
-        `p[data-error-for="${input.name}"]`
-      );
+      const errors = form.querySelectorAll(`p[data-error-for="${input.name}"]`);
       errors.forEach((p) => p.classList.add("hidden"));
       input.classList.remove("border-red-500", "focus:ring-red-500");
     });
   });
 
-
-  // Populate country codes
-  const countrySelect = document.getElementById("countryCode");
-  fetch("/ajirika/javascript/CountryCodes.json")
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((country) => {
-        const option = document.createElement("option");
-        option.value = country.dial_code;
-        option.textContent = `${country.code} (${country.dial_code})`;
-        option.setAttribute(
-          "data-full-text",
-          `${country.name} (${country.dial_code})`
-        );
-        countrySelect.appendChild(option);
-      });
-      countrySelect.value = "+254";
-
-      // Full text on open
-      countrySelect.addEventListener("mousedown", function () {
-        Array.from(countrySelect.options).forEach((opt) => {
-          opt.textContent = opt.getAttribute("data-full-text");
-        });
-      });
-
-      // Revert to short format on change/blur
-      const revertShort = () => {
-        const selected = data.find((c) => c.dial_code === countrySelect.value);
-        if (!selected) return;
-        Array.from(countrySelect.options).forEach((opt) => {
-          opt.textContent = `${opt.value === selected.dial_code
-            ? selected.code
-            : opt.getAttribute("data-full-text").split(" ")[0]
-            } (${opt.value})`;
-        });
-      };
-      countrySelect.addEventListener("change", revertShort);
-      countrySelect.addEventListener("blur", revertShort);
-    })
-    .catch((err) => console.error("Error loading country codes:", err));
-
-  // Form Submit Handler
+  // Form validation
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     let valid = true;
 
-    // Reset all errors and input styles
-    form.querySelectorAll("p.text-red-500").forEach((p) => p.classList.add("hidden"));
+    // Reset errors
+    form
+      .querySelectorAll("p.text-red-500")
+      .forEach((p) => p.classList.add("hidden"));
     form.querySelectorAll("input").forEach((input) => {
       input.classList.remove("border-red-500", "focus:ring-red-500");
     });
 
-    // Required fields
-    form.querySelectorAll("input[required]").forEach((input) => {
-      if (!input.value.trim()) {
-        valid = false;
-        const requiredError = form.querySelector(
-          `p[data-error-for="${input.name}"][data-error-type="required"]`
-        );
-        if (requiredError) requiredError.classList.remove("hidden");
-        input.classList.add("border-red-500", "focus:ring-red-500");
+    // Required fields: firstname, surname, email, password, confirmPassword
+    ["firstname", "surname", "email", "password", "confirmPassword"].forEach(
+      (name) => {
+        const input = form.querySelector(`input[name="${name}"]`);
+        if (!input.value.trim()) {
+          valid = false;
+          const error = form.querySelector(
+            `p[data-error-for="${name}"][data-error-type="required"]`
+          );
+          error?.classList.remove("hidden");
+          input.classList.add("border-red-500", "focus:ring-red-500");
+        }
       }
-    });
+    );
 
-    // Email format check (only if not empty)
+    // Email format
     if (emailInput.value.trim()) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(emailInput.value.trim())) {
         valid = false;
-        const emailFormatError = form.querySelector(
+        const error = form.querySelector(
           `p[data-error-for="email"][data-error-type="format"]`
         );
-        if (emailFormatError) emailFormatError.classList.remove("hidden");
+        error?.classList.remove("hidden");
         emailInput.classList.add("border-red-500", "focus:ring-red-500");
       }
     }
 
-    // Password strength check (only if not empty)
+    // Password strength
     if (password.value.trim()) {
-      const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      const strongPasswordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
       if (!strongPasswordPattern.test(password.value)) {
         valid = false;
-        const passwordStrengthError = form.querySelector(
+        const error = form.querySelector(
           `p[data-error-for="password"][data-error-type="strength"]`
         );
-        if (passwordStrengthError) passwordStrengthError.classList.remove("hidden");
+        error?.classList.remove("hidden");
         password.classList.add("border-red-500", "focus:ring-red-500");
       }
     }
 
-    // Confirm password mismatch (only if both not empty)
-    if (confirm.value.trim() && password.value.trim() && password.value !== confirm.value) {
+    // Password match
+    if (
+      confirm.value.trim() &&
+      password.value.trim() &&
+      password.value !== confirm.value
+    ) {
       valid = false;
-      const confirmMismatchError = form.querySelector(
+      const error = form.querySelector(
         `p[data-error-for="confirmPassword"][data-error-type="mismatch"]`
       );
-      if (confirmMismatchError) confirmMismatchError.classList.remove("hidden");
+      error?.classList.remove("hidden");
       confirm.classList.add("border-red-500", "focus:ring-red-500");
     }
 
-    // Final email availability check (only if field not empty)
+    // Final email check
     if (emailInput.value.trim()) {
-      const isEmailTaken = await checkEmailAvailability(emailInput.value.trim());
+      const isEmailTaken = await checkEmailAvailability(
+        emailInput.value.trim()
+      );
       if (isEmailTaken) {
         valid = false;
-        const emailTakenError = form.querySelector(
+        const error = form.querySelector(
           `p[data-error-for="email"][data-error-type="taken"]`
         );
-        if (emailTakenError) emailTakenError.classList.remove("hidden");
+        error?.classList.remove("hidden");
         emailInput.classList.add("border-red-500", "focus:ring-red-500");
-        emailInput.focus();
       }
     }
 

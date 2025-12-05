@@ -5,13 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.baraza.DB.BDB;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.baraza.DB.BDB;
 
 @WebServlet("/checkEmail")
 public class EmailCheckServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class EmailCheckServlet extends HttpServlet {
 
             try {
                 try (PreparedStatement ps = conn.prepareStatement(
-                        "SELECT 1 FROM signup_details WHERE email = ? LIMIT 1")) {
+                        "SELECT 1 FROM applicants WHERE applicant_email = ? LIMIT 1")) {
                     ps.setString(1, email.trim().toLowerCase());
                     try (ResultSet rs = ps.executeQuery()) {
                         exists = rs.next();
