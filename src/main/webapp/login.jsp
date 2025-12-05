@@ -1,74 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Tomcat Authentication</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-box {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            width: 320px;
-        }
-        .login-box h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #0078e7;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #005bb5;
-        }
-        .signuplink {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .signuplink a {
-            color: #0078e7;
-            text-decoration: none;
-        }
-        .signuplink a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajirika | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<div class="login-box">
-    <h2>Login</h2>
-    <form method="POST" action="j_security_check">
-        <input type="text" name="j_username" placeholder="Email Address" required />
-        <input type="password" name="j_password" placeholder="Password" required />
-        <button type="submit">Login</button>
-    </form>
-    <div class="signuplink">
-        Don't have an account? 
-        <a href="jbseekerlanding.jsp" id="openSignupFromLogin">Sign Up</a>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+</head>
+
+<body class="min-h-screen relative">
+
+  <!-- Full-screen background image -->
+  <div class="absolute inset-0">
+    <img src="https://asianlinkconsultancy.com/wp-content/uploads/2023/04/960x0.jpg" 
+         class="w-full h-screen md:h-full md:w-auto object-cover" 
+         alt="Background">
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  </div>
+
+  <!-- LOGIN CONTAINER -->
+  <div class="absolute top-0 right-0 h-full w-full md:w-2/3 
+              bg-white bg-opacity-90 backdrop-blur-sm 
+              flex items-center justify-center p-6 z-10 login-clip">
+
+    <div class="w-full max-w-md">
+      
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-6">
+        Log in to your account
+      </h2>
+
+      <!-- Login Form -->
+      <form method="POST" action="j_security_check" class="space-y-5">
+
+        <div>
+          <input type="text" name="j_username"
+                 placeholder="Email Address" required
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg 
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div>
+          <input type="password" name="j_password"
+                 placeholder="Password" required
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg 
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold
+                       hover:bg-blue-700 transition">
+          Login
+        </button>
+
+      </form>
+
+      <p class="text-center text-gray-600 mt-6">
+        Don't have an account?
+        <a href="jbseekerlanding.jsp" class="text-blue-600 font-semibold hover:underline">
+          Sign Up
+        </a>
+      </p>
+
     </div>
-</div>
+
+  </div>
 
 </body>
 </html>

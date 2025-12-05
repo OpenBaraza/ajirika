@@ -417,3 +417,10 @@ html {
 .animation-delay-2500 {
   animation-delay: 2.5s;
 }
+
+/* Desktop clipped shape */
+@media (min-width: 768px) {
+  .login-clip {
+    clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 5% 50%);
+  }
+}
