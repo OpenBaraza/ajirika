@@ -16,9 +16,10 @@ CREATE TABLE applicants (
 	middle_name				varchar(50),
 	applicant_email			varchar(120) not null unique,
 	applicant_phone			varchar(50),
+	applicant_password      varchar(64);
 	date_of_birth			date,
 	gender					varchar(1),
-	nationality				char(2) not null references sys_countrys,
+	nationality				char(2) not null  default 'KE' references sys_countrys,
 	marital_status 			varchar(2),
 	picture_file			varchar(64),
 	cv_file					varchar(64),
@@ -576,6 +577,8 @@ DECLARE
 	v_user_name				varchar(120);
 	v_applicant_name		varchar(120);
 	v_order_first_name		boolean;
+	v_final_password        varchar(64);
+    v_first_password        varchar(12);
 BEGIN
 	NEW.First_name := trim(NEW.First_name);
 	NEW.Middle_name := trim(NEW.Middle_name);
@@ -630,14 +633,27 @@ BEGIN
 				FROM entity_types 
 				WHERE (org_id = v_org_id) AND (use_key_id = 4);
 
+				IF (NEW.applicant_password IS NOT NULL AND NEW.applicant_password != '') THEN
+					v_first_password := NEW.applicant_password;
+				ELSE
+					v_first_password := first_password();
+				END IF;
+				v_final_password := md5(v_first_password);
+
 				NEW.entity_id := nextval('entitys_entity_id_seq');
 
-				INSERT INTO entitys (entity_id, org_id, entity_type_id, use_key_id,
+				INSERT INTO entitys (
+					entity_id, org_id, entity_type_id, use_key_id,
 					entity_name, user_name, primary_email, 
-					primary_telephone, function_role)
-				VALUES (NEW.entity_id, v_org_id, v_entity_type_id, 4, 
+					primary_telephone, function_role,
+					first_password, entity_password 
+				)
+				VALUES (
+					NEW.entity_id, v_org_id, v_entity_type_id, 4, 
 					v_applicant_name, NEW.applicant_email, NEW.applicant_email,
-					NEW.applicant_phone, 'applicant');
+					NEW.applicant_phone, 'applicant',
+					v_first_password, v_final_password 
+				);
 			ELSE
 				RAISE EXCEPTION 'The username exists use a different one or reset password for the current one';
 			END IF;
@@ -650,9 +666,22 @@ BEGIN
 		INSERT INTO sys_emailed (sys_email_id, org_id, table_id, table_name, email_type)
 		VALUES (v_sys_email_id, NEW.org_id, NEW.entity_id, 'applicant', 1);
 	ELSIF (TG_OP = 'UPDATE') THEN
-		UPDATE entitys  SET entity_name = v_applicant_name, primary_email = NEW.applicant_email
+		UPDATE entitys  
+		SET 
+			entity_name = v_applicant_name, 
+			primary_email = NEW.applicant_email
 		WHERE entity_id = NEW.entity_id;
+
+		IF NEW.applicant_password IS NOT NULL AND NEW.applicant_password != '' THEN
+            UPDATE entitys
+            SET
+                first_password = NEW.applicant_password,
+                entity_password = MD5(NEW.applicant_password)
+            WHERE entity_id = NEW.entity_id;
+        END IF;
 	END IF;
+
+	NEW.applicant_password := NULL;
 
 	RETURN NEW;
 END;
