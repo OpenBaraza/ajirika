@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-<!-- Author: Eric Kariuki -->
 <html lang="en">
 <!-- begin::Head -->
 
@@ -14,6 +12,8 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="assets/resume/vendor/style.bundle.css" rel="stylesheet" type="text/css" />
 
@@ -435,247 +435,174 @@
 
                                 <div class="m-portlet__body">
                                     
-                                    <%-- begin::Portlet --%>
-                                    <div class="card-container" id="detailsCard">
-                                        <button class="new-edit-btn" data-toggle="modal" data-target="#detailsModal">
-                                            <svg class="new-edit-icon" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.704 1.627H4.523c-1.794 0-2.919 1.27-2.919 3.068v4.85c0 1.797 1.12 3.067 2.919 3.067H9.67c1.8 0 2.92-1.27 2.92-3.068v-2.35"/>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.15 6.37l4.36-4.359a1.391 1.391 0 011.966 0l.71.71a1.39 1.39 0 010 1.967l-4.38 4.38c-.238.237-.56.37-.896.37H4.725l.054-2.204c.009-.324.141-.634.37-.864z"/>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.847 2.685l2.663 2.663"/>
-                                            </svg>
+                                    <!-- Begin: Personal Details Card (Tailwind + Font Awesome) -->
+                                    <div class="relative bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+                                        <!-- Edit Button -->
+                                        <button 
+                                            class="absolute top-4 right-4 w-8 h-8 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity focus:outline-none"
+                                            data-toggle="modal" 
+                                            data-target="#detailsModal"
+                                            aria-label="Edit personal details">
+                                            <i class="fas fa-pencil-alt text-xs"></i>
                                         </button>
 
-                                        <div class="profile-header">
-                                            <%-- <div class="avatar">
-                                                <svg class="avatar-icon" viewBox="0 0 36 36">
-                                                    <path fill="currentColor" d="M32,8H24.7L23.64,5.28A2,2,0,0,0,21.78,4H14.22a2,2,0,0,0-1.87,1.28L11.3,8H4a2,2,0,0,0-2,2V30a2,2,0,0,0,2,2H32a2,2,0,0,0,2-2V10A2,2,0,0,0,32,8ZM18,28a9,9,0,1,1,9-9A9,9,0,0,1,18,28Z"/>
-                                                </svg>
-                                            </div> --%>
-                                            <div>
-                                                <h2 class="profile-name" id="new_surname" style="font-size: 3rem"></h2>
-                                            </div>
+                                        <!-- Name -->
+                                        <div class="mb-4">
+                                            <h2 id="new_surname" class="text-3xl font-bold text-gray-800"></h2>
                                         </div>
 
-                                        <div class="contact-info">
-                                            <div class="contact-item" id="new_applicant_email">
-                                                <svg class="contact-icon" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                                        d="M17.268 9.061l-4.266 3.434a2.223 2.223 0 01-2.746 0L5.954 9.061"/>
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                                        d="M6.888 3.5h9.428c1.36.015 2.653.59 3.58 1.59a5.017 5.017 0 011.326 3.704v6.528a5.017 5.017 0 01-1.326 3.704 4.957 4.957 0 01-3.58 1.59H6.888C3.968 20.616 2 18.241 2 15.322V8.794C2 5.875 3.968 3.5 6.888 3.5z"/>
-                                                </svg>
+                                        <!-- Contact Info -->
+                                        <div class="space-y-2">
+                                            <!-- Email -->
+                                            <div id="new_applicant_email" class="flex items-center text-gray-700">
+                                                <i class="fas fa-envelope text-gray-400 mr-3 text-lg"></i>
+                                                <span class="text-gray-700"></span>
                                             </div>
-
-                                            <div class="contact-item" id="new_applicant_phone">
-                                                <svg class="contact-icon" fill="none" viewBox="0 0 24 25">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                                        d="M2.99 5.765c.316-.525 2.06-2.43 3.303-2.372.372.032.7.256.967.516h.001c.613.6 2.369 2.864 2.467 3.34.244 1.169-1.15 1.842-.724 3.02 1.087 2.659 2.96 4.531 5.62 5.617 1.176.427 1.85-.966 3.019-.723.476.1 2.74 1.854 3.34 2.467v0c.26.266.485.596.516.968.046 1.31-1.977 3.076-2.371 3.302-.93.667-2.145.655-3.625-.033-4.13-1.719-10.73-8.193-12.48-12.479-.669-1.471-.714-2.694-.033-3.623z"/>
-                                                </svg>
+                                            
+                                            <!-- Phone -->
+                                            <div id="new_applicant_phone" class="flex items-center text-gray-700">
+                                                <i class="fas fa-phone text-gray-400 mr-3 text-lg"></i>
+                                                <span class="text-gray-700"></span>
                                             </div>
-
-                                            <div class="contact-item" id="new_home_country">
-                                                <svg class="contact-icon" fill="none" viewBox="0 0 25 25">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                                        d="M4.74 11.108a7.678 7.678 0 0115.356.053v.087c-.052 2.756-1.591 5.304-3.479 7.295a20.18 20.18 0 01-3.59 2.957.93.93 0 01-1.218 0 19.818 19.818 0 01-5.052-4.73 9.826 9.826 0 01-2.018-5.635v-.027z"/>
-                                                    <circle cx="12.418" cy="11.256" r="2.461" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                                                </svg>
+                                            
+                                            <!-- Country -->
+                                            <div id="new_home_country" class="flex items-center text-gray-700">
+                                                <i class="fas fa-globe-africa text-gray-400 mr-3 text-lg"></i>
+                                                <span class="text-gray-700"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <%-- end::Portlet --%>
+                                    <!-- End: Personal Details Card -->
 
 
-                                    <!--begin::Portlet-->
-                                    <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm cv-section">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-title">
-                                                    <h3 class="m-portlet__head-text">
-                                                        Education
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <%-- <li class="m-portlet__nav-item">
-                                                        <a href="" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air btn-brand m-btn modal-toggle" data-toggle="modal" data-target="#educationModal"><i class="la la-plus"></i></a>
-                                                    </li> --%>
-                                                    <li class="m-portlet__nav-item portletArrow">
-                                                        <a href="#educationPortlet" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air" data-toggle="collapse" aria-expanded="true" aria-controls="educationPortlet"><i class="la la-angle-down"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <!-- Begin: Education Section -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                                        <div class="flex items-center justify-between p-4">
+                                            <h3 class="text-lg font-semibold">Education</h3>
+                                            <button
+                                            class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
+                                            aria-expanded="false"
+                                            data-target="#educationPortlet"
+                                            aria-controls="educationPortlet">
+                                            <i class="fas fa-chevron-down"></i>
+                                            </button>
                                         </div>
-                                        <div id="educationPortlet" class="m-portlet__body py-0 collapse">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <div class="m-widget4 m-widget4--progress" id="educationContainer">
-                                                        <div class="m-widget4__item">
-                                                            No items.
-                                                        </div>
-                                                    </div>
-                                                    <div class="cv-actions">
-                                                        <button class="cv-add-btn" data-toggle="modal" data-target="#educationModal">➕ Add Entry</button>
-                                                    </div>
-                                                </div>
+                                        <div id="educationPortlet" class="hidden px-4 pb-4 space-y-4">
+                                            <!-- Full-width container for education items -->
+                                            <div id="educationContainer" class="space-y-3 w-full"></div>
+                                            
+                                            <!-- Centered button wrapper -->
+                                            <div class="text-center pt-2 flex items-center justify-center">
+                                            <button
+                                                class="cv-add-btn flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-xl bg-white font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                                                data-toggle="modal"
+                                                data-target="#educationModal">
+                                                <i class="fas fa-plus"></i> Add Entry
+                                            </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end::Portlet-->
+                                    <!-- End: Education Section -->
 
-                                    <!--begin::Portlet-->
-                                    <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm cv-section">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-title">
-                                                    <h3 class="m-portlet__head-text">
-                                                        Employment
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <%-- <li class="m-portlet__nav-item">
-                                                        <a href="" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air btn-brand m-btn modal-toggle" data-toggle="modal" data-target="#employmentModal"><i class="la la-plus"></i></a>
-                                                    </li> --%>
-                                                    <li class="m-portlet__nav-item portletArrow">
-                                                        <a href="#employmentPortlet" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air" data-toggle="collapse" aria-expanded="true" aria-controls="employmentPortlet"><i class="la la-angle-down"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <!-- Begin: Employment Section -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                                        <div class="flex items-center justify-between p-4">
+                                            <h3 class="text-lg font-semibold">Employment</h3>
+                                            <button
+                                            class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
+                                            aria-expanded="false" data-target="#employmentPortlet"
+                                            aria-controls="employmentPortlet">
+                                            <i class="fas fa-chevron-down"></i>
+                                            </button>
                                         </div>
-                                        <div id="employmentPortlet" class="m-portlet__body py-0 collapse">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <div class="m-widget4 m-widget4--progress" id="employmentContainer">
-                                                        <div class="m-widget4__item">
-                                                            No items.
-                                                        </div>
-                                                    </div>
-                                                    <div class="cv-actions">
-                                                        <button class="cv-add-btn" data-toggle="modal" data-target="#employmentModal">➕ Add Entry</button>
-                                                    </div>
-                                                </div>
+                                        <div id="employmentPortlet" class="hidden px-4 pb-4 space-y-4">
+                                            <div id="employmentContainer" class="space-y-3 w-full"></div>
+                                            <div class="text-center flex items-center justify-center">
+                                            <button
+                                                class="cv-add-btn flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-xl bg-white font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                                                data-toggle="modal"
+                                                data-target="#employmentModal">
+                                                <i class="fas fa-plus"></i> Add Entry
+                                            </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end::Portlet-->
+                                    <!-- End: Employment Section -->
 
-
-
-                                    <!--begin::Portlet-->
-                                    <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm cv-section">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-title">
-                                                    <h3 class="m-portlet__head-text">
-                                                        Projects
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <%-- <li class="m-portlet__nav-item">
-                                                        <a href="" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air btn-brand m-btn modal-toggle" data-toggle="modal" data-target="#projectsModal"><i class="la la-plus"></i></a>
-                                                    </li> --%>
-                                                    <li class="m-portlet__nav-item portletArrow">
-                                                        <a href="#projectsPortlet" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air" data-toggle="collapse" aria-expanded="true" aria-controls="projectsPortlet"><i class="la la-angle-down"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <!-- Begin: Projects Section -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                                        <div class="flex items-center justify-between p-4">
+                                            <h3 class="text-lg font-semibold">Projects</h3>
+                                            <button 
+                                            class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
+                                            aria-expanded="false" data-target="#projectsPortlet"
+                                            aria-controls="projectsPortlet">
+                                            <i class="fas fa-chevron-down"></i>
+                                            </button>
                                         </div>
-                                        <div id="projectsPortlet" class="m-portlet__body py-0 collapse">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <div class="m-widget4 m-widget4--progress" id="projectsContainer">
-                                                        <div class="m-widget4__item">
-                                                            No items.
-                                                        </div>
-                                                    </div>
-                                                    <div class="cv-actions">
-                                                        <button class="cv-add-btn" data-toggle="modal" data-target="#projectsModal">➕ Add Entry</button>
-                                                    </div>
-                                                </div>
+                                        <div id="projectsPortlet" class="hidden px-4 pb-4 space-y-4">
+                                            <div id="projectsContainer" class="space-y-3 w-full"></div>
+                                            <div class="text-center flex items-center justify-center">
+                                                <button
+                                                    class="cv-add-btn flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-xl bg-white font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                                                    data-toggle="modal"
+                                                    data-target="#projectsModal">
+                                                    <i class="fas fa-plus"></i> Add Entry
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end::Portlet-->
+                                    <!-- End: Projects Section -->
 
-                                    <!--begin::Portlet-->
-                                    <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm cv-section">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-title">
-                                                    <h3 class="m-portlet__head-text">
-                                                        Referees
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <%-- <li class="m-portlet__nav-item">
-                                                        <a href="" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air btn-brand m-btn modal-toggle" data-toggle="modal" data-target="#refereeModal"><i class="la la-plus"></i></a>
-                                                    </li> --%>
-                                                    <li class="m-portlet__nav-item portletArrow">
-                                                        <a href="#refereesPortlet" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air" data-toggle="collapse" aria-expanded="true" aria-controls="refereesPortlet"><i class="la la-angle-down"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <!-- Begin: Referees Section -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                                        <div class="flex items-center justify-between p-4">
+                                            <h3 class="text-lg font-semibold">Referees</h3>
+                                            <button 
+                                            class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
+                                            aria-expanded="false" data-target="#refereesPortlet"
+                                            aria-controls="refereesPortlet">
+                                            <i class="fas fa-chevron-down"></i>
+                                            </button>
                                         </div>
-                                        <div id="refereesPortlet" class="m-portlet__body py-0 collapse">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <div class="m-widget4 m-widget4--progress" id="refereesContainer">
-                                                        <div class="m-widget4__item">
-                                                            No items.
-                                                        </div>
-                                                    </div>
-                                                    <div class="cv-actions">
-                                                        <button class="cv-add-btn" data-toggle="modal" data-target="#refereeModal">➕ Add Entry</button>
-                                                    </div>
-                                                </div>
+                                        <div id="refereesPortlet" class="hidden px-4 pb-4 space-y-4">
+                                            <div id="refereesContainer" class="space-y-3 w-full"></div>
+                                            <div class="text-center flex items-center justify-center">
+                                            <button
+                                                class="cv-add-btn flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-xl bg-white font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                                                data-toggle="modal"
+                                                data-target="#refereeModal">
+                                                <i class="fas fa-plus"></i> Add Entry
+                                            </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end::Portlet-->
+                                    <!-- End: Referees Section -->
 
-                                    <!--begin::Portlet-->
-                                    <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered m-portlet--head-sm cv-section">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="m-portlet__head-title">
-                                                    <h3 class="m-portlet__head-text">
-                                                        Skills
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="m-portlet__head-tools">
-                                                <ul class="m-portlet__nav">
-                                                    <%-- <li class="m-portlet__nav-item">
-                                                        <a href="" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air btn-brand m-btn modal-toggle" data-toggle="modal" data-target="#skillsModal"><i class="la la-plus"></i></a>
-                                                    </li> --%>
-                                                    <li class="m-portlet__nav-item portletArrow">
-                                                        <a href="#skillsPortlet" class="btn m-btn--pill m-btn--icon m-btn--icon-only m-btn--air" data-toggle="collapse" aria-expanded="true" aria-controls="skillsPortlet"><i class="la la-angle-down"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <!-- Begin: Skills Section -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                                        <div class="flex items-center justify-between p-4">
+                                            <h3 class="text-lg font-semibold">Skills</h3>
+                                            <button
+                                            class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
+                                            aria-expanded="false" data-target="#skillsPortlet"
+                                            aria-controls="skillsPortlet">
+                                            <i class="fas fa-chevron-down"></i>
+                                            </button>
                                         </div>
-                                        <div id="skillsPortlet" class="m-portlet__body py-0 collapse">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <div class="m-widget4 m-widget4--progress" id="skillsContainer">
-                                                        <div class="m-widget4__item">
-                                                            No items.
-                                                        </div>
-                                                    </div>
-                                                    <div class="cv-actions">
-                                                        <button class="cv-add-btn" data-toggle="modal" data-target="#skillsModal">➕ Add Entry</button>
-                                                    </div>
-                                                </div>
+                                        <div id="skillsPortlet" class="hidden px-4 pb-4 space-y-4">
+                                            <div id="skillsContainer" class="space-y-3 w-full"></div>
+                                            <div class="text-center flex items-center justify-center">
+                                            <button
+                                                class="cv-add-btn flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-xl bg-white font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+                                                data-toggle="modal"
+                                                data-target="#skillsModal">
+                                                <i class="fas fa-plus"></i> Add Entry
+                                            </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end::Portlet-->
+                                    <!-- End: Skills Section -->
                                 </div>
 
                                 <!--begin::Modal-->
@@ -1331,6 +1258,25 @@
                 $icon.removeClass('la-angle-down').addClass('la-angle-up');
             } else {
                 $icon.removeClass('la-angle-up').addClass('la-angle-down');
+            }
+        });
+
+       $(document).on('click', '.dropdown-arrow', function () {
+            const $button = $(this);
+            const targetSelector = $button.data('target');
+            const $target = $(targetSelector);
+            const $icon = $button.find('i');
+
+            if ($target.length === 0) return; // safety check
+
+            if ($target.hasClass('hidden')) {
+                $target.removeClass('hidden');
+                $icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+                $button.attr('aria-expanded', 'true');
+            } else {
+                $target.addClass('hidden');
+                $icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+                $button.attr('aria-expanded', 'false');
             }
         });
 
