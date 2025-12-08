@@ -702,3 +702,45 @@ VALUES
   (0, 'Graduate', 8, NULL),
   (0, 'Post Graduate', 9, NULL);
 
+INSERT INTO skill_category (org_id, skill_category_name, details)
+VALUES 
+  (0, 'IT Skills', NULL),
+  (0, 'General Skills', NULL);
+
+INSERT INTO skill_types (skill_category_id, org_id, skill_type_name, stated_skill)
+VALUES
+  (1, 0, 'Indicate Your Skill', true),
+  (1, 0, 'Personal Computer', true),
+  (1, 0, 'Dot Matrix Printer', true),
+  (1, 0, 'Ticket Printer', true),
+  (1, 0, 'Hp Printer', true),
+  (1, 0, 'Dos', true),
+  (1, 0, 'Windowsxp', true),
+  (1, 0, 'Linux', true),
+  (1, 0, 'Solaris Unix', true),
+  (1, 0, 'Dialup', true),
+  (1, 0, 'Office', true),
+  (1, 0, 'Browsing', true),
+  (1, 0, 'Galileo Products', true),
+  (1, 0, 'Antivirus', true),
+  (1, 0, 'Lan', true),
+  (1, 0, 'Wan', true),
+  (1, 0, 'Samba', true),
+  (1, 0, 'Mail', true),
+  (1, 0, 'Web', true),         
+  (1, 0, 'Application', true),  
+  (1, 0, 'Identity Management', true),
+  (1, 0, 'Network Management', true),
+  (1, 0, 'Backup And Storage Services', true),
+  (1, 0, 'Groupware', true),
+  (1, 0, 'Asterix', true),
+  (1, 0, 'Database', true),
+  (1, 0, 'Design', true),
+  (1, 0, 'Baraza', true),
+  (1, 0, 'Coding Java', true);
+
+INSERT INTO skill_levels (org_id, skill_level_name, details)
+VALUES
+  (0, 'Basic', NULL),        
+  (0, 'Intermediate', NULL),
+  (0, 'Advanced', NULL);     
