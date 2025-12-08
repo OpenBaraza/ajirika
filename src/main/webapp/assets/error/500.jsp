@@ -49,7 +49,7 @@
 				 We are fixing it!<br/>
 				Please come back in a while.<br/><br/>
 			</p>
-    <a href="login.html">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>

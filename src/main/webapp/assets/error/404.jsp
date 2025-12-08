@@ -49,7 +49,7 @@
 		 Actually, the page you are looking for does not exist.
 	</p>
 	
-    <a href="login.html">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>

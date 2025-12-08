@@ -49,7 +49,7 @@
         Your are not allowed to access this resource.
 	</p>
     
-    <a href="login.html">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>

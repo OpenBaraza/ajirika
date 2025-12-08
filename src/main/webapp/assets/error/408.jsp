@@ -48,7 +48,7 @@
 	<p>
 		 Your Login Time Expired
 	</p>
-    <a href="login.html">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>
