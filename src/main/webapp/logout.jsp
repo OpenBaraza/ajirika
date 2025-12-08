@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Invalidate the current session to log the user out
+    session.invalidate();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +50,7 @@
 <div class="error-box">
     <h2>Logout</h2>
     
-    <a href="index.jsp">Back to Login</a>
+    <a href="profile.jsp">Back to Login</a>
 </div>
 
 </body>
