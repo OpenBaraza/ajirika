@@ -374,25 +374,10 @@
 
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <div class="top-menu">
-                        <ul class="nav navbar-nav pull-right">
                             <!-- BEGIN USER LOGIN DROPDOWN -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                            <li class="dropdown dropdown-user dropdown-dark">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="username username-hide-on-mobile">
-                                    <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-                                    <img alt="" class="img-circle" src="./assets/admin/layout4/img/avatar.png" />
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-default">
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="logout.jsp?logoff=yes">
-                                            <i class="icon-key"></i> Log Out </a>
-                                    </li>
-                                </ul>
-                            </li>
+                            <a href="logout.jsp?logoff=yes"><i class="icon-key"></i> Log Out </a>
                             <!-- END USER LOGIN DROPDOWN -->
-                        </ul>
                     </div>
                     <!-- END TOP NAVIGATION MENU -->
                 </div>
