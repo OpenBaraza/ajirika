@@ -121,8 +121,8 @@
               <input type="email" name="email" required 
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
               <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="required">Email address is required.</p>
-              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="format">Enter a valid email (example: user@mail.com)</p>
-              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="taken">This email is already registered.</p>
+              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="format">Enter a valid email address(example: user@mail.com)</p>
+              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="email" data-error-type="taken">This email address is already registered.</p>
             </div>
 
             <!-- Password -->
@@ -131,7 +131,7 @@
               <input type="password" name="password" required 
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
               <p class="text-red-500 text-sm mt-1 hidden" data-error-for="password" data-error-type="required">Password is required.</p>
-              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="password" data-error-type="strength">Password must include uppercase, lowercase, number, special char, min 8 chars.</p>
+              <p class="text-red-500 text-sm mt-1 hidden" data-error-for="password" data-error-type="strength">Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character</p>
             </div>
 
             <!-- Confirm Password -->
