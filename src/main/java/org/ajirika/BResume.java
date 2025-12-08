@@ -25,6 +25,28 @@ public class BResume extends HttpServlet {
 	BDB db = null;
 	String orgId = "0";
 	String userID = "0";
+
+	private String getLoggedInUserId(HttpServletRequest request) {
+		try {
+			// 1. Get username from Tomcat authentication
+			String username = request.getUserPrincipal().getName();
+			System.out.println("Logged in user: " + username);
+
+			// 2. Query database for entity_id
+			String sql = "SELECT entity_id FROM entitys WHERE user_name = '" + username + "'";
+			BQuery rs = new BQuery(db, sql);
+
+			if (rs.moveNext()) {
+				return rs.getString("entity_id");
+			} else {
+				System.out.println("No entity found for username: " + username);
+				return "-1";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "-1";
+		}
+	}
 	
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -40,6 +62,10 @@ public class BResume extends HttpServlet {
 		ServletContext context = getServletContext();
 		
 		if(!db.isValid()) db.reconnect("java:/comp/env/jdbc/database");
+
+		// Fetch real logged in user ID
+		userID = getLoggedInUserId(request);
+		System.out.println("Resolved userID = " + userID);
 		
 
 		if(orgId == null) orgId = "0";
