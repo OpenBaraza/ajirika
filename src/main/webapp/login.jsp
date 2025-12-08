@@ -62,7 +62,7 @@
 
       <p class="text-center text-gray-600 mt-6">
         Don't have an account?
-        <a href="jbseekerlanding.jsp" class="text-blue-600 font-semibold hover:underline">
+        <a href="jbseekerlanding.jsp?signup=true" class="text-blue-600 font-semibold hover:underline">
           Sign Up
         </a>
       </p>

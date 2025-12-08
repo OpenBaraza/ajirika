@@ -168,6 +168,13 @@
   <jsp:include page="/includes/footer.jsp" />
   <script>
     window.CTX = "<%= request.getContextPath() %>";
+    document.addEventListener("DOMContentLoaded", function () {
+      const modal = document.getElementById("signupModal");
+
+      if (modal && new URLSearchParams(window.location.search).get("signup") === "true") {
+        modal.classList.remove("hidden");
+     }
+    });
   </script>
   <script src="<%= request.getContextPath() %>/javascript/jbseekerscript.js"></script>
   <script src="<%= request.getContextPath() %>/javascript/signup.js"></script>
