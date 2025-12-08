@@ -690,4 +690,15 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER ins_applicants BEFORE INSERT OR UPDATE ON applicants
 	FOR EACH ROW EXECUTE PROCEDURE ins_applicants();
 
+INSERT INTO education_class (org_id, education_class_name, education_level, details)
+VALUES 
+  (0, 'Primary School', 1, NULL),
+  (0, 'Secondary School', 2, NULL),
+  (0, 'High School', 3, NULL),
+  (0, 'Certificate', 4, NULL),
+  (0, 'Diploma', 5, NULL),
+  (0, 'Professional Qualifications', 6, NULL),
+  (0, 'Higher Diploma', 7, NULL),
+  (0, 'Graduate', 8, NULL),
+  (0, 'Post Graduate', 9, NULL);
 

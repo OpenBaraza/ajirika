@@ -816,3 +816,4 @@ INSERT INTO entitys (entity_id, org_id, entity_type_id, use_key_id, sys_language
 (1, 0, 11, 0, 0, 'repository', 'repository', 'repository@localhost', true, false, false, 'baraza');
 SELECT pg_catalog.setval('entitys_entity_id_seq', 1, true);
 
+INSERT INTO sys_countrys (sys_country_id,sys_continent_id,sys_country_code,sys_country_name,sys_country_number,sys_country_capital,sys_phone_code,sys_currency_name,sys_currency_code,sys_currency_cents,sys_currency_exchange) VALUES ('KE','AF','KEN','Kenya','404','Nairobi','+254','Kenyan Shilling','KES','Cent', 1.0);
