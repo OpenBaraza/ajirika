@@ -1200,6 +1200,9 @@
 
                                         </div>
                                     </div>
+                                    <div class="text-center mt-4">
+                                         <button id="downloadJsonBtn" class="btn btn-primary">Download JSON Version</button>
+                                    </div>
                                     <!--end::Portlet-->
                                 </div>
                             </div>
@@ -1226,6 +1229,7 @@
     <script src="assets/resume/vendor/scripts.bundle.js" type="text/javascript"></script>
 
     <script src="assets/resume/js/resume.js?1076" type="text/javascript"></script>
+    <script src="assets/resume/js/jsonDownload.js" type="text/javascript"></script>
     <script src="assets/resume/js/resume_api.js?1073" type="text/javascript"></script>
     <!--end::Global Theme Bundle -->
 
