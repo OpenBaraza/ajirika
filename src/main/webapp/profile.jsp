@@ -16,6 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="assets/resume/vendor/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 
     <style type="text/css">
         .hidden {
@@ -350,46 +351,31 @@
     <div class="resume-container m-grid m-grid--hor m-grid--root m-page">
 
 
-        <!-- BEGIN HEADER -->
-        <div class="resume-section page-header navbar navbar-fixed-top">
-            <!-- BEGIN HEADER INNER -->
-            <div class="page-header-inner" style="width: 100%;">
-                <!-- BEGIN LOGO -->
-                <div class="page-logo">
-                    <a href="index.jsp">
-					<img src="logo.jpg" alt="logo" style="margin: 5px 5px 0 10px; height: 50px; max-width: 250px; object-fit: contain;" class="logo-default"/>
-					</a>
-                    <div class="menu-toggler sidebar-toggler">
-                        <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-                    </div>
+        <!-- Navigation Bar -->
+        <nav id="navbar" class="navbar fixed top-0 left-0 right-0 w-full z-50 bg-white shadow">
+            <%-- <div class="max-w-7xl mx-auto px-6 py-4"> --%>
+                <div class="flex items-center justify-between w-full px-10 py-4">
+                    
+                    <!-- Logo -->
+                    <a href="index.jsp" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
+                            <span class="text-white font-bold text-xl">A</span>
+                        </div>
+                        <span class="text-xl font-bold gradient-text-blue">Project Ajirika</span>
+                    </a>
+
+                    <!-- Logout Button -->
+                    <a href="logout.jsp?logoff=yes"
+                    class="px-4 py-2 rounded-lg font-medium text-white bg-red-600 hover:bg-red-700 transition">
+                    Log Out
+                    </a>
+
                 </div>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                </a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-
-                <!-- BEGIN PAGE TOP -->
-                <div class="page-top">
-
-                    <!-- BEGIN TOP NAVIGATION MENU -->
-                    <div class="top-menu">
-                            <!-- BEGIN USER LOGIN DROPDOWN -->
-                            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                            <a href="logout.jsp?logoff=yes"><i class="icon-key"></i> Log Out </a>
-                            <!-- END USER LOGIN DROPDOWN -->
-                    </div>
-                    <!-- END TOP NAVIGATION MENU -->
-                </div>
-                <!-- END PAGE TOP -->
-            </div>
-            <!-- END HEADER INNER -->
-        </div>
-
-        <!-- END HEADER -->
+            <%-- </div> --%>
+        </nav>
 
         <!-- begin::Body -->
-        <section>
+        <section class="py-8">
             <div class="resume-section m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 
                 <!-- BEGIN: Left Aside -->
@@ -1223,6 +1209,7 @@
 
     </div>
     <!-- end:: Page -->
+     <jsp:include page="/includes/footer.jsp" />
 
     <!--begin::Global Theme Bundle -->
     <script src="assets/resume/vendor/vendors.bundle.js" type="text/javascript"></script>
