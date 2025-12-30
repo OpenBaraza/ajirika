@@ -16,7 +16,7 @@ CREATE TABLE applicants (
 	middle_name				varchar(50),
 	applicant_email			varchar(120) not null unique,
 	applicant_phone			varchar(50),
-	applicant_password      varchar(64);
+	applicant_password      varchar(64),
 	date_of_birth			date,
 	gender					varchar(1),
 	nationality				char(2) not null  default 'KE' references sys_countrys,
