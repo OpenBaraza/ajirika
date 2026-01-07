@@ -18,7 +18,7 @@
 <body class="bg-white text-gray-800">
   <!-- Navigation Bar -->
   <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="max-w-6xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <!-- Logo -->
         <a href="#home" class="flex items-center gap-2 group">
@@ -73,7 +73,7 @@
   <!-- Hero Section -->
   <section id="home" class="relative overflow-hidden my-5">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-5 via-purple-50 to-pink-50 opacity-50"></div>
-    <div class="relative max-w-7xl mx-auto px-6 pb-8 pt-16">
+    <div class="relative max-w-6xl mx-auto px-6 pb-8 pt-16">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="animate-fade-in-up">
           <div class="inline-block mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold animate-scale-in">
