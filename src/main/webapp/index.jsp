@@ -89,7 +89,7 @@
           <p class="text-lg text-gray-600 mb-8 leading-relaxed">
             Ajirika introduces a universal, data-driven CV format that both <span class="font-medium text-gray-800">job seekers</span> and 
             <span class="font-medium text-gray-800">HR professionals</span> can use seamlessly.  
-            Your profile becomes a reusable <a href="jsonCV.jsp" class="text-blue-700 font-semibold hover:underline">
+            Your profile becomes a reusable <a href="resume_guide.jsp" class="text-blue-700 font-semibold hover:underline">
               JSON CV
             </a> — standardized, shareable, 
             and readable by any job platform.
