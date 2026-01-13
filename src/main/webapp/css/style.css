@@ -226,7 +226,7 @@ html {
   transform: scale(1.1);
 }
 
-/* Updated navbar styles with gradient background for better visual appeal */
+
 .navbar {
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
@@ -278,17 +278,8 @@ html {
 
 .mobile-menu {
   animation: slideDown 0.3s ease-out;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-.mobile-menu.open {
-  max-height: 400px;
-  /* Adjust based on your content */
-  opacity: 1;
-}
 
 @keyframes move-dots {
   0% {

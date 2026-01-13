@@ -12,17 +12,7 @@
 </head>
 <body class="bg-gray-100">
   <!-- Header -->
-  <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-    <div class="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-6 py-4 flex items center justify-between">
-        <!-- Logo -->
-        <a href="index.jsp" class="flex items-center gap-2 group">
-          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
-            <span class="text-white font-bold text-xl">A</span>
-          </div>
-          <span class="text-xl font-bold gradient-text-blue">Project Ajirika</span>
-        </a>
-    </div>
-  </nav>
+  <jsp:include page="/includes/header.jsp" />
 
   <div class="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8 mb-10 mt-20">
     <h1 class="text-3xl font-bold mb-4 text-center">Ajirika Resume in JSON</h1>

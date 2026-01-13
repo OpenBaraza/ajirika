@@ -39,30 +39,13 @@ if (mobileMenuBtn && mobileMenu) {
   mobileMenuBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Just toggle the 'hidden' class
-    const isOpening = mobileMenu.classList.toggle("hidden");
-
-    // Toggle menu/close icons
-    if (menuIcon && closeIcon) {
-      if (isOpening) {
-        // When menu is opening (hidden class being removed)
-        menuIcon.classList.add("hidden");
-        closeIcon.classList.remove("hidden");
-      } else {
-        // When menu is closing (hidden class being added)
-        menuIcon.classList.remove("hidden");
-        closeIcon.classList.add("hidden");
-      }
-    }
+    mobileMenu.classList.toggle("hidden");
   });
 
   // Close mobile menu when clicking on links
   mobileLinks.forEach((link) => {
     link.addEventListener("click", () => {
       mobileMenu.classList.add("hidden");
-      menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
     });
   });
 
@@ -70,8 +53,6 @@ if (mobileMenuBtn && mobileMenu) {
   document.addEventListener("click", (e) => {
     if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
       mobileMenu.classList.add("hidden");
-      menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
     }
   });
 }
@@ -111,8 +92,8 @@ if (hrToast && hrToast.classList.contains("opacity-100")) {
     // After fade animation completes, hide it completely
     setTimeout(() => {
       hrToast.classList.add("hidden");
-      hrToast.style.pointerEvents = "none"; // Ensure it doesn't block clicks
-    }, 500); // Match this with your CSS transition duration
+      hrToast.style.pointerEvents = "none";
+    }, 500);
   }, 3000);
 }
 
