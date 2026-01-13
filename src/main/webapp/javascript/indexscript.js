@@ -5,6 +5,8 @@ const heroGetInvolvedBtn = document.getElementById("heroGetInvolvedBtn");
 const ctaJoinBtn = document.getElementById("ctaJoinBtn");
 const hrModal = document.getElementById("hrModal");
 const hrToast = document.getElementById("toast");
+const menuIcon = mobileMenuBtn.querySelector("#menuIcon");
+const closeIcon = mobileMenuBtn.querySelector("#closeIcon");
 const mobileLinks = mobileMenu.querySelectorAll("a");
 const observerOptions = {
   threshold: 0.1,
@@ -37,13 +39,30 @@ if (mobileMenuBtn && mobileMenu) {
   mobileMenuBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    mobileMenu.classList.toggle("hidden");
+
+    // Just toggle the 'hidden' class
+    const isOpening = mobileMenu.classList.toggle("hidden");
+
+    // Toggle menu/close icons
+    if (menuIcon && closeIcon) {
+      if (isOpening) {
+        // When menu is opening (hidden class being removed)
+        menuIcon.classList.add("hidden");
+        closeIcon.classList.remove("hidden");
+      } else {
+        // When menu is closing (hidden class being added)
+        menuIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
+      }
+    }
   });
 
   // Close mobile menu when clicking on links
   mobileLinks.forEach((link) => {
     link.addEventListener("click", () => {
       mobileMenu.classList.add("hidden");
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     });
   });
 
@@ -51,6 +70,8 @@ if (mobileMenuBtn && mobileMenu) {
   document.addEventListener("click", (e) => {
     if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
       mobileMenu.classList.add("hidden");
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     }
   });
 }
@@ -86,7 +107,18 @@ if (hrToast && hrToast.classList.contains("opacity-100")) {
   setTimeout(() => {
     hrToast.classList.remove("opacity-100", "translate-y-0");
     hrToast.classList.add("opacity-0", "-translate-y-4");
+
+    // After fade animation completes, hide it completely
+    setTimeout(() => {
+      hrToast.classList.add("hidden");
+      hrToast.style.pointerEvents = "none"; // Ensure it doesn't block clicks
+    }, 500); // Match this with your CSS transition duration
   }, 3000);
+}
+
+if (hrToast && !hrToast.classList.contains("opacity-100")) {
+  hrToast.classList.add("hidden");
+  hrToast.style.pointerEvents = "none";
 }
 
 // Remove ?success=true from URL after showing toast

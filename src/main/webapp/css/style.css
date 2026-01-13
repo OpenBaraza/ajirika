@@ -8,6 +8,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -18,6 +19,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -28,6 +30,7 @@
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -39,6 +42,7 @@
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -50,6 +54,7 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -57,10 +62,12 @@
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -70,6 +77,7 @@
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -107,18 +115,23 @@
 .delay-100 {
   animation-delay: 0.1s;
 }
+
 .delay-200 {
   animation-delay: 0.2s;
 }
+
 .delay-300 {
   animation-delay: 0.3s;
 }
+
 .delay-400 {
   animation-delay: 0.4s;
 }
+
 .delay-500 {
   animation-delay: 0.5s;
 }
+
 .delay-600 {
   animation-delay: 0.6s;
 }
@@ -163,10 +176,12 @@
 
 /* Timeline dot pulse */
 @keyframes pulse-dot {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
   }
+
   50% {
     box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
   }
@@ -216,15 +231,14 @@ html {
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
   box-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
+  overflow: visible;
 }
 
 .navbar-scrolled {
-  background: linear-gradient(
-    135deg,
-    rgba(240, 249, 255, 0.98) 0%,
-    rgba(224, 242, 254, 0.98) 50%,
-    rgba(219, 234, 254, 0.98) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(240, 249, 255, 0.98) 0%,
+      rgba(224, 242, 254, 0.98) 50%,
+      rgba(219, 234, 254, 0.98) 100%);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
 }
@@ -255,6 +269,7 @@ html {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -263,6 +278,16 @@ html {
 
 .mobile-menu {
   animation: slideDown 0.3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.mobile-menu.open {
+  max-height: 400px;
+  /* Adjust based on your content */
+  opacity: 1;
 }
 
 @keyframes move-dots {
@@ -270,21 +295,26 @@ html {
     transform: translateX(0) scale(1);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   100% {
     transform: translateX(220px) scale(0.8);
     opacity: 0;
   }
 }
+
 .ajirika-dot {
   animation: move-dots 2.2s linear infinite;
   will-change: transform, opacity;
 }
+
 .ajirika-dot:nth-child(2) {
   animation-delay: 0.25s;
 }
+
 .ajirika-dot:nth-child(3) {
   animation-delay: 0.45s;
 }
@@ -293,6 +323,7 @@ html {
 .ajirika-json {
   transition: transform 0.28s ease, box-shadow 0.28s ease;
 }
+
 .ajirika-cv:hover,
 .ajirika-json:hover {
   transform: translateY(-6px);
@@ -313,9 +344,11 @@ html {
   0% {
     d: path("M0,50 C200,10 400,90 600,50 S1000,10 1200,50");
   }
+
   50% {
     d: path("M0,70 C200,30 400,110 600,70 S1000,30 1200,70");
   }
+
   100% {
     d: path("M0,50 C200,10 400,90 600,50 S1000,10 1200,50");
   }
@@ -327,16 +360,20 @@ html {
 
 /* Keep your existing animations */
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0) translateX(0);
   }
+
   25% {
     transform: translateY(-10px) translateX(5px);
   }
+
   50% {
     transform: translateY(-5px) translateX(-5px);
   }
+
   75% {
     transform: translateY(-15px) translateX(5px);
   }
@@ -347,6 +384,7 @@ html {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -358,6 +396,7 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -365,10 +404,12 @@ html {
 }
 
 @keyframes pulse-slow {
+
   0%,
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
