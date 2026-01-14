@@ -40,7 +40,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 public class breakdownCV {
 	private static final Logger log = Logger.getLogger(breakdownCV.class.getName());
 
-	private static final String SENTENCE_MODEL_PATH = "./models/en-sent.bin";
+	// private static final String SENTENCE_MODEL_PATH = "./models/en-sent.bin";
 
 	// Section detection patterns
 	private static final Pattern PERSONAL_INFO_PATTERN = Pattern.compile("(?i)(?:name|email|phone|address|contact|mobile)\\s*:?\\s*([^\\n]+)");
@@ -667,33 +667,31 @@ public class breakdownCV {
 	private Map<String, List<String>> extractSections(String plainText) {
 		System.out.println("Extracting sections from document");
 		Map<String, List<String>> sections = new HashMap<>();
-
 		// Initialize sections
 		sections.put("summary", new ArrayList<>());
 		sections.put("education", new ArrayList<>());
 		sections.put("experience", new ArrayList<>());
 		sections.put("skills", new ArrayList<>());
 		sections.put("references", new ArrayList<>());
-
 		List<String> sectionOrder = new ArrayList<>();
-		try (InputStream modelIn = new FileInputStream(SENTENCE_MODEL_PATH)){
+
+		// === LOAD SENTENCE MODEL FROM CLASSPATH ===
+		try (InputStream modelIn = breakdownCV.class.getResourceAsStream("/models/en-sent.bin")) {
 			if (modelIn == null) {
-				System.err.println("Model file not found.");
+				System.err.println("Sentence model not found in classpath. Falling back to line-based parsing.");
+				extractSectionsLineByLine(plainText, sections);
 				return sections;
 			}
-
-			System.out.println("Using Open NLP");
+			System.out.println("Using OpenNLP sentence detector from classpath");
 			SentenceModel model = new SentenceModel(modelIn);
 			SentenceDetectorME sentenceDetector = new SentenceDetectorME(model);
 			String[] sentences = sentenceDetector.sentDetect(plainText);
-
 			System.out.println("Detected " + sentences.length + " sentences");
 
 			String currentSection = null;
 			for (String sentence : sentences) {
 				String trimmed = sentence.trim();
 				if (trimmed.isEmpty()) continue;
-
 				System.out.println("Processing sentence: " + trimmed);
 
 				// Check if this sentence is a section header
@@ -714,7 +712,10 @@ public class breakdownCV {
 				}
 			}
 		} catch (IOException e) {
+			System.err.println("Error loading sentence model: " + e.getMessage());
 			e.printStackTrace();
+			// Fallback to line-based parsing on any error
+			extractSectionsLineByLine(plainText, sections);
 		}
 
 		// If no sections found, try alternative extraction
@@ -727,7 +728,6 @@ public class breakdownCV {
 		for (String section : sections.keySet()) {
 			System.out.println("Section '" + section + "' contains " + sections.get(section).size() + " entries");
 		}
-
 		return sections;
 	}
 

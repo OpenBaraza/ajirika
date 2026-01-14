@@ -30,16 +30,16 @@ import opennlp.tools.util.MarkableFileInputStreamFactory;
 public class analyzeCV {
 
 	// Paths to the OpenNLP models. Make sure these files are in your 'models' directory.
-	private static final String SENTENCE_MODEL_PATH = "./models/en-sent.bin";
-	private static final String TOKEN_MODEL_PATH = "./models/en-token.bin";
-	private static final String POS_MODEL_PATH = "./models/en-pos-maxent.bin";
-	private static final String NER_PERSON_MODEL_PATH = "./models/en-ner-person.bin";
-	private static final String NER_ORGANIZATION_MODEL_PATH = "./models/en-ner-organization.bin";
-	private static final String NER_LOCATION_MODEL_PATH = "./models/en-ner-location.bin";
-	private static final String NER_CV_MODEL_PATH = "./models/en-ner-cv.bin";
-	private static final String CUST_PERSON_MODEL_PATH = "./models/cust-person.bin";
-	private static final String NER_EDUC_MODEL_PATH = "./models/en-ner-education.bin";
-	private static final String NER_EXP_MODEL_PATH = "./models/en-ner-experience.bin";
+	// private static final String SENTENCE_MODEL_PATH = "/models/en-sent.bin";
+	// private static final String TOKEN_MODEL_PATH = "/models/en-token.bin";
+	// private static final String POS_MODEL_PATH = "/models/en-pos-maxent.bin";
+	// private static final String NER_PERSON_MODEL_PATH = "/models/en-ner-person.bin";
+	// private static final String NER_ORGANIZATION_MODEL_PATH = "/models/en-ner-organization.bin";
+	// private static final String NER_LOCATION_MODEL_PATH = "/models/en-ner-location.bin";
+	// private static final String NER_CV_MODEL_PATH = "/models/en-ner-cv.bin";
+	// private static final String CUST_PERSON_MODEL_PATH = "/models/cust-person.bin";
+	// private static final String NER_EDUC_MODEL_PATH = "/models/en-ner-education.bin";
+	// private static final String NER_EXP_MODEL_PATH = "/models/en-ner-experience.bin";
 	
 
 	private SentenceDetectorME sentenceDetector;
@@ -58,68 +58,77 @@ public class analyzeCV {
 	* It's crucial to handle IOException as model files might be missing or corrupted.
 	*/
 	public analyzeCV() {
-		try {
-			// Load Sentence Detector Model
-			try (InputStream modelIn = new FileInputStream(SENTENCE_MODEL_PATH)) {
-				SentenceModel model = new SentenceModel(modelIn);
-				sentenceDetector = new SentenceDetectorME(model);
-			}
+        try {
+            // Load Sentence Detector Model
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-sent.bin")) {
+                if (modelIn == null) throw new IOException("Sentence model not found in classpath");
+                SentenceModel model = new SentenceModel(modelIn);
+                sentenceDetector = new SentenceDetectorME(model);
+            }
 
-			// Load Tokenizer Model
-			try (InputStream modelIn = new FileInputStream(TOKEN_MODEL_PATH)) {
-				TokenizerModel model = new TokenizerModel(modelIn);
-				tokenizer = new TokenizerME(model);
-			}
+            // Load Tokenizer Model
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-token.bin")) {
+                if (modelIn == null) throw new IOException("Tokenizer model not found in classpath");
+                TokenizerModel model = new TokenizerModel(modelIn);
+                tokenizer = new TokenizerME(model);
+            }
 
-			// Load POS Tagger Model
-			try (InputStream modelIn = new FileInputStream(POS_MODEL_PATH)) {
-				POSModel model = new POSModel(modelIn);
-				posTagger = new POSTaggerME(model);
-			}
+            // Load POS Tagger Model
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-pos-maxent.bin")) {
+                if (modelIn == null) throw new IOException("POS model not found in classpath");
+                POSModel model = new POSModel(modelIn);
+                posTagger = new POSTaggerME(model);
+            }
 
-			// Load Named Entity Recognition Models
-			// For Person
-			try (InputStream modelIn = new FileInputStream(NER_PERSON_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderPerson = new NameFinderME(model);
-			}
-			// For Organization
-			try (InputStream modelIn = new FileInputStream(NER_ORGANIZATION_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderOrganization = new NameFinderME(model);
-			}
-			// For Location
-			try (InputStream modelIn = new FileInputStream(NER_LOCATION_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderLocation = new NameFinderME(model);
-			}
+            // Load Named Entity Recognition Models
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-person.bin")) {
+                if (modelIn == null) throw new IOException("Person NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderPerson = new NameFinderME(model);
+            }
 
-			try (InputStream modelIn = new FileInputStream(NER_CV_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderCV = new NameFinderME(model);
-			}
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-organization.bin")) {
+                if (modelIn == null) throw new IOException("Organization NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderOrganization = new NameFinderME(model);
+            }
 
-			try (InputStream modelIn = new FileInputStream(CUST_PERSON_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderPersonAdd = new NameFinderME(model);
-			}
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-location.bin")) {
+                if (modelIn == null) throw new IOException("Location NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderLocation = new NameFinderME(model);
+            }
 
-			try (InputStream modelIn = new FileInputStream(NER_EDUC_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderEduc = new NameFinderME(model);
-			}
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-cv.bin")) {
+                if (modelIn == null) throw new IOException("CV NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderCV = new NameFinderME(model);
+            }
 
-			try (InputStream modelIn = new FileInputStream(NER_EXP_MODEL_PATH)) {
-				TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-				nameFinderExp = new NameFinderME(model);
-			}
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/cust-person.bin")) {
+                if (modelIn == null) throw new IOException("Custom person model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderPersonAdd = new NameFinderME(model);
+            }
 
-		} catch (IOException ex) {
-			System.err.println("Error loading OpenNLP models: " + ex.getMessage());
-			ex.printStackTrace();
-			System.exit(1);
-		}
-	}
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-education.bin")) {
+                if (modelIn == null) throw new IOException("Education NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderEduc = new NameFinderME(model);
+            }
+
+            try (InputStream modelIn = analyzeCV.class.getResourceAsStream("/models/en-ner-experience.bin")) {
+                if (modelIn == null) throw new IOException("Experience NER model not found in classpath");
+                TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                nameFinderExp = new NameFinderME(model);
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error loading OpenNLP models: " + ex.getMessage());
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
 
 	/**
 	* Parses the given CV text and prints various NLP outputs.
@@ -253,45 +262,50 @@ public class analyzeCV {
 
 	// process the training text and load the model
 	public void trainModel(String trainingData, int pType) {
-		try {
-			InputStreamFactory factory = fromString(trainingData);
-			ObjectStream<String> lineStream = new PlainTextByLineStream(factory, "UTF-8");
-			ObjectStream<NameSample> sampleStream = new NameSampleDataStream(lineStream);
+        try {
+            InputStreamFactory factory = fromString(trainingData);
+            ObjectStream<String> lineStream = new PlainTextByLineStream(factory, StandardCharsets.UTF_8);
+            ObjectStream<NameSample> sampleStream = new NameSampleDataStream(lineStream);
 
-			TrainingParameters params = new TrainingParameters();
-			params.put(TrainingParameters.ITERATIONS_PARAM, "100");
-			params.put(TrainingParameters.CUTOFF_PARAM, "1");
+            TrainingParameters params = new TrainingParameters();
+            params.put(TrainingParameters.ITERATIONS_PARAM, "100");
+            params.put(TrainingParameters.CUTOFF_PARAM, "1");
 
-			if(pType == 1) {
-				TokenNameFinderModel model = NameFinderME.train("en", "cv", sampleStream, params, new TokenNameFinderFactory());
-				nameFinderCV = new NameFinderME(model);
-				model.serialize(new FileOutputStream(NER_CV_MODEL_PATH));
-			} else if(pType == 2) {
-				TokenNameFinderModel model = NameFinderME.train("en", "person", sampleStream, params, new TokenNameFinderFactory());
-				nameFinderPersonAdd = new NameFinderME(model);
-				model.serialize(new FileOutputStream(CUST_PERSON_MODEL_PATH));
-			} else if(pType == 3) {
-				TokenNameFinderModel model = NameFinderME.train("en", "education", sampleStream, params, new TokenNameFinderFactory());
-				nameFinderEduc = new NameFinderME(model);
-				model.serialize(new FileOutputStream(NER_EDUC_MODEL_PATH));
-			} else if(pType == 4) {
-				TokenNameFinderModel model = NameFinderME.train("en", "experience", sampleStream, params, new TokenNameFinderFactory());
-				nameFinderExp = new NameFinderME(model);
-				model.serialize(new FileOutputStream(NER_EXP_MODEL_PATH));
-			}
+            String outputPath = null;
+            TokenNameFinderModel model = null;
 
-			System.out.println("Model trained successfully from string!");
+            if(pType == 1) {
+                model = NameFinderME.train("en", "cv", sampleStream, params, new TokenNameFinderFactory());
+                nameFinderCV = new NameFinderME(model);
+                outputPath = "en-ner-cv.bin";
+            } else if(pType == 2) {
+                model = NameFinderME.train("en", "person", sampleStream, params, new TokenNameFinderFactory());
+                nameFinderPersonAdd = new NameFinderME(model);
+                outputPath = "cust-person.bin";
+            } else if(pType == 3) {
+                model = NameFinderME.train("en", "education", sampleStream, params, new TokenNameFinderFactory());
+                nameFinderEduc = new NameFinderME(model);
+                outputPath = "en-ner-education.bin";
+            } else if(pType == 4) {
+                model = NameFinderME.train("en", "experience", sampleStream, params, new TokenNameFinderFactory());
+                nameFinderExp = new NameFinderME(model);
+                outputPath = "en-ner-experience.bin";
+            }
 
-		} catch (IOException ex) {
-			System.err.println("Error loading OpenNLP models: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+            if (model != null && outputPath != null) {
+                // Save to current working directory (or specify absolute path)
+                model.serialize(new FileOutputStream(outputPath));
+                System.out.println("Model trained and saved as: " + outputPath);
+            }
 
-	public InputStreamFactory fromString(String data) {
-        return () -> new ByteArrayInputStream(data.getBytes("UTF-8"));
+        } catch (IOException ex) {
+            System.err.println("Error during model training: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
-
+	public InputStreamFactory fromString(String data) {
+        return () -> new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
+    }
 }
 
