@@ -1,68 +1,99 @@
-function processCV() {
-    const fileInput = document.getElementById("cvFile");
+async function processCV() {
+    const fileInput = document.getElementById('cvFile');
+    const file = fileInput.files[0];
 
-    if (!fileInput.files.length) {
-        alert("Please select a CV file first.");
+    if (!file) {
+        alert('Please select a CV file.');
         return;
     }
 
     const formData = new FormData();
-    formData.append("cvFile", fileInput.files[0]);
-    console.log(formData.get("cvFile"));
+    formData.append('cvFile', file);
 
-    fetch("processCV", {  
-        method: "POST",
-        body: formData
-    })
-    // .then(response => {
-    //     if (!response.ok) {
-    //         throw new Error("Failed to process CV");
-    //     }
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     populateCVData(data);
-    // })
-    // .catch(error => {
-    //     console.error(error);
-    //     alert("Error processing CV");
-    // });
-}
+    try {
+        const response = await fetch('processCV', {
+            method: 'POST',
+            body: formData
+        });
 
-function populateCVData(data) {
-    // INFO
-    document.getElementById("infoName").textContent = data.info?.name || "";
-    document.getElementById("infoEmail").textContent = data.info?.email || "";
-    document.getElementById("infoPhone").textContent = data.info?.phone || "";
+        const data = await response.json();
 
-    // EDUCATION
-    renderList("educationContent", data.education);
+        if (data.error) {
+            alert('Error: ' + data.error);
+            return;
+        }
 
-    // EXPERIENCE
-    renderList("experienceContent", data.experience);
+        // === Update UI ===
+        // Personal Info
+        const info = data.personal_info || {};
+        document.getElementById('infoName').textContent = info.name || '—';
+        document.getElementById('infoEmail').textContent = info.email || '—';
+        document.getElementById('infoPhone').textContent = info.phone || '—';
 
-    // SKILLS
-    renderList("skillsContent", data.skills);
+        // Education
+        const eduSection = document.getElementById('educationContent');
+        eduSection.innerHTML = '';
+        if (data.education && data.education.length > 0) {
+            data.education.forEach(edu => {
+                const div = document.createElement('div');
+                div.innerHTML = `<strong>${edu.institution}</strong><br/>
+                                 ${edu.certification} (${edu['edu-from']} – ${edu['edu-to']})`;
+                eduSection.appendChild(div);
+                eduSection.appendChild(document.createElement('hr'));
+            });
+        } else {
+            eduSection.textContent = 'No education found.';
+        }
 
-    // REFEREES
-    renderList("refereesContent", data.referees);
-}
+        // Experience
+        const expSection = document.getElementById('experienceContent');
+        expSection.innerHTML = '';
+        if (data.experience && data.experience.length > 0) {
+            data.experience.forEach(exp => {
+                const div = document.createElement('div');
+                div.innerHTML = `<strong>${exp.role || exp.position}</strong> at <em>${exp.employer || exp.company}</em><br/>
+                                 ${exp.dates || ''}`;
+                expSection.appendChild(div);
+                expSection.appendChild(document.createElement('hr'));
+            });
+        } else {
+            expSection.textContent = 'No experience found.';
+        }
 
-function renderList(containerId, items) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
+        // Skills
+        const skillsSection = document.getElementById('skillsContent');
+        skillsSection.innerHTML = '';
+        if (data.skills && data.skills.length > 0) {
+            const list = document.createElement('ul');
+            data.skills.forEach(skill => {
+                const li = document.createElement('li');
+                li.textContent = skill;
+                list.appendChild(li);
+            });
+            skillsSection.appendChild(list);
+        } else {
+            skillsSection.textContent = 'No skills found.';
+        }
 
-    if (!items || items.length === 0) {
-        container.innerHTML = "<em>No data</em>";
-        return;
+        // Referees
+        const refsSection = document.getElementById('refereesContent');
+        refsSection.innerHTML = '';
+        if (data.references && data.references.length > 0) {
+            data.references.forEach(ref => {
+                const div = document.createElement('div');
+                div.innerHTML = `<strong>${ref.name || ref['referee-name']}</strong><br/>
+                                 ${ref.role || ref['referee-position']}<br/>
+                                 ${ref.organization || ref['referee-company']}<br/>
+                                 ${ref.contact || ref['referee-email'] || ref.phone || ''}`;
+                refsSection.appendChild(div);
+                refsSection.appendChild(document.createElement('hr'));
+            });
+        } else {
+            refsSection.textContent = 'No referees found.';
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert('Failed to process CV: ' + err.message);
     }
-
-    const ul = document.createElement("ul");
-    items.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        ul.appendChild(li);
-    });
-
-    container.appendChild(ul);
 }
