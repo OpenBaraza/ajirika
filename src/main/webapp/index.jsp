@@ -477,7 +477,7 @@
           <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3.5 border-4 border-white timeline-dot"></div>
           <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
             <h3 class="text-xl font-semibold mb-2 text-blue-600">11th December 2025</h3>
-            <p class="text-gray-700 leading-relaxed">Soft launch for the Ajirika project in Parkland sports club.</p>
+            <p class="text-gray-700 leading-relaxed">Soft launch for the Ajirika project in Parklands sports club.</p>
           </div>
         </div>
         <div class="ml-8 scroll-reveal delay-200">
