@@ -1187,7 +1187,10 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt-4">
-                                         <button id="downloadJsonBtn" class="btn btn-primary">Download JSON Version</button>
+                                        <button id="downloadJsonBtn" class="btn btn-primary">Download JSON Version</button>
+                                        <a href="<%= request.getContextPath() %>/processCV.jsp">
+                                            <button id="" class="btn btn-primary">Upload CV</button>
+                                        </a>
                                     </div>
                                     <!--end::Portlet-->
                                 </div>
