@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const gallery = document.getElementById('launchGallery');
   const leftArrow = document.getElementById('leftArrow');
   const rightArrow = document.getElementById('rightArrow');
+  const scrollElements = document.querySelectorAll('.scroll-reveal');
 
   const scrollAmount = 300;
   let currentTranslate = 0;
@@ -101,5 +102,18 @@ document.addEventListener('DOMContentLoaded', () => {
     img.style.cursor = 'pointer';
     img.addEventListener('click', () => openLightbox(i));
   });
+
+
+  const revealOnScroll = () => {
+    scrollElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight - 100) {
+        el.classList.add('revealed');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
 
 });
