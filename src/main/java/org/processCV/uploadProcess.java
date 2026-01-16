@@ -1,14 +1,7 @@
 package org.processCV;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import java.io.*;
+import java.nio.file.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -17,9 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
-
 import org.json.JSONObject;
-
 import org.baraza.DB.BDB;
 import org.baraza.DB.BQuery;
 
@@ -32,12 +23,29 @@ public class uploadProcess extends HttpServlet {
     String orgId = "0";
     String userID = "0";
 
+    // Custom PrintStream to capture logs
+    private static class LogCaptureStream extends OutputStream {
+        private final StringBuilder buffer = new StringBuilder();
+        
+        @Override
+        public void write(int b) {
+            buffer.append((char) b);
+        }
+        
+        public String getLogs() {
+            return buffer.toString();
+        }
+        
+        public void clear() {
+            buffer.setLength(0);
+        }
+    }
+
     private String getLoggedInUserId(HttpServletRequest request) {
         try {
             String username = request.getUserPrincipal().getName();
             System.out.println("Logged in user from uploadProcess: " + username);
 
-            // ⚠️ SECURITY: Use parameterized query in production!
             String sql = "SELECT entity_id FROM entitys WHERE user_name = '" + username + "'";
             BQuery rs = new BQuery(db, sql);
 
@@ -78,10 +86,23 @@ public class uploadProcess extends HttpServlet {
         if (orgId == null) orgId = "0";
         if (userID == null) userID = "-1";
 
+        // Create log capture stream
+        LogCaptureStream logStream = new LogCaptureStream();
+        PrintStream logPrintStream = new PrintStream(logStream, true);
+        
+        // Save original System.out
+        PrintStream originalOut = System.out;
+        
         try {
+            // Redirect System.out to capture logs
+            System.setOut(logPrintStream);
+            
             Part filePart = request.getPart("cvFile");
             if (filePart == null || filePart.getSize() == 0) {
-                out.print(new JSONObject().put("error", "No file uploaded").toString());
+                JSONObject errorResponse = new JSONObject();
+                errorResponse.put("error", "No file uploaded");
+                errorResponse.put("logs", logStream.getLogs());
+                out.print(errorResponse.toString());
                 return;
             }
 
@@ -109,17 +130,23 @@ public class uploadProcess extends HttpServlet {
 
             // === 3. Clean up temp file ===
             Files.deleteIfExists(tempFile);
-            Files.deleteIfExists(tempDir); // only works if empty
+            Files.deleteIfExists(tempDir);
 
-            // === 4. Send JSON response ===
-            out.print(result.toString(2)); // pretty-print for debugging
+            // === 4. Send JSON response with logs ===
+            JSONObject responseObj = new JSONObject();
+            responseObj.put("data", result);
+            responseObj.put("logs", logStream.getLogs());
+            out.print(responseObj.toString(2));
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            JSONObject error = new JSONObject();
-            error.put("error", "Processing failed: " + ex.getMessage());
-            out.print(error.toString());
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("error", "Processing failed: " + ex.getMessage());
+            errorResponse.put("logs", logStream.getLogs());
+            out.print(errorResponse.toString());
         } finally {
+            // Restore original System.out
+            System.setOut(originalOut);
             out.close();
         }
     }

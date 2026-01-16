@@ -7,6 +7,9 @@ async function processCV() {
         return;
     }
 
+    // Clear previous logs
+    document.getElementById('logOutput').innerHTML = 'Processing started...\n';
+
     const formData = new FormData();
     formData.append('cvFile', file);
 
@@ -18,14 +21,25 @@ async function processCV() {
 
         const data = await response.json();
 
+        // Display logs in the logs tab
+        if (data.logs) {
+            addLog(data.logs);
+        }
+
         if (data.error) {
+            addLog('ERROR: ' + data.error);
             alert('Error: ' + data.error);
             return;
         }
 
-        // === Update UI ===
+        // Switch to results view (optional)
+        // openTab('cvForm');
+
+        // Update UI with parsed data
+        const result = data.data;
+        
         // Personal Info
-        const info = data.personal_info || {};
+        const info = result.personal_info || {};
         document.getElementById('infoName').textContent = info.name || '—';
         document.getElementById('infoEmail').textContent = info.email || '—';
         document.getElementById('infoPhone').textContent = info.phone || '—';
@@ -33,11 +47,11 @@ async function processCV() {
         // Education
         const eduSection = document.getElementById('educationContent');
         eduSection.innerHTML = '';
-        if (data.education && data.education.length > 0) {
-            data.education.forEach(edu => {
+        if (result.education && result.education.length > 0) {
+            result.education.forEach(edu => {
                 const div = document.createElement('div');
-                div.innerHTML = `<strong>${edu.institution}</strong><br/>
-                                 ${edu.certification} (${edu['edu-from']} – ${edu['edu-to']})`;
+                div.innerHTML = `<strong>${edu.institution || edu.school || '—'}</strong><br/>
+                                 ${edu.certification || edu.degree || '—'} (${edu['edu-from'] || '—'} – ${edu['edu-to'] || '—'})`;
                 eduSection.appendChild(div);
                 eduSection.appendChild(document.createElement('hr'));
             });
@@ -48,10 +62,10 @@ async function processCV() {
         // Experience
         const expSection = document.getElementById('experienceContent');
         expSection.innerHTML = '';
-        if (data.experience && data.experience.length > 0) {
-            data.experience.forEach(exp => {
+        if (result.experience && result.experience.length > 0) {
+            result.experience.forEach(exp => {
                 const div = document.createElement('div');
-                div.innerHTML = `<strong>${exp.role || exp.position}</strong> at <em>${exp.employer || exp.company}</em><br/>
+                div.innerHTML = `<strong>${exp.role || exp.position || '—'}</strong> at <em>${exp.employer || exp.company || '—'}</em><br/>
                                  ${exp.dates || ''}`;
                 expSection.appendChild(div);
                 expSection.appendChild(document.createElement('hr'));
@@ -63,9 +77,9 @@ async function processCV() {
         // Skills
         const skillsSection = document.getElementById('skillsContent');
         skillsSection.innerHTML = '';
-        if (data.skills && data.skills.length > 0) {
+        if (result.skills && result.skills.length > 0) {
             const list = document.createElement('ul');
-            data.skills.forEach(skill => {
+            result.skills.forEach(skill => {
                 const li = document.createElement('li');
                 li.textContent = skill;
                 list.appendChild(li);
@@ -78,12 +92,12 @@ async function processCV() {
         // Referees
         const refsSection = document.getElementById('refereesContent');
         refsSection.innerHTML = '';
-        if (data.references && data.references.length > 0) {
-            data.references.forEach(ref => {
+        if (result.references && result.references.length > 0) {
+            result.references.forEach(ref => {
                 const div = document.createElement('div');
-                div.innerHTML = `<strong>${ref.name || ref['referee-name']}</strong><br/>
-                                 ${ref.role || ref['referee-position']}<br/>
-                                 ${ref.organization || ref['referee-company']}<br/>
+                div.innerHTML = `<strong>${ref.name || ref['referee-name'] || '—'}</strong><br/>
+                                 ${ref.role || ref['referee-position'] || '—'}<br/>
+                                 ${ref.organization || ref['referee-company'] || '—'}<br/>
                                  ${ref.contact || ref['referee-email'] || ref.phone || ''}`;
                 refsSection.appendChild(div);
                 refsSection.appendChild(document.createElement('hr'));
@@ -94,6 +108,14 @@ async function processCV() {
 
     } catch (err) {
         console.error(err);
+        addLog('CLIENT ERROR: ' + err.message);
         alert('Failed to process CV: ' + err.message);
     }
+}
+
+// Function to add log messages (accessible globally)
+function addLog(message) {
+    const logOutput = document.getElementById('logOutput');
+    logOutput.innerHTML += message + '\n';
+    logOutput.scrollTop = logOutput.scrollHeight;
 }
