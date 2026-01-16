@@ -339,16 +339,16 @@
         <h3 class="font-semibold text-xl mb-3 text-blue-600">Research CV Standards</h3>
         <p class="text-gray-600 leading-relaxed">Conduct detailed research on Kenyan CV data formats and standards.</p>
       </div>
-
-      <div class="card-hover bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-green-500 scroll-reveal delay-100">
-        <div class="image-zoom rounded-xl overflow-hidden mb-6 h-40">
-          <a href="${pageContext.request.contextPath}/launchmeeting.jsp" class="block w-full h-full">
+      
+      <a href="${pageContext.request.contextPath}/launchmeeting.jsp" class="block w-full h-full">
+        <div class="card-hover bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-green-500 scroll-reveal delay-100">
+          <div class="image-zoom rounded-xl overflow-hidden mb-6 h-40">
             <img src="${pageContext.request.contextPath}/images/action-community.jpg" alt="HR Community Engagement" class="w-full h-full object-cover"/>
-          </a>
+          </div>
+          <h3 class="font-semibold text-xl mb-3 text-green-600">HR Community Engagement</h3>
+          <p class="text-gray-600 leading-relaxed">Engage the HR community in Kenya to discuss CV standardization and metadata.</p>
         </div>
-        <h3 class="font-semibold text-xl mb-3 text-green-600">HR Community Engagement</h3>
-        <p class="text-gray-600 leading-relaxed">Engage the HR community in Kenya to discuss CV standardization and metadata.</p>
-      </div>
+      </a>
 
       <div class="card-hover bg-white rounded-2xl shadow-lg p-6 text-center border-t-4 border-yellow-500 scroll-reveal delay-200">
         <div class="image-zoom rounded-xl overflow-hidden mb-6 h-40">
