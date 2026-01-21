@@ -2,7 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CV Processing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
     <script src="<%=request.getContextPath()%>/javascript/processUpload.js?1012" defer></script>
     <style>
         body {
@@ -62,8 +71,14 @@
         }
     </style>
 </head>
-<body>
-    <h2>CV Processing System</h2>
+<body class="bg-gray-50">
+    <!-- Header -->
+  <jsp:include page="/includes/header.jsp" />
+
+    <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-6 py-16 mt-12 bg-white">
+
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center">CV Processing System</h1>
 
     <!-- Upload Form (Above Tabs) -->
     <div class="upload-container">
@@ -134,6 +149,10 @@
             <div id="refereesContent"></div>
         </div>
     </div>
+  </main>
+
+    <!-- Footer -->
+  <jsp:include page="/includes/footer.jsp" />
 
     <script>
         function openTab(tabName) {
