@@ -14,8 +14,8 @@
   <!-- Header -->
   <jsp:include page="/includes/header.jsp" />
 
-  <div class="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8 mb-10 mt-20">
-    <h1 class="text-3xl font-bold mb-4 text-center">Ajirika Resume in JSON</h1>
+  <div class="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8 mb-10 mt-24">
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center"><span class="gradient-text-blue">Ajirika</span> Resume in JSON</h1>
     <p class="text-gray-700 mb-4 text-center">
       This page shows how a resume (CV) can be written in a special computer language called <strong>JSON</strong>.
     </p>

@@ -19,7 +19,7 @@
   <jsp:include page="/includes/header.jsp" />
 
   <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-6 py-16 mt-12 bg-white">
+  <main class="max-w-5xl mx-auto px-6 py-8 mt-24 mb-10 bg-white shadow-lg rounded-lg">
 
     <!-- Title -->
     <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center scroll-reveal">
@@ -34,15 +34,15 @@
     </p>
 
     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      The event served as a collaborative forum to explore the Ajirika project’s vision while openly discussing the real-world pain points faced by HR teams and job seekers alike.
+      The event served as a collaborative forum to explore the Ajirika project's vision while openly discussing the real-world pain points faced by HR teams and job seekers alike.
     </p>
 
-    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
+    <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
       The Recruitment Problem Today
     </h2>
 
     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      A central theme of the discussion was the overwhelming burden placed on HR professionals when handling recruitment processes manually. Many employers are forced to sift through hundreds—sometimes thousands—of CVs for a single role. This approach is not only inefficient but also limits the ability to identify the most suitable candidates effectively.
+      A central theme of the discussion was the overwhelming burden placed on HR professionals when handling recruitment processes manually. Many employers are forced to sift through hundreds sometimes thousands of CVs for a single role. This approach is not only inefficient but also limits the ability to identify the most suitable candidates effectively.
     </p>
 
     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
@@ -53,7 +53,7 @@
       On the employer side, another challenge emerged: poorly defined job descriptions. Vague or unclear job postings often attract large volumes of irrelevant applications, further increasing the workload for HR teams and frustrating qualified candidates.
     </p>
 
-    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
+    <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
       Emerging Challenges in a Changing Job Market
     </h2>
 
@@ -70,7 +70,7 @@
       Other concerns raised included:
     </p>
 
-    <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-3xl mx-auto scroll-reveal">
+    <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
       <li class="mb-4">Incomplete biodata and unclear career timelines from applicants</li>
       <li class="mb-4">Difficulty translating personal work stories into measurable achievements</li>
       <li class="mb-4">Challenges in determining actual skill proficiency</li>
@@ -82,7 +82,7 @@
       Together, these issues paint a clear picture: the traditional recruitment model is no longer sufficient.
     </p>
 
-    <h2 class="text-3xl font-bold leading-tight text-center mb-4 scroll-reveal">
+    <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
       The <span class="gradient-text-blue">Ajirika</span> Vision: Solutions Through Innovation
     </h2>
 
@@ -116,19 +116,6 @@
 
     <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal">
       Such platforms would not only improve productivity but also enable more informed, objective, and scalable hiring decisions.
-    </p>
-  
-
-    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
-      Looking Ahead
-    </h2>
-
-    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      The Ajirika community event underscored a shared understanding: recruitment must evolve to meet the demands of a fast-changing job market. By embracing standardization, automation, and data-driven insights, the Ajirika project aims to redefine how employers and job seekers connect.
-    </p>
-
-    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      As the world of work continues to change, initiatives like Ajirika represent a critical step toward building smarter, fairer, and more efficient recruitment systems for the future.
     </p>
 
     <!-- Image Carousel -->
@@ -171,40 +158,149 @@
     </div>
     
     <!-- Initial Team section -->
-    <h2 class="text-4xl font-bold mb-4 scroll-reveal text-center">
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center scroll-reveal">
       Initial <span class="gradient-text-blue">Team</span>
-    </h2>
+    </h1>
 
-    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal text-center max-w-3xl mx-auto">
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
       The project was initiated and is currently being developed by a core team made up of our developers, who are actively involved in designing, building, and refining the solution. This team brings together technical expertise and firsthand understanding of the challenges within the recruitment ecosystem.
     </p>
 
-    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal text-center max-w-3xl mx-auto">Beyond development, the team collaborates closely with HR professionals to ensure the solution addresses real-world hiring needs, balances technical feasibility with usability, and remains practical for both employers and job seekers.</p>
+    <p class="text-gray-700 leading-relaxed mb-10 scroll-reveal">
+      Beyond development, the team collaborates closely with HR professionals to ensure the solution addresses real-world hiring needs, balances technical feasibility with usability, and remains practical for both employers and job seekers.
+    </p>
 
     <!-- Inception Section -->
-    <h2 class="text-4xl font-bold mb-4 scroll-reveal text-center">
-      <span class="gradient-text-blue">Inception</span>
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center scroll-reveal">
+      The Inception of <span class="gradient-text-blue">Ajirika</span>
+    </h1>
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Ajirika was conceived at the intersection of real recruitment pressure, open-source thinking, and DewCIS Solutions Ltd's long-standing experience in building technology for social and economic impact.
+    </p>
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      For over two decades, DewCIS has worked closely with organizations across Kenya and the wider region, delivering systems in education, government, healthcare, and enterprise. Through this work, one recurring challenge became increasingly clear: recruitment processes were struggling to keep up with scale.
+    </p>
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Ajirika emerged as a response to that reality.
+    </p>
+
+    <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+      Recruitment Pressure in the Kenyan Context
     </h2>
 
-    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal text-center max-w-3xl mx-auto">
-      Before shortlisting candidates, employers must first determine who actually qualifies for a role. This initial qualification stage is often the most difficult and time-consuming part of recruitment.
-    </p>
-    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal text-center max-w-3xl mx-auto">
-      Applications submitted via email further complicate the process, as they lack structure and make it difficult to filter, compare, or analyze candidate information efficiently.
-    </p>
-    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal text-center max-w-3xl mx-auto">
-      To address these challenges, the goal is to create a solution that is accessible to all job applicants and employers, one that simplifies applications, standardizes data, and improves the quality of information shared between both parties.
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      In Kenya, unemployment rates remain high, and job opportunities especially formal employment are highly competitive. When an organization publishes a job advert, it is common to receive thousands of CVs within a very short time.
     </p>
 
-    <h3 class="text-2xl font-bold mb-4 scroll-reveal text-center">
-      Potential 
-      <span class="gradient-text-blue">Challenges</span> 
-      and
-      <span class="gradient-text-blue">Mitigations</span>
-    </h3>
+     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      For HR professionals, this creates intense pressure. CVs arrive as emails and attachments, often exceeding 2,000 submissions per role, all requiring manual review. Each document must be opened, interpreted, and evaluated individually.
+    </p>
 
-    <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-10 scroll-reveal max-w-3xl mx-auto">
-      <li class="mb-10">There was a risk of the project stalling before completion. This was addressed by creating a public <span class="gradient-text-blue"><a href="https://github.com/OpenBaraza/ajirika">GitHub repository</a></span> and inviting developers to contribute, ensuring transparency, collaboration, and long-term sustainability.</li>
+     <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        This approach does not scale.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        The result is a recruitment process that is:
+      </p>
+
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
+        <li class="mb-4">Exhausting for HR teams</li>
+        <li class="mb-4">Inefficient for organizations</li>
+        <li class="mb-4">Unfair to candidates</li>
+      </ul>
+
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        Qualified applicants are often overlooked, not because they lack skills, but because manual systems fail under volume.
+      </p>
+
+      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+        Recruitment Pressure in the Kenyan Context
+      </h2>
+
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        At the heart of the issue lies the CV itself.
+      </p>
+       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        Traditional CVs are documents designed for humans, not systems. They vary widely in layout, language, and structure, making them difficult to process consistently especially in an era where recruitment is increasingly supported by digital tools and Applicant Tracking Systems (ATS).
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        During Ajirika's inception, several systemic problems were identified:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
+        <li class="mb-4">CV data must be extracted manually</li>
+        <li class="mb-4">Early applicants receive disproportionate attention</li>
+        <li class="mb-4">First-level screening excludes candidates unfairly</li>
+        <li class="mb-4">Recruiter fatigue leads to missed opportunities</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        These challenges highlighted a deeper truth: the problem is not talent scarcity, but data inefficiency.
+      </p>
+
+      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+        DewCIS and the Open-Source Mindset
+      </h2>
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        DewCIS Solutions Ltd has long believed that meaningful digital transformation goes beyond proprietary systems. The company has consistently adopted open standards, open collaboration, and community-driven development as a way to build sustainable, reusable solutions.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        Ajirika was therefore deliberately designed as an open-source initiative.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        Rather than creating yet another closed recruitment platform, DewCIS envisioned Ajirika as a shared digital infrastructure a public good that HR professionals, developers, job seekers, and institutions could collectively shape.
+      </p>
+
+      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+        From CVs as Documents to CVs as Data
+      </h2>
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        The core idea behind Ajirika is simple but transformative: move the CV from a document to structured data.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        Instead of forcing HR professionals to manually interpret thousands of files, Ajirika aims to:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
+        <li class="mb-4">Standardize how CV information is captured</li>
+        <li class="mb-4">Convert CVs into machine-readable metadata</li>
+        <li class="mb-4">Enable consistent filtering and comparison</li>
+        <li class="mb-4">Support fairer and more transparent shortlisting</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        By treating CVs as data, recruitment becomes more scalable, objective, and inclusive.
+      </p>
+
+      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+        Solving a Problem That Already Has a Market
+      </h2>      
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        One important realization during Ajirika's inception was that the users already exist.
+      </p>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
+        <li class="mb-4">Organizations are hiring</li>
+        <li class="mb-4">HR professionals are overwhelmed</li>
+        <li class="mb-4">Job seekers are actively applying</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        What is missing is not demand, but the right solution.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        Ajirika positions itself as that missing layer connecting job seekers and employers through standardized, reusable professional data. It reduces friction for applicants while empowering HR teams with clarity, efficiency, and insight.
+      </p>
+
+      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
+        A Community-Driven Future of Employability
+      </h2>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        As an open-source project, Ajirika is not owned by a single organization or limited to a single use case. It is designed to evolve through collaboration with:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-4xl mx-auto scroll-reveal">
+        <li class="mb-4">HR professionals defining real-world requirements</li>
+        <li class="mb-4">Developers building parsing, analytics, and APIs</li>
+        <li class="mb-4">Institutions promoting employability and skills visibility</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+        In this way, Ajirika reflects DewCIS's belief that the future of work infrastructure must be shared, transparent, and interoperable.
+      </p>
 
   </main>
 

@@ -76,7 +76,7 @@
   <jsp:include page="/includes/header.jsp" />
 
     <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-6 py-16 mt-12 bg-white">
+  <main class="max-w-5xl mx-auto px-6 py-16 mt-24 mb-10 bg-white shadow-lg rounded-lg">
 
     <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center">CV Processing System</h1>
 
