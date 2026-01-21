@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajirika | Launch Meeting</title>
+  <title>Ajirika | Community Event</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,22 +13,122 @@
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 
-<body class="bg-gray-50 font-[Space_Grotesk]">
+<body class="bg-gray-50">
 
   <!-- Header -->
   <jsp:include page="/includes/header.jsp" />
 
   <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-6 py-16 mt-7">
+  <main class="max-w-5xl mx-auto px-6 py-16 mt-12 bg-white">
 
     <!-- Title -->
-    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight scroll-reveal text-center">
-      Ajirika <span class="gradient-text-blue">Launch</span> Meeting
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center scroll-reveal">
+      Rethinking Recruitment at the 
+      <span class="gradient-text-blue">Ajirika</span> Community Event
     </h1>
 
-    <p class="text-gray-700 leading-relaxed mb-10 scroll-reveal text-center max-w-3xl mx-auto">
-      On the 11th of December 2025, we gathered HR professionals and software developers at
-      Parklands Sports Club, Nairobi, for a conversation that's long overdue - fixing Kenya's broken job application process.
+    <p class="text-gray-700 leading-relaxed mb-5 scroll-reveal">
+      On <strong>11th December 2025</strong>, the Ajirika community hosted a collaborative engagement at the 
+      <strong>Parklands Sports Club</strong>, bringing together software developers and human resource professionals
+      to explore how recruitment can evolve in the age of digital transformation and artificial intelligence.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      The event served as a collaborative forum to explore the Ajirika project’s vision while openly discussing the real-world pain points faced by HR teams and job seekers alike.
+    </p>
+
+    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
+      The Recruitment Problem Today
+    </h2>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      A central theme of the discussion was the overwhelming burden placed on HR professionals when handling recruitment processes manually. Many employers are forced to sift through hundreds—sometimes thousands—of CVs for a single role. This approach is not only inefficient but also limits the ability to identify the most suitable candidates effectively.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Participants highlighted how poorly optimized CVs make it difficult for recruiters to extract key information such as skills, experience, and achievements. In many cases, essential details are buried in long narratives or omitted entirely.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      On the employer side, another challenge emerged: poorly defined job descriptions. Vague or unclear job postings often attract large volumes of irrelevant applications, further increasing the workload for HR teams and frustrating qualified candidates.
+    </p>
+
+    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
+      Emerging Challenges in a Changing Job Market
+    </h2>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      The discussion also acknowledged newer recruitment challenges driven by technology and shifting work patterns. With the rise of AI-powered tools, many CVs now look strikingly similar, making differentiation increasingly difficult. While these tools help candidates polish their profiles, they also raise concerns around authenticity and originality.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Additionally, the traditional CV model struggles to accommodate the gig economy, where employers seek talent based on specific tasks or short-term engagements rather than permanent roles. Existing recruitment processes are not well equipped to support this evolving employment landscape.
+    </p>
+
+    <!-- Key Challenges -->
+    <p class="text-gray-700 leading-relaxed mb-2 scroll-reveal">
+      Other concerns raised included:
+    </p>
+
+    <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-2 max-w-3xl mx-auto scroll-reveal">
+      <li class="mb-4">Incomplete biodata and unclear career timelines from applicants</li>
+      <li class="mb-4">Difficulty translating personal work stories into measurable achievements</li>
+      <li class="mb-4">Challenges in determining actual skill proficiency</li>
+      <li class="mb-4">The inability of CVs to capture attitude, character, and work ethic</li>
+      <li class="mb-4">Limited integration of psychometric testing into hiring decisions</li>
+    </ul>
+
+     <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal">
+      Together, these issues paint a clear picture: the traditional recruitment model is no longer sufficient.
+    </p>
+
+    <h2 class="text-3xl font-bold leading-tight text-center mb-4 scroll-reveal">
+      The <span class="gradient-text-blue">Ajirika</span> Vision: Solutions Through Innovation
+    </h2>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Despite the challenges, the event was forward-looking and solution-oriented. Three key solutions stood out during the discussions.
+    </p>
+
+    <h4 class="text-xl font-bold mb-4 mx-10 scroll-reveal">
+      1. Standardizing the CV
+    </h4>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Participants emphasized the importance of creating a standardized CV format that can be easily understood by HR professionals across different organizations. Standardization would improve consistency, reduce ambiguity, and make it easier to compare candidates fairly.
+    </p>
+
+    <h4 class="text-xl font-bold mb-4 mx-10 scroll-reveal">
+      2. Automation and Intelligent Parsing
+    </h4>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Automation emerged as a critical component of modern recruitment. By leveraging machine learning models to parse and filter CVs, organizations can dramatically reduce manual effort while improving accuracy. Intelligent systems can identify suitable candidates based on defined job requirements, allowing HR teams to focus on strategic decision-making.
+    </p>
+
+    <h4 class="text-xl font-bold mb-4 mx-10 scroll-reveal">
+      3. Data-Driven Recruitment Platforms
+    </h4>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      The event strongly advocated for a shift away from manual CV reviews conducted via emails and paper documents. Instead, participants envisioned a centralized recruitment portal where CVs are processed automatically, enriched with statistical insights, and used to generate recommended candidate lists for HR professionals.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-8 scroll-reveal">
+      Such platforms would not only improve productivity but also enable more informed, objective, and scalable hiring decisions.
+    </p>
+  
+
+    <h2 class="text-3xl font-bold mb-4 scroll-reveal">
+      Looking Ahead
+    </h2>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      The Ajirika community event underscored a shared understanding: recruitment must evolve to meet the demands of a fast-changing job market. By embracing standardization, automation, and data-driven insights, the Ajirika project aims to redefine how employers and job seekers connect.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      As the world of work continues to change, initiatives like Ajirika represent a critical step toward building smarter, fairer, and more efficient recruitment systems for the future.
     </p>
 
     <!-- Image Carousel -->
@@ -69,31 +169,7 @@
       </button>
 
     </div>
-
-    <!-- Launch Section -->
-    <h2 class="text-4xl font-bold mb-4 scroll-reveal text-center">
-      <span class="gradient-text-blue">Launch</span>
-    </h2>
-
-    <p class="text-gray-700 leading-relaxed mb-10 scroll-reveal text-center max-w-3xl mx-auto">
-      HR professionals and software developers were invited to discuss the main challenges currently affecting the job application process. The goal of this session was to openly identify pain points from both the hiring and technical perspectives, and to explore opportunities for building better, fairer recruitment tools.
-    </p>
-
-    <h3 class="text-2xl font-bold mb-4 scroll-reveal text-center">
-      Key 
-      <span class="gradient-text-blue">Challenges</span> 
-      Identified
-    </h3>
-    <ul class="list-disc list-inside text-gray-700 leading-relaxed mb-10 scroll-reveal max-w-3xl mx-auto">
-      <li class="text-gray-700 leading-relaxed mb-10 max-w-3xl mx-auto"><span class="gradient-text-blue font-bold">Too many CVs submitted:</span> Employers receive an overwhelming number of applications for a single role, making it difficult to review each one thoroughly and fairly within a reasonable time.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Difficulty extracting important information from CVs:</span> CVs are structured differently depending on the applicant, making it hard for recruiters to quickly identify critical details such as skills, experience, and qualifications.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Unqualified applicants due to unclear job descriptions:</span> Poorly defined or vague job descriptions lead to many applicants applying without meeting the minimum requirements, increasing screening workload.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">AI-generated CVs that lack authenticity:</span> The rise of AI tools has led to CVs that are polished but exaggerated, making it difficult to distinguish genuine experience from artificially enhanced content.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Gig economy considerations:</span> Traditional recruitment processes struggle to accommodate candidates seeking one-time, freelance, or part-time opportunities, which are increasingly common.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Incomplete biodata:</span> Missing or inconsistent personal information makes it difficult to properly understand and evaluate applicants, especially during early screening stages.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Poor representation of experience, achievements, and skills:</span> Many candidates struggle to clearly articulate their accomplishments and competencies using standard CV formats.</li>
-      <li class="mb-10"><span class="gradient-text-blue font-bold">Difficulty documenting attitude and character:</span> Soft skills such as integrity, teamwork, and work ethic are hard to capture in a CV and are often overstated or misrepresented.</li>
-    </ul>
+    
     <!-- Initial Team section -->
     <h2 class="text-4xl font-bold mb-4 scroll-reveal text-center">
       Initial <span class="gradient-text-blue">Team</span>
