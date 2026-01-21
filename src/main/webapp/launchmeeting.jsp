@@ -178,27 +178,16 @@
       Ajirika was conceived at the intersection of real recruitment pressure, open-source thinking, and DewCIS Solutions Ltd's long-standing experience in building technology for social and economic impact.
     </p>
     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      For over two decades, DewCIS has worked closely with organizations across Kenya and the wider region, delivering systems in education, government, healthcare, and enterprise. Through this work, one recurring challenge became increasingly clear: recruitment processes were struggling to keep up with scale.
-    </p>
-    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      Ajirika emerged as a response to that reality.
+      For over two decades, DewCIS has worked closely with organizations across Kenya and the wider region, delivering systems in education, government, healthcare, and enterprise. Through this work, one recurring challenge became increasingly clear: recruitment processes were struggling to keep up with scale. Ajirika emerged as a response to that reality.
     </p>
 
-    <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-      Recruitment Pressure in the Kenyan Context
-    </h2>
-
-    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+    <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
       In Kenya, unemployment rates remain high, and job opportunities especially formal employment are highly competitive. When an organization publishes a job advert, it is common to receive thousands of CVs within a very short time.
     </p>
 
      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      For HR professionals, this creates intense pressure. CVs arrive as emails and attachments, often exceeding 2,000 submissions per role, all requiring manual review. Each document must be opened, interpreted, and evaluated individually.
+      For HR professionals, this creates intense pressure. CVs arrive as emails and attachments, often exceeding 2,000 submissions per role, all requiring manual review. Each document must be opened, interpreted, and evaluated individually. This approach does not scale.
     </p>
-
-     <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        This approach does not scale.
-      </p>
 
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         The result is a recruitment process that is:
@@ -211,16 +200,9 @@
       </ul>
 
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-        Qualified applicants are often overlooked, not because they lack skills, but because manual systems fail under volume.
+        Qualified applicants are often overlooked, not because they lack skills, but because manual systems fail under volume. At the heart of the issue lies the CV itself.
       </p>
 
-      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-        Recruitment Pressure in the Kenyan Context
-      </h2>
-
-      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        At the heart of the issue lies the CV itself.
-      </p>
        <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         Traditional CVs are documents designed for humans, not systems. They vary widely in layout, language, and structure, making them difficult to process consistently especially in an era where recruitment is increasingly supported by digital tools and Applicant Tracking Systems (ATS).
       </p>
@@ -236,26 +218,15 @@
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         These challenges highlighted a deeper truth: the problem is not talent scarcity, but data inefficiency.
       </p>
+      
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
+        DewCIS Solutions Ltd has long believed that meaningful digital transformation goes beyond proprietary systems. The company has consistently adopted open standards, open collaboration, and community-driven development as a way to build sustainable, reusable solutions. Ajirika was therefore deliberately designed as an open-source initiative.
+      </p>
 
-      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-        DewCIS and the Open-Source Mindset
-      </h2>
-      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        DewCIS Solutions Ltd has long believed that meaningful digital transformation goes beyond proprietary systems. The company has consistently adopted open standards, open collaboration, and community-driven development as a way to build sustainable, reusable solutions.
-      </p>
-      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        Ajirika was therefore deliberately designed as an open-source initiative.
-      </p>
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-        Rather than creating yet another closed recruitment platform, DewCIS envisioned Ajirika as a shared digital infrastructure a public good that HR professionals, developers, job seekers, and institutions could collectively shape.
+        Rather than creating yet another closed recruitment platform, DewCIS envisioned Ajirika as a shared digital infrastructure a public good that HR professionals, developers, job seekers, and institutions could collectively shape. The core idea behind Ajirika is simple but transformative: move the CV from a document to structured data.
       </p>
 
-      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-        From CVs as Documents to CVs as Data
-      </h2>
-      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        The core idea behind Ajirika is simple but transformative: move the CV from a document to structured data.
-      </p>
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         Instead of forcing HR professionals to manually interpret thousands of files, Ajirika aims to:
       </p>
@@ -265,13 +236,10 @@
         <li class="mb-4">Enable consistent filtering and comparison</li>
         <li class="mb-4">Support fairer and more transparent shortlisting</li>
       </ul>
-      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
         By treating CVs as data, recruitment becomes more scalable, objective, and inclusive.
       </p>
-
-      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-        Solving a Problem That Already Has a Market
-      </h2>      
+    
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         One important realization during Ajirika's inception was that the users already exist.
       </p>
@@ -281,15 +249,9 @@
         <li class="mb-4">Job seekers are actively applying</li>
       </ul>
       <p class="text-gray-700 leading-relaxed mb-1 scroll-reveal">
-        What is missing is not demand, but the right solution.
-      </p>
-      <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-        Ajirika positions itself as that missing layer connecting job seekers and employers through standardized, reusable professional data. It reduces friction for applicants while empowering HR teams with clarity, efficiency, and insight.
+        What is missing is not demand, but the right solution. Ajirika positions itself as that missing layer connecting job seekers and employers through standardized, reusable professional data. It reduces friction for applicants while empowering HR teams with clarity, efficiency, and insight.
       </p>
 
-      <h2 class="text-2xl font-bold leading-tight mb-4 scroll-reveal underline">
-        A Community-Driven Future of Employability
-      </h2>
       <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
         As an open-source project, Ajirika is not owned by a single organization or limited to a single use case. It is designed to evolve through collaboration with:
       </p>
