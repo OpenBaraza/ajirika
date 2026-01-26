@@ -163,11 +163,11 @@
     </h1>
 
     <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
-      The project was initiated and is currently being developed by a core team made up of our developers, who are actively involved in designing, building, and refining the solution. This team brings together technical expertise and firsthand understanding of the challenges within the recruitment ecosystem.
+      Ajirika began as a collaborative initiative shaped by conversations between software developers and HR professionals who experience recruitment challenges firsthand. The initial team came together around a shared goal which was to make recruitment fairer, more efficient, and more inclusive by improving how CV data is handled.
     </p>
 
-    <p class="text-gray-700 leading-relaxed mb-10 scroll-reveal">
-      Beyond development, the team collaborates closely with HR professionals to ensure the solution addresses real-world hiring needs, balances technical feasibility with usability, and remains practical for both employers and job seekers.
+    <p class="text-gray-700 leading-relaxed mb-4 scroll-reveal">
+      Early contributors from DewCIS Solutions Ltd, independent developers, and HR practitioners worked collectively to define Ajirika's foundations, bringing technical, operational, and human perspectives into the project. From the start, Ajirika was designed as an open-source, community-driven platform, with the initial team acting as facilitators rather than owners, supporting a growing community committed to shaping the future of employability.
     </p>
 
     <!-- Inception Section -->
