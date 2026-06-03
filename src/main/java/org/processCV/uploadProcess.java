@@ -1,18 +1,27 @@
 package org.processCV;
 
-import java.io.*;
-import java.nio.file.*;
-import jakarta.servlet.annotation.WebServlet;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.baraza.DB.BDB;
+import org.baraza.DB.BQuery;
+import org.json.JSONObject;
+
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
-import org.json.JSONObject;
-import org.baraza.DB.BDB;
-import org.baraza.DB.BQuery;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
                  maxFileSize = 1024 * 1024 * 10,      // 10 MB
@@ -68,6 +77,11 @@ public class uploadProcess extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                try {
+                    userID = getLoggedInUserId(request);
+                } catch (Exception e) {
+                    userID = "-1";
+                }
         doGet(request, response);
     }
 
@@ -78,7 +92,7 @@ public class uploadProcess extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
-        if (!db.isValid()) db.reconnect("java:/comp/env/jdbc/database");
+        if (db != null && !db.isValid()) db.reconnect("java:/comp/env/jdbc/database");
 
         userID = getLoggedInUserId(request);
         System.out.println("Resolved userID in uploadProcess = " + userID);

@@ -1,43 +1,20 @@
 package org.processCV;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-// import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-
-// import opennlp.tools.namefind.NameFinderME;
-// import opennlp.tools.namefind.NameSample;
-// import opennlp.tools.namefind.NameSampleDataStream;
-// import opennlp.tools.namefind.TokenNameFinderFactory;
-// import opennlp.tools.namefind.TokenNameFinderModel;
-// import opennlp.tools.util.InputStreamFactory;
-import opennlp.tools.util.ObjectStream;
-import opennlp.tools.util.PlainTextByLineStream;
-import opennlp.tools.util.TrainingParameters;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.sentdetect.SentenceSample;
-import opennlp.tools.sentdetect.SentenceSampleStream;
-import opennlp.tools.sentdetect.SentenceDetectorFactory;
-
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class App implements ActionListener {
 
@@ -205,6 +182,12 @@ public class App implements ActionListener {
 
 	}
 
+
+	public void trainCustSentModel(String trainingFilePath) {
+    	System.out.println("trainCustSentModel() not supported under CoreNLP. No-op.");
+    }
+
+	/*
 	public void trainCustSentModel(String trainingFilePath) {
 		File trainFile = new File(trainingFilePath);
 		File modelFile = new File("./models/en-cust-sent.bin");
@@ -233,6 +216,7 @@ public class App implements ActionListener {
 			ex.printStackTrace();
 		}
 	}
+	*/
 
 	private String readFile(String filePath) {
 		StringBuffer strLearn = new StringBuffer();
