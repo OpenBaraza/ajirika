@@ -41,11 +41,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-rose-100 text-rose-700 rounded-full">Custom NER</span>
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full">CRF Training · African Names</span>
+
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP — Custom NER Training for African CV Parsing</h1>
-      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Internship</p>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP Custom NER Training for African CV Parsing</h1>
+      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Interns</p>
     </div>
   </section>
 
@@ -56,7 +55,7 @@
     <p>This phase documents the training of a <strong>custom CoreNLP NER model</strong> targeting four entity types specific to CV processing, its validation against test sentences, packaging into the Ajirika WAR, and integration into the live pipeline.</p>
 
     <h2>Training Overview</h2>
-    <p>CoreNLP's NER component uses a <strong>Conditional Random Field (CRF) classifier</strong>. Training does not replace the existing pre-trained models — it produces an additional <code>.ser.gz</code> model file loaded alongside the default English models, allowing the custom model to tag entity types the default models do not recognise.</p>
+    <p>CoreNLP's NER component uses a <strong>Conditional Random Field (CRF) classifier</strong>. Training does not replace the existing pre-trained models it produces an additional <code>.ser.gz</code> model file loaded alongside the default English models, allowing the custom model to tag entity types the default models do not recognise.</p>
     <table>
       <tr><th>Label</th><th>Rationale</th></tr>
       <tr><td>PERSON</td><td>Default model fails on African names not in its training corpus</td></tr>
@@ -65,7 +64,7 @@
       <tr><td>ORGANIZATION</td><td>Default model partially works but misses African institution names</td></tr>
     </table>
 
-    <h2>Stage 1 — Training Data Preparation</h2>
+    <h2>Stage 1: Training Data Preparation</h2>
     <h3>Format</h3>
     <p>CoreNLP NER training requires data in <strong>CoNLL column format</strong>. Each token appears on its own line with its label in a second tab-separated column. Blank lines separate segments. Entity spans use <strong>BIO tagging</strong> (Begin, Inside, Outside).</p>
     <pre><code>UPAO        B-PERSON
@@ -115,8 +114,8 @@ useTypeySequences = true</code></pre>
     <p><strong>Key decisions:</strong></p>
     <ul>
       <li><code>useNGrams</code> + <code>maxNGramLeng = 6</code> — allows the model to learn character-level subword patterns; important for African names which share morphological patterns (suffixes like -oti, -eki, -wanjiku, -adhiambo) that help generalise to unseen names</li>
-      <li><code>usePrev</code> + <code>useNext</code> — gives context from surrounding tokens; a name is more likely after contextual tokens like "Name:" or at document start</li>
-      <li><code>wordShape = chris2useLC</code> — maps tokens to abstract shape representations (uppercase, lowercase, mixed) helping handle capitalisation patterns in CV formatting</li>
+      <li><code>usePrev</code> + <code>useNext</code> gives context from surrounding tokens; a name is more likely after contextual tokens like "Name:" or at document start</li>
+      <li><code>wordShape = chris2useLC</code> maps tokens to abstract shape representations (uppercase, lowercase, mixed) helping handle capitalisation patterns in CV formatting</li>
     </ul>
 
     <h2>Stage 3 — Model Training</h2>
@@ -133,7 +132,7 @@ numFeatures: 4229
 numWeights: 87093</code></pre>
     <div class="good">Optimiser converged after <strong>75 iterations in 2.70 seconds</strong>. Total training time including data loading and serialisation: 3.2 seconds.</div>
 
-    <h2>Stage 4 — Standalone Validation</h2>
+    <h2>Stage 4: Standalone Validation</h2>
     <pre><code>echo "UPAO MAZIBO is a Software Developer Intern at Catholic University \
 of Eastern Africa with a BSc Computer Science degree" | \
 java -Xmx2g \
@@ -198,17 +197,17 @@ DEGREE: High school</code></pre>
 
     <table>
       <tr><th>Field</th><th>PDF</th><th>DOCX</th></tr>
-      <tr><td>Name</td><td>✅ UPAO MAZIBO</td><td>✅ UPAO MAZIBO</td></tr>
-      <tr><td>Email</td><td>✅ Correct</td><td>✅ Correct</td></tr>
-      <tr><td>Phone</td><td>⚠️ Not extracted</td><td>✅ Correct</td></tr>
-      <tr><td>Skills</td><td>⚠️ Garbage bytes in category</td><td>✅ 28 items, correct</td></tr>
-      <tr><td>Education</td><td>⚠️ Dates empty</td><td>⚠️ edu-from unparsed</td></tr>
+      <tr><td>Name</td><td> UPAO MAZIBO</td><td> UPAO MAZIBO</td></tr>
+      <tr><td>Email</td><td> Correct</td><td> Correct</td></tr>
+      <tr><td>Phone</td><td> Not extracted</td><td> Correct</td></tr>
+      <tr><td>Skills</td><td> Garbage bytes in category</td><td> 28 items, correct</td></tr>
+      <tr><td>Education</td><td> Dates empty</td><td> edu-from unparsed</td></tr>
     </table>
 
     <h3>Frontend Rendering Issues Identified</h3>
     <ul>
-      <li><strong>[object Object] in skills display</strong> — frontend JS renders skill objects without accessing the <code>.skill</code> field</li>
-      <li><strong>Experience shows "— at —"</strong> — template expects <code>role</code> and <code>company</code> fields; most entries only carry <code>description</code></li>
+      <li><strong>[object Object] in skills display</strong> frontend JS renders skill objects without accessing the <code>.skill</code> field</li>
+      <li><strong>Experience shows " at "</strong> template expects <code>role</code> and <code>company</code> fields; most entries only carry <code>description</code></li>
     </ul>
 
     <h2>Remaining Issues</h2>
@@ -218,7 +217,7 @@ DEGREE: High school</code></pre>
       <tr><td>edu-from stored as "May 2024" unparsed</td><td>Normalise whitespace before <code>DateTimeFormatter</code></td></tr>
       <tr><td>PDF skills category garbage bytes</td><td>Extend <code>stripBullet</code> regex for PDF-specific multi-byte sequences</td></tr>
       <tr><td>PDF experience lines fragmented</td><td>Continuation line merging heuristic in <code>parseExperience</code></td></tr>
-      <tr><td>Model overfitting — "Currently", "From" tagged as PERSON</td><td>Add more O-labelled training segments and retrain</td></tr>
+      <tr><td>Model overfitting "Currently", "From" tagged as PERSON</td><td>Add more O-labelled training segments and retrain</td></tr>
     </table>
 
     <div class="warn"><strong>Note on model overfitting:</strong> The entity log shows false positives where common English words ("Currently", "From", "Worked") are tagged as PERSON. This indicates insufficient negative examples in the training data for these tokens. The fix is to add more O-labelled training segments and retrain. This does not affect name extraction because the first-line heuristic takes precedence for clean CVs.</div>

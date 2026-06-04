@@ -42,11 +42,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-blue-100 text-blue-700 rounded-full">Setup</span>
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full">Java · Maven · NLP</span>
+
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">Stanford CoreNLP — Local Setup &amp; NLP Pipeline Testing</h1>
-      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Internship</p>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">Stanford CoreNLP Local Setup &amp; NLP Pipeline Testing</h1>
+      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Interns</p>
     </div>
   </section>
 
@@ -72,7 +71,7 @@
 
     <h2>Setup &amp; Configuration</h2>
     <h3>Java Environment</h3>
-    <p>The machine runs a <strong>multi-JDK setup</strong> managed via Kali's <code>update-alternatives</code> system. Java 25 was partially registered — <code>java</code> pointed to v25 but <code>javac</code> defaulted to v11 due to an incomplete registration. This was resolved manually:</p>
+    <p>The machine runs a <strong>multi-JDK setup</strong> managed via Kali's <code>update-alternatives</code> system. Java 25 was partially registered <code>java</code> pointed to v25 but <code>javac</code> defaulted to v11 due to an incomplete registration. This was resolved manually:</p>
     <pre><code># Register javac for Java 25
 sudo update-alternatives --install \
   /usr/bin/javac javac \
@@ -132,11 +131,11 @@ export PATH=$JAVA_HOME/bin:$PATH</code></pre>
     <p>CoreNLP processes text through a <strong>sequential annotator chain</strong>. Each annotator enriches the document and passes it forward:</p>
     <pre><code>Raw Text → tokenize → ssplit → pos → lemma → ner → Annotated CoreDocument</code></pre>
     <ul>
-      <li><strong>tokenize</strong> — splits text into individual word/punctuation tokens</li>
-      <li><strong>ssplit</strong> — groups tokens into sentence boundaries</li>
-      <li><strong>pos</strong> — tags each token with its grammatical role (NNP, VBP, etc.)</li>
-      <li><strong>lemma</strong> — reduces tokens to dictionary base forms (running → run)</li>
-      <li><strong>ner</strong> — identifies named entities (PERSON, ORG, CITY, DATE, etc.)</li>
+      <li><strong>tokenize</strong> splits text into individual word/punctuation tokens</li>
+      <li><strong>ssplit</strong> groups tokens into sentence boundaries</li>
+      <li><strong>pos</strong> tags each token with its grammatical role (NNP, VBP, etc.)</li>
+      <li><strong>lemma</strong> reduces tokens to dictionary base forms (running → run)</li>
+      <li><strong>ner</strong> identifies named entities (PERSON, ORG, CITY, DATE, etc.)</li>
     </ul>
 
     <h3>Implementation — App.java</h3>
@@ -193,8 +192,8 @@ java -jar target/corenlp-demo-1.0-SNAPSHOT.jar</code></pre>
       <tr><td>Cupertino</td><td>NNP</td><td>Cupertino</td><td>CITY</td></tr>
       <tr><td>California</td><td>NNP</td><td>California</td><td>STATE_OR_PROVINCE</td></tr>
     </table>
-    <div class="tip"><strong>Lemmatization</strong> correctly resolves irregular forms — <code>are → be</code>, <code>students → student</code>. The model uses morphological analysis rather than simple suffix stripping.</div>
-    <div class="tip"><strong>NER span detection</strong> — <code>Apple Inc.</code> is recognised as a single ORGANIZATION entity across two separate tokens, showing the model operates at span level.</div>
+    <div class="tip"><strong>Lemmatization</strong> correctly resolves irregular forms <code>are → be</code>, <code>students → student</code>. The model uses morphological analysis rather than simple suffix stripping.</div>
+    <div class="tip"><strong>NER span detection</strong> <code>Apple Inc.</code> is recognised as a single ORGANIZATION entity across two separate tokens, showing the model operates at span level.</div>
 
     <h2>Challenges &amp; Resolutions</h2>
     <table>
@@ -207,11 +206,11 @@ java -jar target/corenlp-demo-1.0-SNAPSHOT.jar</code></pre>
 
     <h2>Key Takeaways</h2>
     <ul>
-      <li><code>update-alternatives</code> registers <code>java</code> and <code>javac</code> independently — a JDK can be partially registered, causing silent version mismatches</li>
-      <li>CoreNLP separates code and models into distinct JARs — both must be explicitly declared</li>
+      <li><code>update-alternatives</code> registers <code>java</code> and <code>javac</code> independently a JDK can be partially registered, causing silent version mismatches</li>
+      <li>CoreNLP separates code and models into distinct JARs both must be explicitly declared</li>
       <li>Fat JARs via <code>maven-shade-plugin</code> produce portable single-file executables</li>
       <li><code>-Dmaven.test.skip=true</code> skips both test compilation and execution; <code>-DskipTests</code> only skips execution</li>
-      <li>Pipeline build-once, annotate-many — model loading (~10s) is amortised across all subsequent annotations</li>
+      <li>Pipeline build-once, annotate-many model loading (~10s) is amortised across all subsequent annotations</li>
     </ul>
 
   </article>

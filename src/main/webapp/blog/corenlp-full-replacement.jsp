@@ -40,11 +40,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-orange-100 text-orange-700 rounded-full">Refactor</span>
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full">Parser · Tika · Section Detection</span>
+
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP — Full NLP Engine Replacement for Ajirika HCM</h1>
-      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Internship</p>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP Full NLP Engine Replacement for Ajirika HCM</h1>
+      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Interns</p>
     </div>
   </section>
 
@@ -59,15 +58,15 @@
   "skills": [],
   "references": []
 }</code></pre>
-    <p>Root cause analysis confirmed that name extraction failure, empty education/skills/references arrays, and malformed experience entries were all <strong>upstream of CoreNLP</strong> — attributable to how <code>readCV</code> reconstructed text from the Tika XML output.</p>
+    <p>Root cause analysis confirmed that name extraction failure, empty education/skills/references arrays, and malformed experience entries were all <strong>upstream of CoreNLP</strong> attributable to how <code>readCV</code> reconstructed text from the Tika XML output.</p>
 
-    <h2>Phase 6 — Full OpenNLP Removal</h2>
+    <h2>Phase 6: Full OpenNLP Removal</h2>
     <p><strong>Decision:</strong> Remove OpenNLP entirely from <code>pom.xml</code>, replace <code>analyzeCV.java</code> and <code>analyzeHeaders.java</code> with CoreNLP and rule-based equivalents, and verify the project compiled without any OpenNLP references.</p>
     <p><strong>Files changed:</strong></p>
     <ul>
-      <li><code>analyzeCV.java</code> — rewritten with a static CoreNLP pipeline (initialised once in a static block, not per-request)</li>
-      <li><code>analyzeHeaders.java</code> — replaced all four custom OpenNLP header NER models with keyword-based line matching</li>
-      <li><code>pom.xml</code> — <code>opennlp-tools</code> dependency block removed</li>
+      <li><code>analyzeCV.java</code>  rewritten with a static CoreNLP pipeline (initialised once in a static block, not per-request)</li>
+      <li><code>analyzeHeaders.java</code> replaced all four custom OpenNLP header NER models with keyword-based line matching</li>
+      <li><code>pom.xml</code>  <code>opennlp-tools</code> dependency block removed</li>
     </ul>
 
     <h3>Compilation Failures Encountered</h3>
@@ -75,7 +74,7 @@
     <p><code>App.java</code> retained active imports for <code>SentenceDetectorME</code>, <code>SentenceModel</code>, <code>TrainingParameters</code>, and five more — all used in the <code>trainCustSentModel</code> method. That method was replaced with a no-op and all eight imports were removed.</p>
     <div class="note">The distinction between <code>-DskipTests</code> and <code>-Dmaven.test.skip=true</code> is critical. <code>-DskipTests</code> skips test <em>execution</em> but still compiles test sources. Since <code>AppTest.java</code> referenced JUnit classes that had been removed, compilation still failed. The correct flag is <code>-Dmaven.test.skip=true</code>.</div>
 
-    <h2>Phase 7 — readCV Reconstruction Fix</h2>
+    <h2>Phase 7: readCV Reconstruction Fix</h2>
     <h3>The Problem</h3>
     <p>The previous <code>readCV</code> used <code>ToXMLContentHandler</code> + Jsoup and applied a heuristic: if the previous element exceeded 55 characters and the current element started with a lowercase letter, they were joined with a space rather than a newline. The effect on CV structure: section headers, institution names, and bullet points were merged into single lines hundreds of characters long.</p>
     <p>Concrete example from logs:</p>
@@ -99,9 +98,9 @@ String rawText = handler.toString();
 // Normalise: split on newlines, trim, collapse blank lines
 String[] lines = rawText.split("\\n");
 // ... reassemble with structural line breaks preserved</code></pre>
-    <div class="good">After the fix, "A. EDUCATION" appeared on its own line and was correctly matched as a section header. DOCX support also came for free — <code>BodyContentHandler</code> handles DOCX natively via Tika's <code>AutoDetectParser</code>.</div>
+    <div class="good">After the fix, "A. EDUCATION" appeared on its own line and was correctly matched as a section header. DOCX support also came for free <code>BodyContentHandler</code> handles DOCX natively via Tika's <code>AutoDetectParser</code>.</div>
 
-    <h2>Phase 8 — breakdownCV Section Parser Rewrite</h2>
+    <h2>Phase 8: breakdownCV Section Parser Rewrite</h2>
     <h3>Section Detection</h3>
     <p><code>detectSectionHeader</code> was updated to strip leading section prefix patterns before matching. CV headers formatted as "A. EDUCATION", "B. EXPERIENCE" were not being matched because prefix letters remained after the formatting strip.</p>
     <pre><code>// Strip leading prefix: "A. ", "B. ", "1. ", etc.
@@ -142,36 +141,36 @@ line = line.replaceAll("^[a-z0-9]{1,3}\\.\\s*", "");
     <h3>DOCX Processing</h3>
     <table>
       <tr><th>Field</th><th>Result</th><th>Status</th></tr>
-      <tr><td>Name</td><td>UPAO MAZIBO</td><td>✅ Correct</td></tr>
-      <tr><td>Email</td><td>mazibohoppo@gmail.com</td><td>✅ Correct</td></tr>
-      <tr><td>Phone</td><td>+254746782795</td><td>✅ Correct</td></tr>
-      <tr><td>Education</td><td>1 entry, institution + cert populated</td><td>⚠️ Partial — edu-from unparsed</td></tr>
-      <tr><td>Experience</td><td>4 entries, role extracted for 2</td><td>⚠️ Partial — company field empty</td></tr>
-      <tr><td>Skills</td><td>28 items with category metadata</td><td>✅ Correct</td></tr>
+      <tr><td>Name</td><td>UPAO MAZIBO</td><td> Correct</td></tr>
+      <tr><td>Email</td><td>mazibohoppo@gmail.com</td><td> Correct</td></tr>
+      <tr><td>Phone</td><td>+254746782795</td><td> Correct</td></tr>
+      <tr><td>Education</td><td>1 entry, institution + cert populated</td><td> Partial — edu-from unparsed</td></tr>
+      <tr><td>Experience</td><td>4 entries, role extracted for 2</td><td> Partial — company field empty</td></tr>
+      <tr><td>Skills</td><td>28 items with category metadata</td><td> Correct</td></tr>
     </table>
 
     <h3>PDF Processing</h3>
     <table>
       <tr><th>Field</th><th>Result</th><th>Status</th></tr>
-      <tr><td>Name</td><td>UPAO MAZIBO</td><td>✅ Correct</td></tr>
-      <tr><td>Email</td><td>mazibohoppo@proton.me</td><td>✅ Correct</td></tr>
-      <tr><td>Skills</td><td>29 items with category metadata</td><td>⚠️ Garbage bytes in PDF-specific category labels</td></tr>
-      <tr><td>Experience</td><td>11 entries, 1 per bullet line</td><td>⚠️ Some lines are continuation fragments from wrapping</td></tr>
+      <tr><td>Name</td><td>UPAO MAZIBO</td><td> Correct</td></tr>
+      <tr><td>Email</td><td>mazibohoppo@proton.me</td><td> Correct</td></tr>
+      <tr><td>Skills</td><td>29 items with category metadata</td><td> Garbage bytes in PDF-specific category labels</td></tr>
+      <tr><td>Experience</td><td>11 entries, 1 per bullet line</td><td> Some lines are continuation fragments from wrapping</td></tr>
     </table>
 
     <h2>Remaining Challenges</h2>
     <ul>
       <li><strong>edu-from "May 2024" unparsed</strong> — double space between month and year doesn't match <code>DateTimeFormatter</code>; fix: normalise whitespace before parsing</li>
-      <li><strong>PDF bullet garbage bytes surviving stripBullet</strong> — extend regex character class for PDF-specific multi-byte bullet sequences</li>
+      <li><strong>PDF bullet garbage bytes surviving stripBullet</strong> extend regex character class for PDF-specific multi-byte bullet sequences</li>
       <li><strong>PDF experience line fragmentation</strong> — wrapped bullet lines produce two separate entries; fix: continuation line merging heuristic</li>
       <li><strong>No summary section captured</strong> — pre-section content is intentionally ignored; capturing it requires explicitly identifying the prose block between header and first section</li>
     </ul>
 
     <h2>Technical Debt Observations</h2>
     <ul>
-      <li>The static CoreNLP pipeline exists in both <code>breakdownCV</code> and <code>analyzeCV</code> independently — two 400MB model loads if both classes are instantiated. Fix: single shared pipeline on a <code>NLPPipeline</code> utility class</li>
+      <li>The static CoreNLP pipeline exists in both <code>breakdownCV</code> and <code>analyzeCV</code> independently two 400MB model loads if both classes are instantiated. Fix: single shared pipeline on a <code>NLPPipeline</code> utility class</li>
       <li>CoreNLP is annotating the full CV text including URLs and mailto strings, which contribute noise. Passing only the first 500–800 characters would reduce annotation time</li>
-      <li><code>analyzeHeaders</code> is currently dead code in the web pipeline — it populates four static lists that are not read by <code>uploadProcess</code></li>
+      <li><code>analyzeHeaders</code> is currently dead code in the web pipeline it populates four static lists that are not read by <code>uploadProcess</code></li>
     </ul>
 
   </article>

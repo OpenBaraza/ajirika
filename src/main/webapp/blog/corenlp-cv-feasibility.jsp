@@ -43,11 +43,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-purple-100 text-purple-700 rounded-full">Feasibility</span>
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full">NER · CV Parsing · HCM</span>
+
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP CV Parsing — Feasibility Evaluation for Ajirika HCM</h1>
-      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Internship</p>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP CV Parsing Feasibility Evaluation for Ajirika HCM</h1>
+      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Interns</p>
     </div>
   </section>
 
@@ -61,8 +60,8 @@
     <p>Ajirika is a Human Capital Management platform. A natural evolution is automated CV/resume parsing — extracting structured information from unstructured candidate documents. CoreNLP was selected because:</p>
     <ul>
       <li>It is <strong>Java-native</strong>, matching Ajirika's backend language</li>
-      <li>It is <strong>open-source and free</strong> — no API costs or rate limits</li>
-      <li>It runs <strong>entirely on-premise</strong> — no data leaves the server</li>
+      <li>It is <strong>open-source and free</strong> no API costs or rate limits</li>
+      <li>It runs <strong>entirely on-premise</strong> no data leaves the server</li>
       <li>It has an established <strong>NER pipeline</strong> directly applicable to CV parsing</li>
     </ul>
 
@@ -75,24 +74,24 @@
       <tr><td>Database</td><td>PostgreSQL</td></tr>
       <tr><td>Frontend</td><td>Server-rendered HTML/JSP</td></tr>
     </table>
-    <p>Ajirika is built on the <strong>Baraza Framework</strong> — a Java development framework where UI components and business logic are declared in XML. This means there are no REST controllers to extend trivially, and dependencies are managed via Ant, not Maven.</p>
+    <p>Ajirika is built on the <strong>Baraza Framework</strong> a Java development framework where UI components and business logic are declared in XML. This means there are no REST controllers to extend trivially, and dependencies are managed via Ant, not Maven.</p>
 
     <h2>Compatibility Findings</h2>
     <table>
       <tr><th>Dimension</th><th>Assessment</th></tr>
-      <tr><td>Language compatibility</td><td><span class="badge-good">FULL</span> Both Java — no bridging required</td></tr>
+      <tr><td>Language compatibility</td><td><span class="badge-good">FULL</span> Both Java no bridging required</td></tr>
       <tr><td>Memory requirements</td><td><span class="badge-med">MEDIUM</span> ~400MB heap; requires <code>-Xmx4g</code></td></tr>
-      <tr><td>NER accuracy — dates/cities/emails</td><td><span class="badge-good">GOOD</span> Reliable extractions</td></tr>
-      <tr><td>NER accuracy — African names</td><td><span class="badge-bad">HIGH RISK</span> Consistently missed</td></tr>
-      <tr><td>NER accuracy — tech tools</td><td><span class="badge-bad">HIGH RISK</span> Misclassified as LOCATION/PERSON</td></tr>
+      <tr><td>NER accuracy dates/cities/emails</td><td><span class="badge-good">GOOD</span> Reliable extractions</td></tr>
+      <tr><td>NER accuracy African names</td><td><span class="badge-bad">HIGH RISK</span> Consistently missed</td></tr>
+      <tr><td>NER accuracy tech tools</td><td><span class="badge-bad">HIGH RISK</span> Misclassified as LOCATION/PERSON</td></tr>
     </table>
 
     <h2>Architecture Decision</h2>
-    <p>For this evaluation: a <strong>standalone executable JAR</strong> that accepts a CV file path, extracts plain text, runs the CoreNLP pipeline, and outputs a named entity summary to the console. This approach completely isolates NLP behaviour from the Ajirika codebase — zero integration risk, zero Ant classpath issues.</p>
+    <p>For this evaluation: a <strong>standalone executable JAR</strong> that accepts a CV file path, extracts plain text, runs the CoreNLP pipeline, and outputs a named entity summary to the console. This approach completely isolates NLP behaviour from the Ajirika codebase zero integration risk, zero Ant classpath issues.</p>
     <p>One new dependency added: <strong>Apache PDFBox 3.0.3</strong> for PDF text extraction.</p>
 
     <h2>Implementation</h2>
-    <pre><code>// PDFBox 3.x API — load PDF
+    <pre><code>// PDFBox 3.x API load PDF
 try (PDDocument document = Loader.loadPDF(file)) {
     PDFTextStripper stripper = new PDFTextStripper();
     return stripper.getText(document);
@@ -131,32 +130,32 @@ for (CoreEntityMention em : document.entityMentions()) {
 
     <h3>Reliable vs Unreliable</h3>
     <p><strong>Reliable:</strong> email addresses (perfect), all dates (excellent), cities and countries, Western organisation names.</p>
-    <p><strong>Unreliable:</strong> candidate name "UPAO MAZIBO" — missed entirely. Security tools (Wireshark, Nmap) misclassified. No CERTIFICATION or SKILL entity types exist in CoreNLP's default label set.</p>
+    <p><strong>Unreliable:</strong> candidate name "UPAO MAZIBO" missed entirely. Security tools (Wireshark, Nmap) misclassified. No CERTIFICATION or SKILL entity types exist in CoreNLP's default label set.</p>
 
-    <div class="warn">African names absent from CoreNLP's training corpus (Wall Street Journal, etc.) receive no PERSON tag. This is a fundamental limitation — not a configuration issue.</div>
+    <div class="warn">African names absent from CoreNLP's training corpus (Wall Street Journal, etc.) receive no PERSON tag. This is a fundamental limitation not a configuration issue.</div>
 
     <h2>Challenges Encountered</h2>
     <table>
       <tr><th>#</th><th>Challenge</th><th>Resolution</th></tr>
-      <tr><td>1</td><td><code>PDDocument.load(File)</code> compilation failure</td><td>PDFBox 3.x removed legacy <code>load()</code> — replaced with <code>Loader.loadPDF(file)</code></td></tr>
-      <tr><td>2</td><td>African candidate name not detected</td><td>Documented as fundamental limitation — requires custom NER training</td></tr>
+      <tr><td>1</td><td><code>PDDocument.load(File)</code> compilation failure</td><td>PDFBox 3.x removed legacy <code>load()</code> replaced with <code>Loader.loadPDF(file)</code></td></tr>
+      <tr><td>2</td><td>African candidate name not detected</td><td>Documented as fundamental limitation requires custom NER training</td></tr>
       <tr><td>3</td><td>Security tools misclassified</td><td>Domain-specific proper nouns resemble place/person names in news-trained model</td></tr>
     </table>
 
     <h2>Future Recommendations</h2>
     <ul>
-      <li><strong>Option 1 — Custom NER training</strong>: train on annotated African CVs (~500–1000 labelled). High accuracy, high effort.</li>
-      <li><strong>Option 2 — Rule-based post-processing</strong>: use CoreNLP for dates/emails/cities and layer keyword rules for skills and name extraction. Pragmatic hybrid.</li>
-      <li><strong>Option 3 — Transformer-based model</strong> (bert-base-NER, spaCy): highest accuracy but Python-ecosystem — requires a microservice bridge.</li>
-      <li><strong>Option 4 — Dedicated CV parsing API</strong> (Affinda, RChilli): lowest effort, immediate results, handles African names out of the box.</li>
+      <li><strong>Option 1: Custom NER training</strong>: train on annotated African CVs (~500–1000 labelled). High accuracy, high effort.</li>
+      <li><strong>Option 2: Rule-based post-processing</strong>: use CoreNLP for dates/emails/cities and layer keyword rules for skills and name extraction. Pragmatic hybrid.</li>
+      <li><strong>Option 3: Transformer-based model</strong> (bert-base-NER, spaCy): highest accuracy but Python-ecosystem — requires a microservice bridge.</li>
+      <li><strong>Option 4: Dedicated CV parsing API</strong> (Affinda, RChilli): lowest effort, immediate results, handles African names out of the box.</li>
     </ul>
 
     <h2>Key Lessons</h2>
     <ul>
-      <li>CoreNLP is corpus-dependent — it performs well on entities that appear in English news text, poorly on African names and technical tool names</li>
-      <li>CV text is structurally adversarial for sentence boundary detection — bullet points and newlines are not sentence-ending punctuation</li>
+      <li>CoreNLP is corpus-dependent it performs well on entities that appear in English news text, poorly on African names and technical tool names</li>
+      <li>CV text is structurally adversarial for sentence boundary detection bullet points and newlines are not sentence-ending punctuation</li>
       <li>Separating extraction from annotation kept debugging surfaces small</li>
-      <li><code>-Xmx4g</code> is not optional — default JVM settings cause <code>OutOfMemoryError</code> during pipeline initialisation</li>
+      <li><code>-Xmx4g</code> is not optional default JVM settings cause <code>OutOfMemoryError</code> during pipeline initialisation</li>
     </ul>
 
   </article>

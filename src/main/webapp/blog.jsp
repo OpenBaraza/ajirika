@@ -24,14 +24,12 @@
   <section class="relative overflow-hidden pt-28 pb-12">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-60"></div>
     <div class="relative max-w-5xl mx-auto px-6 text-center">
-      <div class="inline-block mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold animate-scale-in">
-        Internship Writeups
-      </div>
+
       <h1 class="text-5xl font-bold mb-4">
         Project <span class="gradient-text-blue">Blog</span>
       </h1>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Technical deep-dives from the Ajirika internship team — NLP, Java, and building a smarter CV ecosystem.
+        Technical deep-dives from the Ajirika internship team NLP, Java, and building a smarter CV ecosystem.
       </p>
     </div>
   </section>
@@ -53,10 +51,9 @@
         <div class="h-3 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
         <div class="p-6">
           <div class="flex items-center gap-2 mb-3">
-            <span class="tag bg-blue-100 text-blue-700">Setup</span>
-            <span class="tag bg-gray-100 text-gray-500">Java · Maven</span>
+
           </div>
-          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">Stanford CoreNLP — Local Setup &amp; NLP Pipeline Testing</h2>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">Stanford CoreNLP Local Setup &amp; NLP Pipeline Testing</h2>
           <p class="text-sm text-gray-500 leading-relaxed mb-4">End-to-end setup of CoreNLP 4.5.10 on Kali Linux with Java 25 and Maven, producing a standalone fat JAR with tokenization, POS tagging, lemmatization, and NER.</p>
           <div class="flex items-center justify-between text-xs text-gray-400">
             <span>Samuel Dabaly &amp; Upao Mazibo</span>
@@ -70,10 +67,9 @@
         <div class="h-3 bg-gradient-to-r from-purple-500 to-pink-500"></div>
         <div class="p-6">
           <div class="flex items-center gap-2 mb-3">
-            <span class="tag bg-purple-100 text-purple-700">Feasibility</span>
-            <span class="tag bg-gray-100 text-gray-500">NER · CV Parsing</span>
+
           </div>
-          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP CV Parsing — Feasibility Evaluation for Ajirika HCM</h2>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP CV Parsing Feasibility Evaluation for Ajirika HCM</h2>
           <p class="text-sm text-gray-500 leading-relaxed mb-4">Analysing Ajirika's repository, assessing CoreNLP compatibility, and building a standalone proof-of-concept that processes a real PDF CV document.</p>
           <div class="flex items-center justify-between text-xs text-gray-400">
             <span>Samuel Dabaly &amp; Upao Mazibo</span>
@@ -87,10 +83,9 @@
         <div class="h-3 bg-gradient-to-r from-green-500 to-teal-500"></div>
         <div class="p-6">
           <div class="flex items-center gap-2 mb-3">
-            <span class="tag bg-green-100 text-green-700">Web Integration</span>
-            <span class="tag bg-gray-100 text-gray-500">Tomcat · JSP</span>
+
           </div>
-          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP CV Parsing — Web Integration into Ajirika HCM</h2>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP CV Parsing Web Integration into Ajirika HCM</h2>
           <p class="text-sm text-gray-500 leading-relaxed mb-4">Two-phase integration: standalone CLI validation then surgical embedding into the live Ajirika servlet, replacing the non-functional OpenNLP pipeline.</p>
           <div class="flex items-center justify-between text-xs text-gray-400">
             <span>Samuel Dabaly &amp; Upao Mazibo</span>
@@ -104,10 +99,9 @@
         <div class="h-3 bg-gradient-to-r from-orange-500 to-amber-500"></div>
         <div class="p-6">
           <div class="flex items-center gap-2 mb-3">
-            <span class="tag bg-orange-100 text-orange-700">Refactor</span>
-            <span class="tag bg-gray-100 text-gray-500">Parser · Tika</span>
+
           </div>
-          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP — Full NLP Engine Replacement for Ajirika HCM</h2>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP Full NLP Engine Replacement for Ajirika HCM</h2>
           <p class="text-sm text-gray-500 leading-relaxed mb-4">Complete removal of OpenNLP, rewrite of readCV text reconstruction, and a full rebuild of the section parser that fixes education, experience, and skills extraction.</p>
           <div class="flex items-center justify-between text-xs text-gray-400">
             <span>Samuel Dabaly &amp; Upao Mazibo</span>
@@ -121,11 +115,10 @@
         <div class="h-3 bg-gradient-to-r from-rose-500 to-red-500"></div>
         <div class="p-6">
           <div class="flex items-center gap-2 mb-3">
-            <span class="tag bg-rose-100 text-rose-700">Custom NER</span>
-            <span class="tag bg-gray-100 text-gray-500">Training · CRF</span>
+
           </div>
-          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP — Custom NER Training for African CV Parsing</h2>
-          <p class="text-sm text-gray-500 leading-relaxed mb-4">Training a custom CRF model on 5,329 tokens to recognise African names, job titles, degrees, and organisations — and integrating it into the live pipeline.</p>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CoreNLP Custom NER Training for African CV Parsing</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4">Training a custom CRF model on 5,329 tokens to recognise African names, job titles, degrees, and organisations and integrating it into the live pipeline.</p>
           <div class="flex items-center justify-between text-xs text-gray-400">
             <span>Samuel Dabaly &amp; Upao Mazibo</span>
             <span class="text-rose-600 font-semibold">Read →</span>

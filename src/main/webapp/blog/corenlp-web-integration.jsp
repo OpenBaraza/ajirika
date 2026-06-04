@@ -40,11 +40,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-green-100 text-green-700 rounded-full">Web Integration</span>
-        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full">Tomcat · JSP · Servlet</span>
+
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP CV Parsing — Web Integration into Ajirika HCM</h1>
-      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Internship</p>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CoreNLP CV Parsing Web Integration into Ajirika HCM</h1>
+      <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions Interns</p>
     </div>
   </section>
 
@@ -53,7 +52,7 @@
     <h2>Objective</h2>
     <p>This phase documents a two-phase evaluation: a standalone CLI proof-of-concept, then integrating Stanford CoreNLP directly into the running Ajirika web application, replacing the personal information extraction logic in the existing NLP pipeline, and verifying end-to-end operation through the browser interface.</p>
 
-    <h2>Phase 1 — Repository Analysis</h2>
+    <h2>Phase 1: Repository Analysis</h2>
     <p>The confirmed technology stack after cloning and analysing the repository:</p>
     <table>
       <tr><th>Layer</th><th>Technology</th></tr>
@@ -70,25 +69,25 @@
     <p>The OpenNLP implementation required <strong>seven custom trained model files</strong> (en-ner-person.bin, en-ner-organization.bin, en-ner-cv.bin, etc.) that were absent from the repository. The pipeline was <strong>non-functional without significant additional work</strong>. CoreNLP was evaluated as an alternative because it ships pre-trained English NER models requiring no custom training to run.</p>
     <p>The existing architecture:</p>
     <ul>
-      <li><code>readCV.java</code> — uses Tika + Jsoup to extract and structure text from PDF/DOC/DOCX files</li>
-      <li><code>breakdownCV.java</code> — rule-based section detection and parsing with OpenNLP fallback</li>
-      <li><code>uploadProcess.java</code> — Jakarta servlet mapped to <code>/processCV</code></li>
-      <li><code>processCV.jsp</code> — fully built frontend with upload form, processing log tab, and results tab</li>
+      <li><code>readCV.java</code> uses Tika + Jsoup to extract and structure text from PDF/DOC/DOCX files</li>
+      <li><code>breakdownCV.java</code> rule-based section detection and parsing with OpenNLP fallback</li>
+      <li><code>uploadProcess.java</code> Jakarta servlet mapped to <code>/processCV</code></li>
+      <li><code>processCV.jsp</code> fully built frontend with upload form, processing log tab, and results tab</li>
     </ul>
 
-    <h2>Phase 2 — Compatibility Findings</h2>
+    <h2>Phase 2: Compatibility Findings</h2>
     <table>
       <tr><th>Dimension</th><th>Assessment</th></tr>
-      <tr><td>Language compatibility</td><td>Full — both Java, no bridging required</td></tr>
+      <tr><td>Language compatibility</td><td>Full both Java, no bridging required</td></tr>
       <tr><td>Build system</td><td>Maven → Maven Central; two dependency declarations needed</td></tr>
       <tr><td>Memory</td><td>~400MB heap; <code>-Xmx4g</code> mandatory; pipeline must be a singleton</td></tr>
       <tr><td>Compiler target</td><td>CoreNLP requires minimum Java 11; project was at Java 8</td></tr>
     </table>
 
-    <h2>Phase 3 — Architecture: Surgical Integration</h2>
-    <p>The decision was to <strong>not create a new servlet</strong> but to modify the existing <code>breakdownCV.java</code> to replace its personal information extraction logic with CoreNLP NER, leaving all rule-based section detection intact. This was the lowest-risk path — the URL mapping, file handling, log capture, and JSON response format remained unchanged.</p>
+    <h2>Phase 3: Architecture: Surgical Integration</h2>
+    <p>The decision was to <strong>not create a new servlet</strong> but to modify the existing <code>breakdownCV.java</code> to replace its personal information extraction logic with CoreNLP NER, leaving all rule-based section detection intact. This was the lowest-risk path the URL mapping, file handling, log capture, and JSON response format remained unchanged.</p>
 
-    <h2>Phase 4 — Standalone POC</h2>
+    <h2>Phase 4: Standalone POC</h2>
     <p>Dependencies added to <code>corenlp-demo/pom.xml</code>:</p>
     <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;edu.stanford.nlp&lt;/groupId&gt;
@@ -108,7 +107,7 @@
 &lt;/dependency&gt;</code></pre>
     <p>The pipeline processed 303 words across 16 detected sentences from a real PDF CV with no errors. Model loading: ~12 seconds. The feasibility question was answered: <strong>CoreNLP can process a CV-sized document.</strong></p>
 
-    <h2>Phase 5 — Web Integration</h2>
+    <h2>Phase 5: Web Integration</h2>
     <h3>Prerequisites</h3>
     <pre><code># Load database schema
 sudo -u postgres psql -d baraza -f db/01.baraza.sql
@@ -178,7 +177,7 @@ sudo rm -rf /opt/tomcat/webapps/ajirika
 sudo cp target/ajirika.war /opt/tomcat/webapps/
 export JAVA_OPTS="-Xmx4g -Xms512m"
 sudo -E /opt/tomcat/bin/startup.sh</code></pre>
-    <div class="note">WAR size: <strong>599MB</strong> — reflecting the inclusion of the CoreNLP models JAR (~400MB). Expected for an evaluation deployment.</div>
+    <div class="note">WAR size: <strong>599MB</strong> reflecting the inclusion of the CoreNLP models JAR (~400MB). Expected for an evaluation deployment.</div>
 
     <h2>Testing Results</h2>
     <p>JSON response produced after uploading the test CV through the browser:</p>
@@ -206,7 +205,7 @@ sudo -E /opt/tomcat/bin/startup.sh</code></pre>
 
     <h2>Key Lessons</h2>
     <ul>
-      <li>Text reconstruction quality in <code>readCV</code> determines downstream NLP quality — garbage in, garbage out</li>
+      <li>Text reconstruction quality in <code>readCV</code> determines downstream NLP quality garbage in, garbage out</li>
       <li>Integrating into an existing servlet is preferable to adding a new one with duplicate mappings</li>
       <li>Heap configuration (<code>-Xmx4g</code>) is mandatory and must be set before Tomcat starts</li>
       <li><code>-Dmaven.test.skip=true</code> skips both test compilation and execution — critical when test dependencies are removed</li>
