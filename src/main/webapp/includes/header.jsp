@@ -26,6 +26,7 @@
         <a href="${pageContext.request.contextPath}/#history" class="nav-link text-gray-700 hover:text-blue-600 font-medium">History</a>
         <a href="${pageContext.request.contextPath}/#actions" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Actions</a>
         <a href="${pageContext.request.contextPath}/#next-steps" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Next Steps</a>
+        <a href="${pageContext.request.contextPath}/blog.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Process CV</a>
       </div>
@@ -54,6 +55,7 @@
         <a href="${pageContext.request.contextPath}/#history" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">History</a>
         <a href="${pageContext.request.contextPath}/#actions" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Actions</a>
         <a href="${pageContext.request.contextPath}/#next-steps" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Next Steps</a>
+        <a href="${pageContext.request.contextPath}/blog.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Process CV</a>
       </div>
