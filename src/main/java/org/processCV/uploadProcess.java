@@ -120,7 +120,7 @@ public class uploadProcess extends HttpServlet {
                 return;
             }
 
-            // === 1. Save uploaded file to temp location ===
+            // Save uploaded file to temp location
             String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             Path tempDir = Files.createTempDirectory("cv_upload_");
             Path tempFile = tempDir.resolve(originalFileName);
@@ -135,18 +135,18 @@ public class uploadProcess extends HttpServlet {
 
             System.out.println("Saved to: " + tempFile);
 
-            // === 2. Process CV ===
+            // Process CV
             readCV reader = new readCV();
             String rawText = reader.read(tempFile.toString());
 
             breakdownCV parser = new breakdownCV();
             JSONObject result = parser.extractCVData(rawText);
 
-            // === 3. Clean up temp file ===
+            // Clean up temp file
             Files.deleteIfExists(tempFile);
             Files.deleteIfExists(tempDir);
 
-            // === 4. Send JSON response with logs ===
+            // Send JSON response with logs
             JSONObject responseObj = new JSONObject();
             responseObj.put("data", result);
             responseObj.put("logs", logStream.getLogs());

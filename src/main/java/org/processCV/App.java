@@ -61,26 +61,6 @@ public class App implements ActionListener {
 		btAnalyse.addActionListener(this);
 		headerPanel.add(btAnalyse);
 
-		// btBreakdown = new JButton("Beakdown CV");
-		// btBreakdown.addActionListener(this);
-		// headerPanel.add(btBreakdown);
-
-		// btTrainCV = new JButton("Train CV");
-		// btTrainCV.addActionListener(this);
-		// headerPanel.add(btTrainCV);
-
-		// btTrainNames = new JButton("Train Names");
-		// btTrainNames.addActionListener(this);
-		// headerPanel.add(btTrainNames);
-
-		// btTrainEduc = new JButton("Train Education");
-		// btTrainEduc.addActionListener(this);
-		// headerPanel.add(btTrainEduc);
-
-		// btTrainExp = new JButton("Train Experience");
-		// btTrainExp.addActionListener(this);
-		// headerPanel.add(btTrainExp);
-
 		btTrainExpHead = new JButton("Train Exp Headers");
 		btTrainExpHead.addActionListener(this);
 		headerPanel.add(btTrainExpHead);
@@ -182,41 +162,9 @@ public class App implements ActionListener {
 
 	}
 
-
 	public void trainCustSentModel(String trainingFilePath) {
     	System.out.println("trainCustSentModel() not supported under CoreNLP. No-op.");
     }
-
-	/*
-	public void trainCustSentModel(String trainingFilePath) {
-		File trainFile = new File(trainingFilePath);
-		File modelFile = new File("./models/en-cust-sent.bin");
-
-		System.out.println("Training Sentences -------");
-	
-		try (ObjectStream<String> lineStream =
-				 new PlainTextByLineStream(() -> new FileInputStream(trainFile), StandardCharsets.UTF_8);
-			 ObjectStream<SentenceSample> sampleStream = new SentenceSampleStream(lineStream)) {
-	
-			// Create a factory with default settings
-			SentenceDetectorFactory factory = new SentenceDetectorFactory("en", true, null, null);
-	
-			// Train the model
-			SentenceModel model = SentenceDetectorME.train("en", sampleStream, factory, TrainingParameters.defaultParams());
-	
-			// Save the model
-			try (OutputStream modelOut = new BufferedOutputStream(new FileOutputStream(modelFile))) {
-				model.serialize(modelOut);
-			}
-	
-			System.out.println("Model trained successfully from file: " + trainFile.getAbsolutePath());
-	
-		} catch (IOException ex) {
-			System.err.println("Error training custom sentence model: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
-	*/
 
 	private String readFile(String filePath) {
 		StringBuffer strLearn = new StringBuffer();

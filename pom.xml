@@ -67,20 +67,11 @@
       <artifactId>tika-serialization</artifactId>
       <version>3.1.0</version>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.apache.opennlp</groupId>
-      <artifactId>opennlp-tools</artifactId>
-      <version>2.5.2</version>
-    </dependency>
-    -->
-    <!-- Stanford CoreNLP -->
     <dependency>
       <groupId>edu.stanford.nlp</groupId>
       <artifactId>stanford-corenlp</artifactId>
       <version>4.5.10</version>
     </dependency>
-
 	<!-- Stanford CoreNLP English models (~400MB) -->
     <dependency>
       <groupId>edu.stanford.nlp</groupId>
@@ -88,7 +79,6 @@
       <version>4.5.10</version>
       <classifier>models</classifier>
     </dependency>
-
   </dependencies>
 
   <build>
