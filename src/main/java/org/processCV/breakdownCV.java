@@ -166,7 +166,7 @@ public class breakdownCV {
             if (currentSection != null) {
                 // Skip lines that are themselves section headers of other sections we don't track
                 // (e.g. PROJECTS — we don't have a projects bucket, stop adding to current section)
-                if (isProjectsHeader(trimmed)) {
+                if (isStopHeader(trimmed)) {
                     currentSection = null;
                     continue;
                 }
@@ -203,9 +203,11 @@ public class breakdownCV {
         return null;
     }
 
-    private boolean isProjectsHeader(String line) {
+    private static final String[] STOP_HEADERS = {"projects", "personal projects", "project", "accomplishments", "achievements", "awards"};
+
+    private boolean isStopHeader(String line) {
         String lower = line.replaceAll("(?i)^[a-z0-9]{1,3}\\.\\s*", "").trim().toLowerCase();
-        for (String h : PROJECTS_HEADERS) if (lower.equals(h) || lower.startsWith(h)) return true;
+        for (String h : STOP_HEADERS) if (lower.equals(h) || lower.startsWith(h)) return true;
         return false;
     }
 
@@ -261,7 +263,18 @@ public class breakdownCV {
 
             // If we have all three, save and reset
             if (!institute.isEmpty() && !certificate.isEmpty() && !rawdate.isEmpty()) {
-                result.put(buildEducationEntry(institute, certificate, rawdate));
+                JSONObject newEntry = buildEducationEntry(institute, certificate, rawdate);
+                boolean duplicate = false;
+                for (int i = 0; i < result.length(); i++) {
+                    if (result.getJSONObject(i).optString("institution","")
+                            .contains(newEntry.optString("institution","").substring(0, 
+                                Math.min(10, newEntry.optString("institution","").length())))) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (!duplicate) result.put(newEntry);
+
                 System.out.println("    Saved education entry");
                 institute = ""; certificate = ""; rawdate = "";
             }
@@ -351,44 +364,75 @@ public class breakdownCV {
     // Skills
 
     private JSONArray parseSkills(List<String> lines) {
-        System.out.println("Parsing skills with " + lines.size() + " lines");
-        JSONArray result = new JSONArray();
+    System.out.println("Parsing skills with " + lines.size() + " lines");
+    JSONArray result = new JSONArray();
 
-        for (String raw : lines) {
-            // Strip bullet characters
-            String line = stripBullet(raw).trim();
-            if (line.isEmpty()) continue;
-            System.out.println("  Skill line: " + line);
+    // First pass: join continuation lines to their category header
+    // A continuation line is one that has no colon and is not a new category
+    List<String> joined = new ArrayList<>();
+    String currentCategory = null;
+    StringBuilder currentItems = new StringBuilder();
 
-            // If line has a category label like "Security Tools: ..." split on first colon
-            if (line.contains(":")) {
-                String[] parts = line.split(":", 2);
-                String category = parts[0].trim();
-                String items = parts.length > 1 ? parts[1].trim() : "";
+    for (String raw : lines) {
+        String line = stripBullet(raw).trim();
+        if (line.isEmpty()) continue;
 
-                // Split items by comma
-                String[] skills = items.split(",");
-                for (String skill : skills) {
-                    String s = skill.trim();
-                    if (!s.isEmpty()) {
-                        JSONObject skillObj = new JSONObject();
-                        skillObj.put("category", category);
-                        skillObj.put("skill", s);
-                        result.put(skillObj);
-                    }
-                }
+        if (line.endsWith(":")) {
+            // Pure category header with no items on same line
+            if (currentCategory != null && currentItems.length() > 0) {
+                joined.add(currentCategory + ": " + currentItems.toString().trim());
+            }
+            currentCategory = line.substring(0, line.length() - 1).trim();
+            currentItems = new StringBuilder();
+        } else if (line.contains(":") && !line.startsWith("http")) {
+            // Category header with items on same line
+            if (currentCategory != null && currentItems.length() > 0) {
+                joined.add(currentCategory + ": " + currentItems.toString().trim());
+            }
+            int colon = line.indexOf(":");
+            currentCategory = line.substring(0, colon).trim();
+            currentItems = new StringBuilder(line.substring(colon + 1).trim());
+        } else {
+            // Continuation line — append to current category or add as standalone
+            if (currentCategory != null) {
+                if (currentItems.length() > 0) currentItems.append(", ");
+                currentItems.append(line);
             } else {
-                // Plain skill line — split by comma or add whole line
-                String[] parts = line.split(",");
-                for (String part : parts) {
-                    String s = part.trim();
-                    if (!s.isEmpty()) result.put(s);
-                }
+                joined.add(line);
             }
         }
+    }
+    // Flush last category
+    if (currentCategory != null && currentItems.length() > 0) {
+        joined.add(currentCategory + ": " + currentItems.toString().trim());
+    }
 
-        System.out.println("Skills parsed: " + result.length());
-        return result;
+    // Second pass: parse joined lines into skill objects
+    for (String line : joined) {
+        if (line.contains(":")) {
+            int colon = line.indexOf(":");
+            String category = line.substring(0, colon).trim();
+            String items = line.substring(colon + 1).trim();
+            for (String item : items.split(",")) {
+                String s = item.trim();
+                if (!s.isEmpty()) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("category", category);
+                    obj.put("skill", s);
+                    result.put(obj);
+                }
+            }
+        } else {
+            String[] parts = line.split(",");
+            for (String part : parts) {
+                String s = part.trim();
+                if (!s.isEmpty()) result.put(s);
+            }
+        }
+    }
+
+    System.out.println("Skills parsed: " + result.length());
+    return result;
     }
 
     // References 

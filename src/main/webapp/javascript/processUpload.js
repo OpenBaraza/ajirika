@@ -7,7 +7,6 @@ async function processCV() {
         return;
     }
 
-    // Clear previous logs
     document.getElementById('logOutput').innerHTML = 'Processing started...\n';
 
     const formData = new FormData();
@@ -21,10 +20,7 @@ async function processCV() {
 
         const data = await response.json();
 
-        // Display logs in the logs tab
-        if (data.logs) {
-            addLog(data.logs);
-        }
+        if (data.logs) addLog(data.logs);
 
         if (data.error) {
             addLog('ERROR: ' + data.error);
@@ -32,12 +28,8 @@ async function processCV() {
             return;
         }
 
-        // Switch to results view (optional)
-        // openTab('cvForm');
-
-        // Update UI with parsed data
         const result = data.data;
-        
+
         // Personal Info
         const info = result.personal_info || {};
         document.getElementById('infoName').textContent = info.name || '—';
@@ -50,8 +42,10 @@ async function processCV() {
         if (result.education && result.education.length > 0) {
             result.education.forEach(edu => {
                 const div = document.createElement('div');
+                const from = edu['edu-from'] || '—';
+                const to = edu['edu-to'] || '—';
                 div.innerHTML = `<strong>${edu.institution || edu.school || '—'}</strong><br/>
-                                 ${edu.certification || edu.degree || '—'} (${edu['edu-from'] || '—'} – ${edu['edu-to'] || '—'})`;
+                                 ${edu.certification || edu.degree || '—'} (${from} – ${to})`;
                 eduSection.appendChild(div);
                 eduSection.appendChild(document.createElement('hr'));
             });
@@ -59,14 +53,25 @@ async function processCV() {
             eduSection.textContent = 'No education found.';
         }
 
-        // Experience
+        // Experience — Fix: render description when role/company absent
         const expSection = document.getElementById('experienceContent');
         expSection.innerHTML = '';
         if (result.experience && result.experience.length > 0) {
             result.experience.forEach(exp => {
                 const div = document.createElement('div');
-                div.innerHTML = `<strong>${exp.role || exp.position || '—'}</strong> at <em>${exp.employer || exp.company || '—'}</em><br/>
-                                 ${exp.dates || ''}`;
+                const role = exp.role || exp.position || '';
+                const employer = exp.employer || exp.company || '';
+                const dates = exp.dates || '';
+                const description = exp.description || '';
+
+                if (role && employer) {
+                    div.innerHTML = `<strong>${role}</strong> at <em>${employer}</em><br/>${dates}`;
+                } else if (role) {
+                    div.innerHTML = `<strong>${role}</strong><br/>${description}`;
+                } else {
+                    div.innerHTML = description;
+                }
+
                 expSection.appendChild(div);
                 expSection.appendChild(document.createElement('hr'));
             });
@@ -74,17 +79,42 @@ async function processCV() {
             expSection.textContent = 'No experience found.';
         }
 
-        // Skills
+        // Skills — Fix: handle both string and {category, skill} object formats
         const skillsSection = document.getElementById('skillsContent');
         skillsSection.innerHTML = '';
         if (result.skills && result.skills.length > 0) {
-            const list = document.createElement('ul');
-            result.skills.forEach(skill => {
-                const li = document.createElement('li');
-                li.textContent = skill;
-                list.appendChild(li);
-            });
-            skillsSection.appendChild(list);
+            // Group by category if objects, else flat list
+            const hasCategories = result.skills.some(s => typeof s === 'object' && s.category);
+
+            if (hasCategories) {
+                const groups = {};
+                result.skills.forEach(s => {
+                    if (typeof s === 'object' && s.category) {
+                        // Strip non-printable/non-ASCII garbage from category name
+                        const cat = s.category.replace(/[^\x20-\x7E]/g, '').trim() || 'Other';
+                        if (!groups[cat]) groups[cat] = [];
+                        groups[cat].push(s.skill);
+                    } else if (typeof s === 'string') {
+                        if (!groups['Other']) groups['Other'] = [];
+                        groups['Other'].push(s);
+                    }
+                });
+
+                Object.entries(groups).forEach(([category, skills]) => {
+                    const catDiv = document.createElement('div');
+                    catDiv.style.marginBottom = '8px';
+                    catDiv.innerHTML = `<strong>${category}:</strong> ${skills.join(', ')}`;
+                    skillsSection.appendChild(catDiv);
+                });
+            } else {
+                const list = document.createElement('ul');
+                result.skills.forEach(skill => {
+                    const li = document.createElement('li');
+                    li.textContent = typeof skill === 'string' ? skill : (skill.skill || JSON.stringify(skill));
+                    list.appendChild(li);
+                });
+                skillsSection.appendChild(list);
+            }
         } else {
             skillsSection.textContent = 'No skills found.';
         }
@@ -113,7 +143,6 @@ async function processCV() {
     }
 }
 
-// Function to add log messages (accessible globally)
 function addLog(message) {
     const logOutput = document.getElementById('logOutput');
     logOutput.innerHTML += message + '\n';
