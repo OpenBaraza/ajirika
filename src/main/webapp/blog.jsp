@@ -126,6 +126,23 @@
         </div>
       </a>
 
+      <!-- Post 6 -->
+      <a href="<%= request.getContextPath() %>/blog/cv-annotation-interface.jsp" class="block blog-card bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden scroll-reveal delay-200">
+        <div class="h-3 bg-gradient-to-r from-cyan-500 to-sky-500"></div>
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="tag bg-cyan-100 text-cyan-700">Tooling</span>
+            <span class="tag bg-gray-100 text-gray-500">Annotation · Dataset · CRF</span>
+          </div>
+          <h2 class="text-lg font-bold text-gray-800 mb-2 leading-snug">CV Annotation Interface and NER Dataset Expansion</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4">A browser-based annotation tool replacing manual TSV editing, an iterative refinement cycle, a targeted dataset expansion batch, and a full retrain that resolves the PERSON false-positive failure mode.</p>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Samuel Dabaly &amp; Upao Mazibo</span>
+            <span class="text-cyan-600 font-semibold">Read →</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </section>
 

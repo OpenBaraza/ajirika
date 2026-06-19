@@ -226,7 +226,7 @@ DEGREE: High school</code></pre>
 
   <div class="max-w-3xl mx-auto px-6 pb-16 flex justify-between items-center border-t border-gray-100 pt-8">
     <a href="<%= request.getContextPath() %>/blog/corenlp-full-replacement.jsp" class="text-rose-700 font-semibold text-sm hover:underline">← Full NLP Replacement</a>
-    <a href="<%= request.getContextPath() %>/blog.jsp" class="text-rose-700 font-semibold text-sm hover:underline">Back to Blog →</a>
+    <a href="<%= request.getContextPath() %>/blog/cv-annotation-interface.jsp" class="text-rose-700 font-semibold text-sm hover:underline">Next: CV Annotation Interface →</a>
   </div>
 
   <jsp:include page="/includes/footer.jsp" />
