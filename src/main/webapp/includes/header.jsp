@@ -29,6 +29,7 @@
         <a href="${pageContext.request.contextPath}/blog.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Process CV</a>
+        <a href="${pageContext.request.contextPath}/annotate.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Annotate</a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -58,6 +59,7 @@
         <a href="${pageContext.request.contextPath}/blog.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Process CV</a>
+        <a href="${pageContext.request.contextPath}/annotate.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Annotate</a>
       </div>
     </div>
 

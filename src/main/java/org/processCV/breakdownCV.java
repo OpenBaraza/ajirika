@@ -1,5 +1,6 @@
 package org.processCV;
 
+import java.io.StringReader;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -18,9 +19,12 @@ import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreEntityMention;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.process.CoreLabelTokenFactory;
+import edu.stanford.nlp.process.PTBTokenizer;
 
 public class breakdownCV {
     private static final Logger log = Logger.getLogger(breakdownCV.class.getName());
@@ -121,6 +125,26 @@ public class breakdownCV {
         System.out.println("\n=== CV EXTRACTION COMPLETED ===");
         System.out.println(result.toString());
         return result;
+    }
+
+    // Annotation tool entry point: reuses the existing static pipeline.
+    public JSONArray tokenizeForAnnotation(String plainText) {
+        JSONArray segments = new JSONArray();
+        String[] lines = plainText.split("\\r?\\n");
+        for (int i = 0; i < lines.length; i++) {
+            String trimmed = lines[i].trim();
+            if (trimmed.isEmpty()) continue;
+            PTBTokenizer<CoreLabel> tokenizer = new PTBTokenizer<>(
+                new StringReader(trimmed), new CoreLabelTokenFactory(), "");
+            List<CoreLabel> tokenList = tokenizer.tokenize();
+            JSONArray tokens = new JSONArray();
+            for (CoreLabel tok : tokenList) tokens.put(tok.word());
+            JSONObject segment = new JSONObject();
+            segment.put("line", i);
+            segment.put("tokens", tokens);
+            segments.put(segment);
+        }
+        return segments;
     }
 
      // Called by analyzeHeaders — kept for API compatibility
