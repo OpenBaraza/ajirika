@@ -3,7 +3,6 @@ let currentLabels = [];
 let selection = { seg: null, anchor: null, focus: null };
 let hasExportedThisLoad = false;
 
-// Lowercase = B (begin), Uppercase = I (continue), x = clear
 const LABEL_KEYS = {
     'p': 'B-PERSON',   'P': 'I-PERSON',
     'j': 'B-JOB_TITLE','J': 'I-JOB_TITLE',
@@ -14,6 +13,9 @@ const LABEL_KEYS = {
 const ENTITY_COLORS = {
     PERSON: '#bfdbfe', JOB_TITLE: '#bbf7d0', DEGREE: '#ddd6fe', ORGANIZATION: '#fed7aa'
 };
+const ENTITY_DISPLAY = {
+    PERSON: 'Person', JOB_TITLE: 'Job Title', DEGREE: 'Degree', ORGANIZATION: 'Organization'
+};
 const TIGHT_BEFORE = /^[.,;:!?)\]}%"''"-]$/;
 const TIGHT_AFTER  = /^[(\[{"']$/;
 
@@ -21,6 +23,28 @@ function getColor(label) {
     if (!label || label === 'O') return 'transparent';
     const entity = label.replace(/^[BI]-/, '');
     return ENTITY_COLORS[entity] || 'transparent';
+}
+
+function updateSummary() {
+    const panel = document.getElementById('annotationSummary');
+    if (!panel) return;
+    const lines = [];
+    currentSegments.forEach((seg, segIdx) => {
+        seg.tokens.forEach((tok, tokIdx) => {
+            const label = currentLabels[segIdx][tokIdx];
+            if (!label || label === 'O') return;
+            const bi     = label.split('-')[0];
+            const entity = label.split('-')[1];
+            if (bi === 'B') {
+                lines.push('<div class="sum-line"><span class="sum-tok">' + tok + '</span><span class="sum-tag sum-b">B</span><span class="sum-entity">' + ENTITY_DISPLAY[entity] + '</span></div>');
+            } else {
+                lines.push('<div class="sum-line"><span class="sum-tok">' + tok + '</span><span class="sum-tag sum-i">I</span></div>');
+            }
+        });
+    });
+    panel.innerHTML = lines.length === 0
+        ? '<p class="sum-empty">No annotations yet.</p>'
+        : lines.join('');
 }
 
 async function loadCVForAnnotation() {
@@ -49,6 +73,7 @@ async function loadCVForAnnotation() {
         selection = { seg: null, anchor: null, focus: null };
         hasExportedThisLoad = false;
         renderSegments();
+        updateSummary();
         exportBtn.disabled = currentSegments.length === 0;
         statusEl.textContent = 'Loaded ' + currentSegments.length + ' lines.';
     } catch (err) {
@@ -60,8 +85,15 @@ async function loadCVForAnnotation() {
 }
 
 function renderSegments() {
-    const container = document.getElementById('annotateContainer');
+    const container  = document.getElementById('annotateContainer');
     container.innerHTML = '';
+    const emptyState = document.getElementById('empty-state');
+
+    if (currentSegments.length === 0) {
+        if (emptyState) emptyState.style.display = 'flex';
+        return;
+    }
+    if (emptyState) emptyState.style.display = 'none';
 
     currentSegments.forEach((seg, segIdx) => {
         const row = document.createElement('div');
@@ -122,6 +154,7 @@ function applyLabel(label) {
     selection = { seg: null, anchor: null, focus: null };
     hideLabelMenu();
     renderSegments();
+    updateSummary();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -148,15 +181,72 @@ document.addEventListener('keydown', (e) => {
     applyLabel(LABEL_KEYS[key]);
 });
 
+
+
+
+
+function clearAll() {
+    if (currentSegments.length === 0) return;
+    if (!confirm('Clear all annotations?')) return;
+    currentLabels = currentSegments.map(seg => seg.tokens.map(() => 'O'));
+    selection = { seg: null, anchor: null, focus: null };
+    renderSegments();
+    updateSummary();
+}
+
+
+
+
+
+
+
 async function exportAnnotations() {
     if (currentSegments.length === 0) {
         document.getElementById('annotateStatus').textContent = 'Load a CV first.';
         return;
     }
 
-    const labeledSegments = currentSegments
-        .map((seg, segIdx) => ({ tokens: seg.tokens, labels: currentLabels[segIdx] }))
-        .filter(seg => seg.labels.some(l => l !== 'O'));
+    //const labeledSegments = currentSegments
+        //.map((seg, segIdx) => ({ tokens: seg.tokens, labels: currentLabels[segIdx] }))
+        //.filter(seg => seg.labels.some(l => l !== 'O'));
+
+
+
+    // Extract contiguous non-O spans as independent segments.
+    // Avoids writing unreviewed O tokens that might actually be entities.
+    const labeledSegments = [];
+    currentSegments.forEach((seg, segIdx) => {
+        const labels = currentLabels[segIdx];
+        let i = 0;
+        while (i < seg.tokens.length) {
+            if (labels[i] !== 'O') {
+                const spanTokens = [], spanLabels = [];
+                while (i < seg.tokens.length && labels[i] !== 'O') {
+                    spanTokens.push(seg.tokens[i]);
+                    spanLabels.push(labels[i]);
+                    i++;
+                }
+                labeledSegments.push({ tokens: spanTokens, labels: spanLabels });
+            } else { i++; }
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     if (labeledSegments.length === 0) {
         document.getElementById('annotateStatus').textContent = 'No labeled tokens. Label at least one token first.';
@@ -168,9 +258,9 @@ async function exportAnnotations() {
     if (hasExportedThisLoad) msg = 'Already exported once — will ADD A DUPLICATE. ' + msg;
     if (!confirm(msg)) return;
 
-    const exportBtn  = document.getElementById('exportBtn');
+    const exportBtn = document.getElementById('exportBtn');
     exportBtn.disabled = true;
-    const statusEl   = document.getElementById('annotateStatus');
+    const statusEl  = document.getElementById('annotateStatus');
     statusEl.textContent = 'Exporting...';
 
     try {
@@ -186,7 +276,7 @@ async function exportAnnotations() {
         } else {
             hasExportedThisLoad = true;
             statusEl.textContent = 'Appended ' + data.data.appendedTokens + ' tokens ('
-                + data.data.appendedSegments + ' segments). Training file now has '
+                + data.data.appendedSegments + ' segments). Total: '
                 + data.data.totalFileTokens + ' tokens.';
         }
     } catch (err) {
