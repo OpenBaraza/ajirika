@@ -8,13 +8,18 @@ const LABEL_KEYS = {
     'j': 'B-JOB_TITLE','J': 'I-JOB_TITLE',
     'd': 'B-DEGREE',   'D': 'I-DEGREE',
     'g': 'B-ORGANIZATION','G': 'I-ORGANIZATION',
+    'l': 'B-LOCATION',  'L': 'I-LOCATION',
+    'c': 'B-COMPANY',   'C': 'I-COMPANY',
+    'r': 'B-CERTIFICATION','R': 'I-CERTIFICATION',
     'x': 'O'
 };
 const ENTITY_COLORS = {
-    PERSON: '#bfdbfe', JOB_TITLE: '#bbf7d0', DEGREE: '#ddd6fe', ORGANIZATION: '#fed7aa'
+    PERSON: '#bfdbfe', JOB_TITLE: '#bbf7d0', DEGREE: '#ddd6fe', ORGANIZATION: '#fed7aa',
+    LOCATION: '#fde68a', COMPANY: '#fca5a5', CERTIFICATION: '#a7f3d0'
 };
 const ENTITY_DISPLAY = {
-    PERSON: 'Person', JOB_TITLE: 'Job Title', DEGREE: 'Degree', ORGANIZATION: 'Organization'
+    PERSON: 'Person', JOB_TITLE: 'Job Title', DEGREE: 'Degree', ORGANIZATION: 'Organization',
+    LOCATION: 'Location', COMPANY: 'Company', CERTIFICATION: 'Certification'
 };
 const TIGHT_BEFORE = /^[.,;:!?)\]}%"''"-]$/;
 const TIGHT_AFTER  = /^[(\[{"']$/;
@@ -181,10 +186,6 @@ document.addEventListener('keydown', (e) => {
     applyLabel(LABEL_KEYS[key]);
 });
 
-
-
-
-
 function clearAll() {
     if (currentSegments.length === 0) return;
     if (!confirm('Clear all annotations?')) return;
@@ -194,25 +195,12 @@ function clearAll() {
     updateSummary();
 }
 
-
-
-
-
-
-
 async function exportAnnotations() {
     if (currentSegments.length === 0) {
         document.getElementById('annotateStatus').textContent = 'Load a CV first.';
         return;
     }
 
-    //const labeledSegments = currentSegments
-        //.map((seg, segIdx) => ({ tokens: seg.tokens, labels: currentLabels[segIdx] }))
-        //.filter(seg => seg.labels.some(l => l !== 'O'));
-
-
-
-    // Extract contiguous non-O spans as independent segments.
     // Avoids writing unreviewed O tokens that might actually be entities.
     const labeledSegments = [];
     currentSegments.forEach((seg, segIdx) => {
@@ -230,23 +218,6 @@ async function exportAnnotations() {
             } else { i++; }
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     if (labeledSegments.length === 0) {
         document.getElementById('annotateStatus').textContent = 'No labeled tokens. Label at least one token first.';

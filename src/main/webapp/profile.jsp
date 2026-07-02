@@ -1188,9 +1188,16 @@
                                     </div>
                                     <div class="text-center mt-4">
                                         <button id="downloadJsonBtn" class="btn btn-primary">Download JSON Version</button>
-                                        <a href="<%= request.getContextPath() %>/processCV.jsp">
-                                            <button id="" class="btn btn-primary">Upload CV</button>
-                                        </a>
+                                        <button type="button" id="toggleCVImport" class="btn btn-primary">Import from CV</button>
+                                    </div>
+                                    <div id="cvImportPanel" style="display:none; margin-top:12px; padding:14px; border:1px solid #e5e7eb; border-radius:10px; background:#f9fafb;">
+                                        <p style="font-size:13px; color:#6b7280; margin-bottom:10px;">
+                                            Upload your CV to automatically fill Details.
+                                        </p>
+                                        <input type="file" id="profileCVFile" accept=".pdf,.doc,.docx" style="margin-bottom:10px;" />
+                                        <br>
+                                        <button type="button" id="runCVImport" class="btn btn-success">Import</button>
+                                        <span id="cvImportProfileStatus" style="margin-left:12px; font-size:13px;"></span>
                                     </div>
                                     <!--end::Portlet-->
                                 </div>
@@ -1310,27 +1317,46 @@
     
         $(document).ready(function () {
     
-            $("#upload_cv").click(function (event) {
-		        var bForm = $('#frm_cv_import')[0];
-				var bData = new FormData(bForm);
-								
-                $.ajax({
-                    url: 'resume_upload_cv',
-                    type: 'POST',
-                    data: bData,
-                    cache: false,
-                    contentType: false,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    success: function (data) {
-                        console.log(data);
-    
-                        var textUpdate = document.getElementById('cv_import');
-                        textUpdate.value = data.cv_content;
+            document.getElementById('toggleCVImport').addEventListener('click', function () {
+                var panel = document.getElementById('cvImportPanel');
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.getElementById('runCVImport').addEventListener('click', async function () {
+                var fileInput = document.getElementById('profileCVFile');
+                var file = fileInput.files[0];
+                var statusEl = document.getElementById('cvImportProfileStatus');
+                if (!file) { alert('Please select a CV file.'); return; }
+
+                statusEl.style.color = '#374151';
+                statusEl.textContent = 'Processing...';
+
+                var formData = new FormData();
+                formData.append('cvFile', file);
+
+                try {
+                    var res = await fetch('<%= request.getContextPath() %>/processCV', {
+                        method: 'POST', body: formData
+                    });
+                    var data = await res.json();
+
+                    if (data.error) {
+                        statusEl.style.color = '#dc2626';
+                        statusEl.textContent = 'Error: ' + data.error;
+                        return;
                     }
-                });
-    
-                return false;
+
+                    if (data.data && data.data.cv_imported) {
+                        statusEl.style.color = '#16a34a';
+                        statusEl.textContent = '✓ Profile updated from CV. Refresh to see changes.';
+                    } else {
+                        statusEl.style.color = '#374151';
+                        statusEl.textContent = 'CV processed. Log out and back in if fields are missing.';
+                    }
+                } catch (err) {
+                    statusEl.style.color = '#dc2626';
+                    statusEl.textContent = 'Error: ' + err.message;
+                }
             });
         });
        

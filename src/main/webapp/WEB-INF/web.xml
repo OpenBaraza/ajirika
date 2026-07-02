@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app
-    version="4.0"
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
+    version="6.0"
+    xmlns="https://jakarta.ee/xml/ns/jakartaee"
     xmlns:xml="http://www.w3.org/XML/1998/namespace"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
   <display-name>Ajirika - openBaraza</display-name>
 
-  	<security-constraint>
-		<display-name>Users Security Constraint</display-name>
-		<web-resource-collection>
-			<web-resource-name>Users Protected Area</web-resource-name>
-			<url-pattern>/profile.jsp</url-pattern>
-    </web-resource-collection>
-		<auth-constraint>
-			<role-name>applicant</role-name>
-			<role-name>sysadmin</role-name>
-		</auth-constraint>
-	</security-constraint>
-	
-	<!--
-	<security-constraint>
-		<display-name>Annotation Tool Constraint</display-name>
-		<web-resource-collection>
-			<web-resource-name>Annotation Protected Area</web-resource-name>
-			<url-pattern>/annotate.jsp</url-pattern>
-			<url-pattern>/annotateCV/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>sysadmin</role-name>
-		</auth-constraint>
-	</security-constraint>
+    <security-constraint>
+        <display-name>Users Security Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Users Protected Area</web-resource-name>
+            <url-pattern>/profile.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>applicant</role-name>
+            <role-name>sysadmin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <!--
+    <security-constraint>
+        <display-name>Annotation Tool Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Annotation Protected Area</web-resource-name>
+            <url-pattern>/annotate.jsp</url-pattern>
+            <url-pattern>/annotateCV/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>sysadmin</role-name>
+        </auth-constraint>
+    </security-constraint>
 	 -->
 
 	<!-- Default login configuration uses form-based authentication -->
@@ -45,10 +44,12 @@
 	</login-config>
 
 	<!-- Security roles referenced by this web application -->
-	<security-role>
-		<role-name>applicant</role-name>
-		<role-name>sysadmin</role-name>
-	</security-role>
+    <security-role>
+        <role-name>applicant</role-name>
+    </security-role>
+    <security-role>
+        <role-name>sysadmin</role-name>
+    </security-role>
 
 	<error-page>
 		<error-code>401</error-code>

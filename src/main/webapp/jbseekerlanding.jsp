@@ -87,7 +87,7 @@
         <button id="closeSignup" class="absolute top-6 right-6 text-gray-500 hover:text-gray-800 text-2xl z-10">&times;</button>
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-6 mt-4">Create Account</h2>
 
-        <form id="signupForm" method="post" action="signupForm" class="space-y-5" novalidate>
+        <form id="signupForm" method="post" action="signupForm" enctype="multipart/form-data" class="space-y-5" novalidate>
 
           <!-- GRID WRAPPER FOR TWO COLUMNS -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -144,6 +144,17 @@
             </div>
 
           </div> <!-- END GRID -->
+
+          <!-- Optional CV upload at signup -->
+            <div>
+              <label class="block text-gray-700 mb-1">
+                CV / Resume <span class="text-gray-400 text-sm font-normal">(Optional: auto-fills your profile)</span>
+              </label>
+              <input type="file" name="cvFile" accept=".pdf,.doc,.docx"
+                class="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg
+                       file:border-0 file:font-medium file:bg-gray-100 file:text-gray-700
+                       hover:file:bg-gray-200 cursor-pointer" />
+            </div>
 
           <!-- Submit Button -->
           <button type="submit" 

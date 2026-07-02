@@ -16,11 +16,11 @@
           class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
           <span class="text-white font-bold text-xl">A</span>
         </div>
-        <span class="text-xl font-bold gradient-text-blue">Project Ajirika</span>
+        <span class="text-xl font-bold gradient-text-blue whitespace-nowrap">Project Ajirika</span>
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden lg:flex items-center gap-5 whitespace-nowrap">
         <a href="${pageContext.request.contextPath}/#home" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a>
         <a href="${pageContext.request.contextPath}/#challenges" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Challenges</a>
         <a href="${pageContext.request.contextPath}/#history" class="nav-link text-gray-700 hover:text-blue-600 font-medium">History</a>
@@ -30,11 +30,12 @@
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Process CV</a>
         <a href="${pageContext.request.contextPath}/annotate.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Annotate</a>
+        <a href="${pageContext.request.contextPath}/login.jsp" class="btn-shimmer text-white px-5 py-2 rounded-lg font-semibold text-sm">Log In</a>
       </div>
 
       <!-- Mobile Menu Button -->
       <button id="mobileMenuBtn"
-              class="md:hidden text-gray-700 hover:text-blue-600 transition-colors"
+              class="lg:hidden text-gray-700 hover:text-blue-600 transition-colors"
               aria-label="Toggle navigation menu"
               aria-expanded="false">
         <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +50,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden mobile-menu mt-4 pb-4">
+    <div id="mobileMenu" class="hidden lg:hidden mobile-menu mt-4 pb-4">"
       <div class="flex flex-col gap-4">
         <a href="${pageContext.request.contextPath}/#home" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Home</a>
         <a href="${pageContext.request.contextPath}/#challenges" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Challenges</a>
@@ -60,6 +61,7 @@
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Process CV</a>
         <a href="${pageContext.request.contextPath}/annotate.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Annotate</a>
+        <a href="${pageContext.request.contextPath}/login.jsp" class="text-blue-600 font-semibold py-2">Log In</a>
       </div>
     </div>
 

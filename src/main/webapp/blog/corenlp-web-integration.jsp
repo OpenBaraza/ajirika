@@ -215,7 +215,7 @@ sudo -E /opt/tomcat/bin/startup.sh</code></pre>
 
   <div class="max-w-3xl mx-auto px-6 pb-16 flex justify-between items-center border-t border-gray-100 pt-8">
     <a href="<%= request.getContextPath() %>/blog/corenlp-cv-feasibility.jsp" class="text-green-700 font-semibold text-sm hover:underline">← CV Parsing Feasibility</a>
-    <a href="<%= request.getContextPath() %>/blog/corenlp-full-replacement.jsp" class="text-green-700 font-semibold text-sm hover:underline">Next: Full NLP Replacement →</a>
+    <a href="<%= request.getContextPath() %>/blog/corenlp-full-replacement.jsp" class="text-rose-700 font-semibold text-sm hover:underline">Full NLP Replacement →</a>
   </div>
 
   <jsp:include page="/includes/footer.jsp" />

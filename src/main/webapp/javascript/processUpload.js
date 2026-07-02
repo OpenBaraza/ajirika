@@ -30,6 +30,17 @@ async function processCV() {
 
         const result = data.data;
 
+        // Notify if profile was updated from this CV
+        if (result.cv_imported) {
+            addLog('\n✓ Profile fields saved to your account from this CV.');
+        }
+
+        // Personal Info
+
+        if (result.cv_imported) {
+            addLog('\n Profile fields saved to your account from this CV.');
+        }
+
         // Personal Info
         const info = result.personal_info || {};
         document.getElementById('infoName').textContent = info.name || '—';
@@ -42,10 +53,11 @@ async function processCV() {
         if (result.education && result.education.length > 0) {
             result.education.forEach(edu => {
                 const div = document.createElement('div');
-                const from = edu['edu-from'] || '—';
+                const from = edu['edu-from'];
                 const to = edu['edu-to'] || '—';
+                const dateRange = from ? `${from} – ${to}` : to;
                 div.innerHTML = `<strong>${edu.institution || edu.school || '—'}</strong><br/>
-                                 ${edu.certification || edu.degree || '—'} (${from} – ${to})`;
+                                 ${edu.certification || edu.degree || '—'} (${dateRange})`;
                 eduSection.appendChild(div);
                 eduSection.appendChild(document.createElement('hr'));
             });
@@ -67,7 +79,11 @@ async function processCV() {
                 if (role && employer) {
                     div.innerHTML = `<strong>${role}</strong> at <em>${employer}</em><br/>${dates}`;
                 } else if (role) {
-                    div.innerHTML = `<strong>${role}</strong><br/>${description}`;
+                    const colonIdx = description.indexOf(':');
+                    const descBody = colonIdx > 0 ? description.substring(colonIdx + 1).trim() : '';
+                    div.innerHTML = descBody
+                        ? `<strong>${role}</strong><br/>${descBody}`
+                        : `<strong>${role}</strong>`;
                 } else {
                     div.innerHTML = description;
                 }

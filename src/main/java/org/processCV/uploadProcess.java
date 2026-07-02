@@ -3,9 +3,9 @@ package org.processCV;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +23,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+import org.processCV.CVImportHelper;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
                  maxFileSize = 1024 * 1024 * 10,      // 10 MB
                  maxRequestSize = 1024 * 1024 * 50)   // 50 MB
@@ -32,29 +34,43 @@ public class uploadProcess extends HttpServlet {
     String orgId = "0";
     String userID = "0";
 
-    // Custom PrintStream to capture logs
-    private static class LogCaptureStream extends OutputStream {
-        private final StringBuilder buffer = new StringBuilder();
-        
+    private static final ThreadLocal<StringBuilder> REQUEST_LOG = new ThreadLocal<>();
+
+    private static class ThreadLocalPrintStream extends PrintStream {
+        public ThreadLocalPrintStream(PrintStream base) { super(base, true); }
+
         @Override
-        public void write(int b) {
-            buffer.append((char) b);
+        public void println(String s) {
+            StringBuilder buf = REQUEST_LOG.get();
+            if (buf != null) buf.append(s == null ? "null" : s).append('\n');
+            else super.println(s);
         }
-        
-        public String getLogs() {
-            return buffer.toString();
+
+        @Override
+        public void print(String s) {
+            StringBuilder buf = REQUEST_LOG.get();
+            if (buf != null) buf.append(s == null ? "null" : s);
+            else super.print(s);
         }
-        
-        public void clear() {
-            buffer.setLength(0);
+
+        @Override
+        public void write(byte[] b, int off, int len) {
+            StringBuilder buf = REQUEST_LOG.get();
+            if (buf != null) buf.append(new String(b, off, len, StandardCharsets.UTF_8));
+            else super.write(b, off, len);
         }
     }
 
     private String getLoggedInUserId(HttpServletRequest request) {
         try {
             String username = request.getUserPrincipal().getName();
-            System.out.println("Logged in user from uploadProcess: " + username);
 
+            if (username == null || !username.matches("[a-zA-Z0-9@._\\-]+")) {
+                System.out.println("Rejected unsafe username format");
+                return "-1";
+            }
+
+            System.out.println("Logged in user from uploadProcess: " + username);
             String sql = "SELECT entity_id FROM entitys WHERE user_name = '" + username + "'";
             BQuery rs = new BQuery(db, sql);
 
@@ -73,6 +89,7 @@ public class uploadProcess extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         db = new BDB("java:/comp/env/jdbc/database");
+        System.setOut(new ThreadLocalPrintStream(System.out));
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -100,22 +117,16 @@ public class uploadProcess extends HttpServlet {
         if (orgId == null) orgId = "0";
         if (userID == null) userID = "-1";
 
-        // Create log capture stream
-        LogCaptureStream logStream = new LogCaptureStream();
-        PrintStream logPrintStream = new PrintStream(logStream, true);
-        
-        // Save original System.out
-        PrintStream originalOut = System.out;
-        
+        StringBuilder logBuffer = new StringBuilder();
+        REQUEST_LOG.set(logBuffer);
+
         try {
-            // Redirect System.out to capture logs
-            System.setOut(logPrintStream);
             
             Part filePart = request.getPart("cvFile");
             if (filePart == null || filePart.getSize() == 0) {
                 JSONObject errorResponse = new JSONObject();
                 errorResponse.put("error", "No file uploaded");
-                errorResponse.put("logs", logStream.getLogs());
+                errorResponse.put("logs", logBuffer.toString());
                 out.print(errorResponse.toString());
                 return;
             }
@@ -142,6 +153,13 @@ public class uploadProcess extends HttpServlet {
             breakdownCV parser = new breakdownCV();
             JSONObject result = parser.extractCVData(rawText);
 
+            // Save to profile DB if user is authenticated
+            boolean cvImported = false;
+            if (!"-1".equals(userID) && db != null && db.isValid()) {
+                cvImported = CVImportHelper.saveForLoggedInUser(db, orgId, userID, result);
+            }
+            result.put("cv_imported", cvImported);
+
             // Clean up temp file
             Files.deleteIfExists(tempFile);
             Files.deleteIfExists(tempDir);
@@ -149,18 +167,17 @@ public class uploadProcess extends HttpServlet {
             // Send JSON response with logs
             JSONObject responseObj = new JSONObject();
             responseObj.put("data", result);
-            responseObj.put("logs", logStream.getLogs());
+            responseObj.put("logs", logBuffer.toString());
             out.print(responseObj.toString(2));
 
         } catch (Exception ex) {
             ex.printStackTrace();
             JSONObject errorResponse = new JSONObject();
             errorResponse.put("error", "Processing failed: " + ex.getMessage());
-            errorResponse.put("logs", logStream.getLogs());
+            errorResponse.put("logs", logBuffer.toString());
             out.print(errorResponse.toString());
         } finally {
-            // Restore original System.out
-            System.setOut(originalOut);
+            REQUEST_LOG.remove();
             out.close();
         }
     }

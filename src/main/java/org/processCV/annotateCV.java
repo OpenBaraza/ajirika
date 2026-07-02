@@ -15,6 +15,7 @@ import java.nio.file.StandardOpenOption;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,11 +30,18 @@ import jakarta.servlet.http.Part;
 @WebServlet("/annotateCV/*")
 public class annotateCV extends HttpServlet {
 
-    private static final String TRAIN_FILE =
-        "/home/upao/Documents/ATTACHEMENT/ajirika/ner-training/cv-train.tsv";
-    
+    private String trainFile;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        trainFile = config.getServletContext().getRealPath("/WEB-INF/ner-training/cv-train.tsv");
+        java.io.File dir = new java.io.File(trainFile).getParentFile();
+        if (dir != null && !dir.exists()) dir.mkdirs();
+    }
+
     private static final java.util.regex.Pattern VALID_LABEL =
-        java.util.regex.Pattern.compile("^(O|[BI]-(PERSON|JOB_TITLE|DEGREE|ORGANIZATION))$");
+        java.util.regex.Pattern.compile("^(O|[BI]-(PERSON|JOB_TITLE|DEGREE|ORGANIZATION|LOCATION|COMPANY|CERTIFICATION))$");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -135,7 +143,7 @@ public class annotateCV extends HttpServlet {
         }
 
         synchronized (annotateCV.class) {
-            Path trainPath = Paths.get(TRAIN_FILE);
+            Path trainPath = Paths.get(trainFile);
             String prefix = "";
             if (Files.exists(trainPath) && Files.size(trainPath) > 0) {
                 try (java.io.RandomAccessFile raf = new java.io.RandomAccessFile(trainPath.toFile(), "r")) {
@@ -148,7 +156,7 @@ public class annotateCV extends HttpServlet {
         }
 
         long totalTokens;
-        try (var lineStream = Files.lines(Paths.get(TRAIN_FILE))) {
+        try (var lineStream = Files.lines(Paths.get(trainFile))) {
             totalTokens = lineStream.filter(l -> !l.isBlank()).count();
         }
 

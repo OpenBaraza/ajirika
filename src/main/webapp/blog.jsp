@@ -126,7 +126,7 @@
         </div>
       </a>
 
-      <!-- Post 6 -->
+      <!-- Post 6 
       <a href="<%= request.getContextPath() %>/blog/cv-annotation-interface.jsp" class="block blog-card bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden scroll-reveal delay-200">
         <div class="h-3 bg-gradient-to-r from-cyan-500 to-sky-500"></div>
         <div class="p-6">
@@ -142,7 +142,7 @@
           </div>
         </div>
       </a>
-
+      -->
     </div>
   </section>
 

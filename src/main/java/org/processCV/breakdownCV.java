@@ -30,24 +30,30 @@ public class breakdownCV {
     private static final Logger log = Logger.getLogger(breakdownCV.class.getName());
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("(?:\\+?\\d{1,3}[-.\\s]?)?\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}");
-    private static final Pattern PERSONAL_INFO_PATTERN = Pattern.compile("(?i)(?:name|email|phone|address|contact|mobile)\\s*:?\\s*([^\\n]+)");
+    private static final boolean DEBUG = false;
+    private static final Pattern PHONE_PATTERN = Pattern.compile("(?:\\+?\\d{1,3}[-.\\s]?)?(?:\\d[-.\\s]?){8,12}\\d");
+    private static final Pattern PERSONAL_INFO_PATTERN = Pattern.compile("(?im)^[ \\t]*(?:name|email|phone|address|contact|mobile)[ \\t]*:[ \\t]*([^\\n]+)");
     private static final Pattern DATE_RANGE_PATTERN2 = Pattern.compile(
         "(?i)(\\d{4}-\\d{2}-\\d{2}|(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\s*\\d{0,4}|\\d{4}|present|currently)\\s*[-–—]\\s*(\\d{4}-\\d{2}-\\d{2}|(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\s*\\d{0,4}|\\d{4}|present|currently)"
     );
-
+    private static final Pattern DATE_RANGE_PATTERN3 = Pattern.compile(
+        "(?i)(?:from\\s+)?((jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\s+\\d{4}|\\d{4})\\s+to\\s+((jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\s+\\d{4}|\\d{4}|present|currently)"
+    );
+    private static final Pattern EMBEDDED_DATE_PATTERN = Pattern.compile(
+        "(?i)(?:in|by|since|expected|finish|complete[sd]?)\\s+(?:in\\s+)?((jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\s+\\d{4})"
+    );
     private static final String[] SUMMARY_HEADERS = {"summary", "profile", "professional summary", "personal profile", "about me", "objective"};
     private static final String[] EDUCATION_HEADERS = {"education", "educational background", "academic qualifications", "academic background", "qualifications"};
     private static final String[] EXPERIENCE_HEADERS = {
         "experience", "work experience", "employment history", "professional experience",
         "career history", "work history", "employment", "professional background",
-        "practical experience", "certifications", "practical experience & certifications"
+        "practical experience", "practical cybersecurity experience", "certifications", "practical experience & certifications"
     };
     private static final String[] SKILLS_HEADERS = {"skills", "technical skills", "core competencies", "key skills", "professional skills"};
     private static final String[] REFERENCES_HEADERS = {"references", "referees", "professional references"};
     private static final String[] PROJECTS_HEADERS = {"projects", "personal projects", "project"};
 
-    private static final String[] DEGREE_TERMS = {"certificate", "bachelor", "master", "phd", "bsc", "msc", "diploma", "degree", "course"};
+    private static final String[] DEGREE_TERMS = {"certificate", "bachelor", "master", "phd", "bsc", "msc", "diploma", "degree", "course", "high school"};
     private static final String[] SCHOOL_TERMS = {"school", "college", "university", "institute", "academy", "polytechnic", "secondary"};
     private static final String[] PROFESSIONAL_TITLES = {
         "engineer", "senior", "supervisor", "developer", "manager", "analyst", "consultant",
@@ -96,7 +102,7 @@ public class breakdownCV {
 
         System.out.println("Plain text extracted: " + cvText.substring(0, Math.min(100, cvText.length())) + "...");
 
-        debugExtraction(cvText);
+        if (DEBUG) debugExtraction(cvText);
         Map<String, List<String>> sections = extractSections(cvText);
 
         System.out.println("\n=== SECTIONS EXTRACTION RESULTS ===");
@@ -188,10 +194,14 @@ public class breakdownCV {
             }
 
             if (currentSection != null) {
-                // Skip lines that are themselves section headers of other sections we don't track
-                // (e.g. PROJECTS — we don't have a projects bucket, stop adding to current section)
+                // Skip lines that are already section headers of untracked sections
                 if (isStopHeader(trimmed)) {
                     currentSection = null;
+                    continue;
+                }
+                if (EMAIL_PATTERN.matcher(trimmed).find()
+                        || PHONE_PATTERN.matcher(trimmed).find()
+                        || (trimmed.split(",").length == 2 && trimmed.length() < 30 && !containsAny(trimmed.toLowerCase(), DEGREE_TERMS))) {
                     continue;
                 }
                 sections.get(currentSection).add(trimmed);
@@ -223,7 +233,7 @@ public class breakdownCV {
         for (String h : SKILLS_HEADERS)   if (lower.equals(h) || lower.startsWith(h)) return "skills";
         for (String h : REFERENCES_HEADERS) if (lower.equals(h) || lower.startsWith(h)) return "references";
 
-        System.out.println("Checking header: '" + lower + "'");
+        if (DEBUG) System.out.println("Checking header: '" + lower + "'");
         return null;
     }
 
@@ -257,6 +267,19 @@ public class breakdownCV {
                 System.out.println("    -> date: " + rawdate);
                 continue;
             }
+            Matcher dm3 = DATE_RANGE_PATTERN3.matcher(lower);
+            if (dm3.find() && rawdate.isEmpty()) {
+                rawdate = dm3.group(1).trim() + " - " + dm3.group(3).trim();
+                // If the portion before the date contains a degree term, also save as certificate
+                String beforeDate = line.substring(0, dm3.start()).trim().replaceAll("[.,\\s]+$", "");
+                if (certificate.isEmpty() && !beforeDate.isEmpty()
+                        && containsAny(beforeDate.toLowerCase(), DEGREE_TERMS)) {
+                    certificate = beforeDate;
+                    System.out.println("    -> cert from to-range line: " + certificate);
+                }
+                System.out.println("    -> date (to-range): " + rawdate);
+                continue;
+            }
 
             // Degree/certificate detection
             // Handle combined lines like "UNIVERSITY NAME - Degree in X"
@@ -273,6 +296,15 @@ public class breakdownCV {
                 }
                 if (certificate.isEmpty()) {
                     certificate = line;
+                    // Extract an embedded single date from the same line
+                    // e.g. "BSc Computer Science. Expected finish in November 2027."
+                    if (rawdate.isEmpty()) {
+                        Matcher dem = EMBEDDED_DATE_PATTERN.matcher(lower);
+                        if (dem.find()) {
+                            rawdate = " - " + dem.group(1).trim();
+                            System.out.println("    -> date (embedded in cert): " + rawdate);
+                        }
+                    }
                     System.out.println("    -> certificate: " + certificate);
                     continue;
                 }
@@ -315,8 +347,23 @@ public class breakdownCV {
             }
         }
 
-        System.out.println("Education entries parsed: " + result.length());
-        return result;
+        // If two institutions share the same 10-char prefix keep only the longer (more complete) one
+        JSONArray deduped = new JSONArray();
+        for (int i = 0; i < result.length(); i++) {
+            String inst = result.getJSONObject(i).optString("institution", "");
+            String prefix = inst.substring(0, Math.min(10, inst.length()));
+            boolean superseded = false;
+            for (int j = 0; j < result.length(); j++) {
+                if (i == j) continue;
+                String other = result.getJSONObject(j).optString("institution", "");
+                if (other.startsWith(prefix) && other.length() > inst.length()) {
+                    superseded = true; break;
+                }
+            }
+            if (!superseded) deduped.put(result.getJSONObject(i));
+        }
+        System.out.println("Education entries parsed: " + deduped.length());
+        return deduped;
     }
 
     private JSONObject buildEducationEntry(String institute, String certificate, String rawdate) {
@@ -417,9 +464,8 @@ public class breakdownCV {
             currentCategory = line.substring(0, colon).trim();
             currentItems = new StringBuilder(line.substring(colon + 1).trim());
         } else {
-            // Continuation line — append to current category or add as standalone
             if (currentCategory != null) {
-                if (currentItems.length() > 0) currentItems.append(", ");
+                if (currentItems.length() > 0) currentItems.append(" ");
                 currentItems.append(line);
             } else {
                 joined.add(line);
@@ -517,6 +563,15 @@ public class breakdownCV {
                     personalInfo.put("corenlp_name", em.text());
                     System.out.println("[CoreNLP custom] Assigned name: " + em.text());
                 }
+                if (em.entityType().equals("LOCATION") && !personalInfo.has("location")) {
+                    personalInfo.put("location", em.text());
+                }
+                if (em.entityType().equals("COMPANY") && !personalInfo.has("current_company")) {
+                    personalInfo.put("current_company", em.text());
+                }
+                if (em.entityType().equals("CERTIFICATION") && !personalInfo.has("certification")) {
+                    personalInfo.put("certification", em.text());
+                }
             }
                 // Use CoreNLP name only if first-line heuristic produced something suspicious
                 // (contains digits or is longer than 40 chars it is probably not a name)
@@ -537,10 +592,7 @@ public class breakdownCV {
             Matcher m = EMAIL_PATTERN.matcher(plainText);
             if (m.find()) personalInfo.put("email", m.group(0));
         }
-        Matcher pm = PHONE_PATTERN.matcher(plainText);
-        if (pm.find()) personalInfo.put("phone", pm.group(0));
-
-        // Step 4: Labeled fields
+        // Step 4: Labeled fields 
         Matcher lm = PERSONAL_INFO_PATTERN.matcher(plainText);
         while (lm.find()) {
             String infoLine = lm.group(0).toLowerCase();
@@ -549,6 +601,12 @@ public class breakdownCV {
             else if (infoLine.contains("name") && !personalInfo.has("name")) personalInfo.put("name", value);
             else if ((infoLine.contains("phone") || infoLine.contains("mobile")) && !personalInfo.has("phone")) personalInfo.put("phone", value);
             else if (infoLine.contains("email") && !personalInfo.has("email")) personalInfo.put("email", value);
+        }
+
+        // Phone regex fallback (only if labeled-field scan didn't find phone)
+        if (!personalInfo.has("phone")) {
+            Matcher pm = PHONE_PATTERN.matcher(plainText.substring(0, Math.min(500, plainText.length())));
+            if (pm.find()) personalInfo.put("phone", pm.group(0));
         }
 
         result.put("personal_info", personalInfo);
@@ -562,7 +620,7 @@ public class breakdownCV {
 
     private String parseDateFlexible(String dateStr) {
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String trimmed = dateStr.trim();
+        String trimmed = dateStr.trim().replaceAll("\\s+", " ");
         if (trimmed.equalsIgnoreCase("present") || trimmed.equalsIgnoreCase("ongoing") || trimmed.equalsIgnoreCase("current"))
             return LocalDate.now().format(outputFormat);
         for (String pattern : fullDateFormats) {
@@ -586,20 +644,8 @@ public class breakdownCV {
         return false;
     }
 
-    private boolean containsAnyIgnoreCase(String text, String[] terms) {
-        String lower = text.toLowerCase();
-        for (String t : terms) if (lower.contains(t.toLowerCase())) return true;
-        return false;
-    }
-
-    private boolean isLikelyName(String text) {
-        String[] parts = text.split("\\s+");
-        if (parts.length < 2 || parts.length > 3) return false;
-        for (String p : parts) if (p.isEmpty() || !Character.isUpperCase(p.charAt(0))) return false;
-        return true;
-    }
-
     private void debugExtraction(String plainText) {
+        if (!DEBUG) return;
         System.out.println("=== DEBUG: Content length: " + plainText.length());
         System.out.println("First 300 chars:\n" + plainText.substring(0, Math.min(300, plainText.length())));
         System.out.println("\n=== DEBUG: SECTION HEADER SCAN ===");
