@@ -1196,7 +1196,7 @@
                                         </p>
                                         <input type="file" id="profileCVFile" accept=".pdf,.doc,.docx" style="margin-bottom:10px;" />
                                         <br>
-                                        <button type="button" id="runCVImport" class="btn btn-success">Import</button>
+                                        <button type="button" id="runCVImport" class="btn btn-primary">Import</button>
                                         <span id="cvImportProfileStatus" style="margin-left:12px; font-size:13px;"></span>
                                     </div>
                                     <!--end::Portlet-->
