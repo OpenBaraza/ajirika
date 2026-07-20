@@ -41,7 +41,10 @@
         ← Back to Blog
       </a>
       <div class="flex flex-wrap gap-2 mb-4">
-
+        <!--
+        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full"></span>
+        <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 bg-gray-100 text-gray-500 rounded-full"></span>
+      -->
       </div>
       <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">CV Annotation Interface and NER Dataset Expansion</h1>
       <p class="text-gray-500 text-sm">By <strong class="text-gray-700">Samuel Dabaly &amp; Upao Mazibo</strong> &nbsp;·&nbsp; Dew CIS Solutions</p>

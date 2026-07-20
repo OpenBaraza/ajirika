@@ -153,10 +153,13 @@ public class uploadProcess extends HttpServlet {
             breakdownCV parser = new breakdownCV();
             JSONObject result = parser.extractCVData(rawText);
 
-            // Save to profile DB if user is authenticated
+            // Save to profile DB 
+            boolean saveRequested = "true".equals(request.getParameter("save"));
+            System.out.println("[uploadProcess] saveRequested=" + saveRequested + " userID=" + userID + " dbValid=" + (db != null && db.isValid()));
             boolean cvImported = false;
-            if (!"-1".equals(userID) && db != null && db.isValid()) {
+            if (saveRequested && !"-1".equals(userID) && db != null && db.isValid()) {
                 cvImported = CVImportHelper.saveForLoggedInUser(db, orgId, userID, result);
+                System.out.println("[uploadProcess] saveForLoggedInUser returned=" + cvImported);
             }
             result.put("cv_imported", cvImported);
 

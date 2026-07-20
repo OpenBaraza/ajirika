@@ -51,7 +51,7 @@
   <article class="max-w-3xl mx-auto px-6 py-10 prose">
 
     <h2>Objective</h2>
-    <p>The previous phase established a working CoreNLP integration that correctly extracted emails and applied rule-based section detection, but failed on name recognition — CoreNLP's default models were trained on Western English news corpora and had no exposure to African naming conventions. "UPAO MAZIBO" received no PERSON tag; instead "Nmap" (a security tool) was incorrectly assigned as the candidate name.</p>
+    <p>The previous phase established a working CoreNLP integration that correctly extracted emails and applied rule-based section detection, but failed on name recognition CoreNLP's default models were trained on Western English news corpora and had no exposure to African naming conventions. "UPAO MAZIBO" received no PERSON tag; instead "Nmap" (a security tool) was incorrectly assigned as the candidate name.</p>
     <p>This phase documents the training of a <strong>custom CoreNLP NER model</strong> targeting four entity types specific to CV processing, its validation against test sentences, packaging into the Ajirika WAR, and integration into the live pipeline.</p>
 
     <h2>Training Overview</h2>
@@ -76,7 +76,7 @@ Developer   I-JOB_TITLE
 Intern      I-JOB_TITLE</code></pre>
 
     <h3>Dataset</h3>
-    <p>The training file <code>cv-train.tsv</code> was built manually by annotating CV text representative of the target demographic — East and Central African candidates in technology fields. It covered:</p>
+    <p>The training file <code>cv-train.tsv</code> was built manually by annotating CV text representative of the target demographic East and Central African candidates in technology fields. It covered:</p>
     <ul>
       <li>African personal names across multiple naming conventions including East African, Central African, and anglicised African names</li>
       <li>Job titles common in Kenyan and East African technology and finance sectors</li>
@@ -92,7 +92,7 @@ Intern      I-JOB_TITLE</code></pre>
       <tr><td><strong>Total tokens</strong></td><td><strong>5,329 across 332 documents</strong></td></tr>
     </table>
 
-    <h2>Stage 2 — Training Configuration</h2>
+    <h2>Stage 2: Training Configuration</h2>
     <p>File: <code>ner-training.properties</code></p>
     <pre><code>trainFile = /path/to/cv-train.tsv
 serializeTo = /path/to/cv-ner-model.ser.gz
@@ -113,12 +113,12 @@ useTypeSeqs2 = true
 useTypeySequences = true</code></pre>
     <p><strong>Key decisions:</strong></p>
     <ul>
-      <li><code>useNGrams</code> + <code>maxNGramLeng = 6</code> — allows the model to learn character-level subword patterns; important for African names which share morphological patterns (suffixes like -oti, -eki, -wanjiku, -adhiambo) that help generalise to unseen names</li>
+      <li><code>useNGrams</code> + <code>maxNGramLeng = 6</code> allows the model to learn character-level subword patterns; important for African names which share morphological patterns (suffixes like -oti, -eki, -wanjiku, -adhiambo) that help generalise to unseen names</li>
       <li><code>usePrev</code> + <code>useNext</code> gives context from surrounding tokens; a name is more likely after contextual tokens like "Name:" or at document start</li>
       <li><code>wordShape = chris2useLC</code> maps tokens to abstract shape representations (uppercase, lowercase, mixed) helping handle capitalisation patterns in CV formatting</li>
     </ul>
 
-    <h2>Stage 3 — Model Training</h2>
+    <h2>Stage 3: Model Training</h2>
     <p>Training run directly against the CoreNLP JAR from the local Maven cache:</p>
     <pre><code>java -Xmx4g \
   -cp ~/.m2/repository/edu/stanford/nlp/stanford-corenlp/4.5.10/stanford-corenlp-4.5.10.jar \
@@ -148,12 +148,12 @@ Africa/I-ORGANIZATION with/O a/O BSc/B-DEGREE Computer/I-DEGREE
 Science/I-DEGREE degree/O</code></pre>
     <div class="good">All four entity types tagged correctly on the first validation run. The model loaded in 0.1 seconds.</div>
 
-    <h2>Stage 5 — Model Packaging</h2>
+    <h2>Stage 5: Model Packaging</h2>
     <pre><code>cp ~/ner-training/cv-ner-model.ser.gz \
    src/main/resources/models/</code></pre>
     <p>Files in <code>src/main/resources/</code> are included in the WAR during the Maven build and accessible at runtime via <code>Class.getResourceAsStream("/models/cv-ner-model.ser.gz")</code>.</p>
 
-    <h2>Stage 6 — Pipeline Integration</h2>
+    <h2>Stage 6: Pipeline Integration</h2>
     <h3>Static Pipeline with Custom Model</h3>
     <pre><code>static {
     Properties props = new Properties();

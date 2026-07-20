@@ -6,7 +6,7 @@
        role="navigation"
        aria-label="Main navigation">
 
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center">
 
       <!-- Logo -->
       <a href="${pageContext.request.contextPath}/#home"
@@ -20,17 +20,22 @@
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden lg:flex items-center gap-5 whitespace-nowrap">
+      <div class="hidden lg:flex items-center gap-6 whitespace-nowrap ml-auto">
         <a href="${pageContext.request.contextPath}/#home" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a>
         <a href="${pageContext.request.contextPath}/#challenges" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Challenges</a>
-        <a href="${pageContext.request.contextPath}/#history" class="nav-link text-gray-700 hover:text-blue-600 font-medium">History</a>
         <a href="${pageContext.request.contextPath}/#actions" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Actions</a>
         <a href="${pageContext.request.contextPath}/#next-steps" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Next Steps</a>
+        <a href="${pageContext.request.contextPath}/#history" class="nav-link text-gray-700 hover:text-blue-600 font-medium">History</a>
         <a href="${pageContext.request.contextPath}/blog.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Process CV</a>
         <a href="${pageContext.request.contextPath}/annotate.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Annotate</a>
+        <% if (request.getUserPrincipal() != null) { %>
+        <a href="${pageContext.request.contextPath}/profile.jsp" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Profile</a>
+        <a href="${pageContext.request.contextPath}/logout.jsp?logoff=yes" class="btn-shimmer text-white px-5 py-2 rounded-lg font-semibold text-sm">Log Out</a>
+        <% } else { %>
         <a href="${pageContext.request.contextPath}/login.jsp" class="btn-shimmer text-white px-5 py-2 rounded-lg font-semibold text-sm">Log In</a>
+        <% } %>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -50,18 +55,23 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden lg:hidden mobile-menu mt-4 pb-4">"
+    <div id="mobileMenu" class="hidden lg:hidden mobile-menu mt-4 pb-4">
       <div class="flex flex-col gap-4">
         <a href="${pageContext.request.contextPath}/#home" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Home</a>
         <a href="${pageContext.request.contextPath}/#challenges" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Challenges</a>
-        <a href="${pageContext.request.contextPath}/#history" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">History</a>
         <a href="${pageContext.request.contextPath}/#actions" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Actions</a>
         <a href="${pageContext.request.contextPath}/#next-steps" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">Next Steps</a>
+        <a href="${pageContext.request.contextPath}/#history" class="text-gray-700 hover:text-blue-600 font-medium py-2 border-b border-gray-100">History</a>
         <a href="${pageContext.request.contextPath}/blog.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Blog</a>
         <a href="${pageContext.request.contextPath}/resume_guide.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">JSON CV</a>
         <a href="${pageContext.request.contextPath}/processCV.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Process CV</a>
         <a href="${pageContext.request.contextPath}/annotate.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Annotate</a>
+        <% if (request.getUserPrincipal() != null) { %>
+        <a href="${pageContext.request.contextPath}/profile.jsp" class="text-gray-700 hover:text-blue-600 font-medium py-2">Profile</a>
+        <a href="${pageContext.request.contextPath}/logout.jsp?logoff=yes" class="text-blue-600 font-semibold py-2">Log Out</a>
+        <% } else { %>
         <a href="${pageContext.request.contextPath}/login.jsp" class="text-blue-600 font-semibold py-2">Log In</a>
+        <% } %>
       </div>
     </div>
 

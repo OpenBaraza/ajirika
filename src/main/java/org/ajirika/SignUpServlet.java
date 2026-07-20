@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import org.baraza.DB.BDB;
 import org.json.JSONObject;
@@ -31,19 +32,49 @@ import jakarta.servlet.http.Part;
 public class SignUpServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private static final Pattern PASSWORD_PATTERN =
+        Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$");
+
+    private static final Pattern EMAIL_PATTERN =
+        Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String firstname = request.getParameter("firstname");
-        String middlename = request.getParameter("middlename");
-        String surname = request.getParameter("surname");
-        String email = request.getParameter("email").trim().toLowerCase();
-        String password = request.getParameter("password");
+        String firstname;
+        String middlename;
+        String surname;
+        String email;
+        String password;
+
+        try {
+            firstname = request.getParameter("firstname");
+            middlename = request.getParameter("middlename");
+            surname = request.getParameter("surname");
+            email = request.getParameter("email");
+            password = request.getParameter("password");
+        } catch (IllegalStateException uploadTooLarge) {
+            uploadTooLarge.printStackTrace();
+            response.sendRedirect("jbseekerlanding.jsp?error=file_too_large");
+            return;
+        }
 
         if (firstname == null || surname == null || email == null || password == null ||
             firstname.trim().isEmpty() || surname.trim().isEmpty() ||
             email.trim().isEmpty() || password.trim().isEmpty()) {
             response.sendRedirect("jbseekerlanding.jsp?error=missing_fields");
+            return;
+        }
+
+        email = email.trim().toLowerCase();
+
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            response.sendRedirect("jbseekerlanding.jsp?error=invalid_email");
+            return;
+        }
+
+        if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            response.sendRedirect("jbseekerlanding.jsp?error=weak_password");
             return;
         }
 

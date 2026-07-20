@@ -39,6 +39,8 @@ public class EmailCheckServlet extends HttpServlet {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                dbConn.close();
             }
         }
 

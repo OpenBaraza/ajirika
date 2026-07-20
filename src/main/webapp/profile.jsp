@@ -352,27 +352,7 @@
 
 
         <!-- Navigation Bar -->
-        <nav id="navbar" class="navbar fixed top-0 left-0 right-0 w-full z-50 bg-white shadow">
-            <%-- <div class="max-w-7xl mx-auto px-6 py-4"> --%>
-                <div class="flex items-center justify-between w-full px-10 py-4">
-                    
-                    <!-- Logo -->
-                    <a href="index.jsp" class="flex items-center gap-2 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
-                            <span class="text-white font-bold text-xl">A</span>
-                        </div>
-                        <span class="text-xl font-bold gradient-text-blue">Project Ajirika</span>
-                    </a>
-
-                    <!-- Logout Button -->
-                    <a href="logout.jsp?logoff=yes"
-                    class="px-4 py-2 rounded-lg font-medium text-white bg-red-600 hover:bg-red-700 transition">
-                    Log Out
-                    </a>
-
-                </div>
-            <%-- </div> --%>
-        </nav>
+        <jsp:include page="/includes/header.jsp" />
 
         <!-- begin::Body -->
         <section class="py-8">
@@ -419,7 +399,7 @@
 
                                         <!-- Name -->
                                         <div class="mb-4">
-                                            <h2 id="new_surname" class="text-3xl font-bold text-gray-800"></h2>
+                                            <h2 id="new_surname" data-display="surname" class="text-3xl font-bold text-gray-800"></h2>
                                         </div>
 
                                         <!-- Contact Info -->
@@ -427,19 +407,19 @@
                                             <!-- Email -->
                                             <div id="new_applicant_email" class="flex items-center text-gray-700">
                                                 <i class="fas fa-envelope text-gray-400 mr-3 text-lg"></i>
-                                                <span class="text-gray-700"></span>
+                                                <span data-display="email" class="text-gray-700"></span>
                                             </div>
                                             
                                             <!-- Phone -->
                                             <div id="new_applicant_phone" class="flex items-center text-gray-700">
                                                 <i class="fas fa-phone text-gray-400 mr-3 text-lg"></i>
-                                                <span class="text-gray-700"></span>
+                                                <span data-display="phone" class="text-gray-700"></span>
                                             </div>
                                             
                                             <!-- Country -->
                                             <div id="new_home_country" class="flex items-center text-gray-700">
                                                 <i class="fas fa-globe-africa text-gray-400 mr-3 text-lg"></i>
-                                                <span class="text-gray-700"></span>
+                                                <span data-display="nationality" class="text-gray-700"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -478,7 +458,7 @@
                                     <!-- Begin: Employment Section -->
                                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                                         <div class="flex items-center justify-between p-4">
-                                            <h3 class="text-lg font-semibold">Employment</h3>
+                                            <h3 class="text-lg font-semibold">Experience</h3>
                                             <button
                                             class="dropdown-arrow w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors focus:outline-none"
                                             aria-expanded="false" data-target="#employmentPortlet"
@@ -793,7 +773,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Employment</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 												</button>
@@ -1152,7 +1132,7 @@
                                                     <div class="m-widget4">
                                                         <div class="m-widget4__item pb-0">
                                                             <div class="m-widget4__info px-0">
-                                                                <span class="m-widget4__title">Employment</span><br>
+                                                                <span class="m-widget4__title">Experience</span><br>
                                                                 <div id="resumeEmployment"></div>
                                                             </div>
                                                         </div>
@@ -1222,6 +1202,7 @@
      <jsp:include page="/includes/footer.jsp" />
 
     <!--begin::Global Theme Bundle -->
+    <script src="<%= request.getContextPath() %>/javascript/indexscript.js"></script>
     <script src="assets/resume/vendor/vendors.bundle.js" type="text/javascript"></script>
     <script src="assets/resume/vendor/scripts.bundle.js" type="text/javascript"></script>
 
@@ -1266,10 +1247,10 @@
             }
         });
 
-        $('#detailsForm .m-input').on('change', function() {
+        $('#detailsForm .m-input').each(function() {
             var textValue = $(this).val();
             var target = $(this).attr('name');
-            $("[data-display=" + target + "]").html(textValue);
+            if (target) $("[data-display=" + target + "]").html(textValue);
         });
 
         $(".m-input").on('change', function() {
@@ -1333,6 +1314,7 @@
 
                 var formData = new FormData();
                 formData.append('cvFile', file);
+                formData.append('save', 'true');    
 
                 try {
                     var res = await fetch('<%= request.getContextPath() %>/processCV', {
@@ -1348,7 +1330,8 @@
 
                     if (data.data && data.data.cv_imported) {
                         statusEl.style.color = '#16a34a';
-                        statusEl.textContent = '✓ Profile updated from CV. Refresh to see changes.';
+                        statusEl.textContent = '✓ Profile updated from CV.';
+                        renderCvContentPreview(JSON.stringify(data.data));
                     } else {
                         statusEl.style.color = '#374151';
                         statusEl.textContent = 'CV processed. Log out and back in if fields are missing.';

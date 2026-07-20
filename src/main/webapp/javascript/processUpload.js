@@ -1,3 +1,12 @@
+function escapeHtml(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 async function processCV() {
     const fileInput = document.getElementById('cvFile');
     const file = fileInput.files[0];
@@ -11,6 +20,10 @@ async function processCV() {
 
     const formData = new FormData();
     formData.append('cvFile', file);
+    const saveCheckbox = document.getElementById('saveToProfile');
+    if (saveCheckbox && saveCheckbox.checked) {
+        formData.append('save', 'true');
+    }
 
     try {
         const response = await fetch('processCV', {
@@ -36,12 +49,6 @@ async function processCV() {
         }
 
         // Personal Info
-
-        if (result.cv_imported) {
-            addLog('\n Profile fields saved to your account from this CV.');
-        }
-
-        // Personal Info
         const info = result.personal_info || {};
         document.getElementById('infoName').textContent = info.name || '—';
         document.getElementById('infoEmail').textContent = info.email || '—';
@@ -56,8 +63,8 @@ async function processCV() {
                 const from = edu['edu-from'];
                 const to = edu['edu-to'] || '—';
                 const dateRange = from ? `${from} – ${to}` : to;
-                div.innerHTML = `<strong>${edu.institution || edu.school || '—'}</strong><br/>
-                                 ${edu.certification || edu.degree || '—'} (${dateRange})`;
+                div.innerHTML = `<strong>${escapeHtml(edu.institution || edu.school || '—')}</strong><br/>
+                                 ${escapeHtml(edu.certification || edu.degree || '—')} (${escapeHtml(dateRange)})`;
                 eduSection.appendChild(div);
                 eduSection.appendChild(document.createElement('hr'));
             });
@@ -77,15 +84,15 @@ async function processCV() {
                 const description = exp.description || '';
 
                 if (role && employer) {
-                    div.innerHTML = `<strong>${role}</strong> at <em>${employer}</em><br/>${dates}`;
+                    div.innerHTML = `<strong>${escapeHtml(role)}</strong> at <em>${escapeHtml(employer)}</em><br/>${escapeHtml(dates)}`;
                 } else if (role) {
                     const colonIdx = description.indexOf(':');
                     const descBody = colonIdx > 0 ? description.substring(colonIdx + 1).trim() : '';
                     div.innerHTML = descBody
-                        ? `<strong>${role}</strong><br/>${descBody}`
-                        : `<strong>${role}</strong>`;
+                        ? `<strong>${escapeHtml(role)}</strong><br/>${escapeHtml(descBody)}`
+                        : `<strong>${escapeHtml(role)}</strong>`;
                 } else {
-                    div.innerHTML = description;
+                    div.innerHTML = escapeHtml(description);
                 }
 
                 expSection.appendChild(div);
@@ -119,7 +126,7 @@ async function processCV() {
                 Object.entries(groups).forEach(([category, skills]) => {
                     const catDiv = document.createElement('div');
                     catDiv.style.marginBottom = '8px';
-                    catDiv.innerHTML = `<strong>${category}:</strong> ${skills.join(', ')}`;
+                    catDiv.innerHTML = `<strong>${escapeHtml(category)}:</strong> ${escapeHtml(skills.join(', '))}`;
                     skillsSection.appendChild(catDiv);
                 });
             } else {
@@ -141,10 +148,10 @@ async function processCV() {
         if (result.references && result.references.length > 0) {
             result.references.forEach(ref => {
                 const div = document.createElement('div');
-                div.innerHTML = `<strong>${ref.name || ref['referee-name'] || '—'}</strong><br/>
-                                 ${ref.role || ref['referee-position'] || '—'}<br/>
-                                 ${ref.organization || ref['referee-company'] || '—'}<br/>
-                                 ${ref.contact || ref['referee-email'] || ref.phone || ''}`;
+                div.innerHTML = `<strong>${escapeHtml(ref.name || ref['referee-name'] || '—')}</strong><br/>
+                                 ${escapeHtml(ref.role || ref['referee-position'] || '—')}<br/>
+                                 ${escapeHtml(ref.organization || ref['referee-company'] || '—')}<br/>
+                                 ${escapeHtml(ref.contact || ref['referee-email'] || ref.phone || '')}`;
                 refsSection.appendChild(div);
                 refsSection.appendChild(document.createElement('hr'));
             });
@@ -161,6 +168,6 @@ async function processCV() {
 
 function addLog(message) {
     const logOutput = document.getElementById('logOutput');
-    logOutput.innerHTML += message + '\n';
+    logOutput.innerHTML += escapeHtml(message) + '\n';
     logOutput.scrollTop = logOutput.scrollHeight;
 }

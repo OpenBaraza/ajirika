@@ -13,6 +13,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
     <script src="<%=request.getContextPath()%>/javascript/processUpload.js?1012" defer></script>
+    <script src="<%= request.getContextPath() %>/javascript/indexscript.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,13 +81,17 @@
 
     <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold mb-6 leading-tight text-center">CV Processing System</h1>
 
-    <!-- Upload Form (Above Tabs) -->
+    <!-- Upload Form -->
     <div class="upload-container">
         <form id="cvForm" enctype="multipart/form-data">
             <div class="section">
                 <h3>Upload & Process CV</h3>
                 <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx" required />
                 <br><br>
+                <% if (request.getUserPrincipal() != null) { %>
+                <label><input type="checkbox" id="saveToProfile" /> Save details to user profile</label>
+                <br><br>
+                <% } %>
                 <button type="button" onclick="processCV()">Process CV</button>
             </div>
         </form>

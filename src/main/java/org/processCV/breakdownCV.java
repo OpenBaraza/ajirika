@@ -194,14 +194,11 @@ public class breakdownCV {
             }
 
             if (currentSection != null) {
-                // Skip lines that are already section headers of untracked sections
-                if (isStopHeader(trimmed)) {
-                    currentSection = null;
-                    continue;
-                }
-                if (EMAIL_PATTERN.matcher(trimmed).find()
+                if (isStopHeader(trimmed)) { currentSection = null; continue; }
+                boolean isReferences = "references".equals(currentSection);
+                if (!isReferences && (EMAIL_PATTERN.matcher(trimmed).find()
                         || PHONE_PATTERN.matcher(trimmed).find()
-                        || (trimmed.split(",").length == 2 && trimmed.length() < 30 && !containsAny(trimmed.toLowerCase(), DEGREE_TERMS))) {
+                        || (trimmed.split(",").length == 2 && trimmed.length() < 30 && !containsAny(trimmed.toLowerCase(), DEGREE_TERMS)))) {
                     continue;
                 }
                 sections.get(currentSection).add(trimmed);
@@ -539,6 +536,7 @@ public class breakdownCV {
         for (String line : plainText.split("\\r?\\n")) {
             String trimmed = line.trim();
             if (trimmed.isEmpty() || trimmed.startsWith("http") || trimmed.startsWith("mailto:")) continue;
+            if (detectSectionHeader(trimmed) != null) continue;
             if (trimmed.length() > 2 && trimmed.length() < 60 && !trimmed.contains("@") && !trimmed.matches(".*\\d{5,}.*")) {
                 String namePart = trimmed.split("[|,+]")[0].trim();
                 if (namePart.length() > 2) {

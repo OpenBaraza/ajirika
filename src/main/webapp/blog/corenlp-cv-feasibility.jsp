@@ -57,7 +57,7 @@
     <p>The test question was deliberately narrow: <em>Can Stanford CoreNLP meaningfully process and understand a CV-sized document instead of a few sentences?</em></p>
 
     <h2>Why Stanford CoreNLP Was Explored</h2>
-    <p>Ajirika is a Human Capital Management platform. A natural evolution is automated CV/resume parsing — extracting structured information from unstructured candidate documents. CoreNLP was selected because:</p>
+    <p>Ajirika is a Human Capital Management platform. A natural evolution is automated CV/resume parsing extracting structured information from unstructured candidate documents. CoreNLP was selected because:</p>
     <ul>
       <li>It is <strong>Java-native</strong>, matching Ajirika's backend language</li>
       <li>It is <strong>open-source and free</strong> no API costs or rate limits</li>
@@ -146,7 +146,7 @@ for (CoreEntityMention em : document.entityMentions()) {
     <ul>
       <li><strong>Option 1: Custom NER training</strong>: train on annotated African CVs (~500–1000 labelled). High accuracy, high effort.</li>
       <li><strong>Option 2: Rule-based post-processing</strong>: use CoreNLP for dates/emails/cities and layer keyword rules for skills and name extraction. Pragmatic hybrid.</li>
-      <li><strong>Option 3: Transformer-based model</strong> (bert-base-NER, spaCy): highest accuracy but Python-ecosystem — requires a microservice bridge.</li>
+      <li><strong>Option 3: Transformer-based model</strong> (bert-base-NER, spaCy): highest accuracy but Python-ecosystem requires a microservice bridge.</li>
       <li><strong>Option 4: Dedicated CV parsing API</strong> (Affinda, RChilli): lowest effort, immediate results, handles African names out of the box.</li>
     </ul>
 

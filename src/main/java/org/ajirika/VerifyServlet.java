@@ -45,6 +45,8 @@ public class VerifyServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("verification_failed.jsp");
+        } finally {
+            dbConn.close();
         }
     }
 }

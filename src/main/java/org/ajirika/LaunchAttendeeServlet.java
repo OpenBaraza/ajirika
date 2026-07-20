@@ -40,6 +40,8 @@ public class LaunchAttendeeServlet extends HttpServlet {
       stmt.close();
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
+      dbConn.close();
     }
     response.sendRedirect("index.jsp?success=true");
   }

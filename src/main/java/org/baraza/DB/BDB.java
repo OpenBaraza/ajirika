@@ -251,7 +251,7 @@ public class BDB {
 		} catch (SQLException ex) {
 			rst = ex.toString();
 			lastErrorMsg = ex.getMessage();
-			System.err.println("Database transaction get data error : " + ex);
+			log.severe("Database transaction get data error : " + ex);
 		}
 
 		return rst;
@@ -676,6 +676,21 @@ public class BDB {
 		return es;
 	}
 	
+	public String saveRecWithWhere(String sqlWithTrailingParam, Map<String, String> addNewBlock, String whereParam) {
+		try {
+			PreparedStatement ps = db.prepareStatement(sqlWithTrailingParam);
+			int col = 1;
+			for (String v : addNewBlock.values()) ps.setString(col++, v);
+			ps.setString(col, whereParam);
+			ps.executeUpdate();
+			ps.close();
+			return null;
+		} catch (SQLException ex) {
+			log.severe("saveRecWithWhere error : " + ex);
+			return ex.getMessage();
+		}
+	}
+
 	public String saveRec(String inSql, Map<String, String> addNewBlock) {
 		String errMsg = null;
 		String keyFieldId = null;

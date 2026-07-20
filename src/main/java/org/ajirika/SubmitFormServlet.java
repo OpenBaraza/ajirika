@@ -44,6 +44,8 @@ public class SubmitFormServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            dbConn.close();
         }
 
         // Redirect after submission

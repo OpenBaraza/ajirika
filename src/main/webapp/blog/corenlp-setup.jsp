@@ -138,7 +138,7 @@ export PATH=$JAVA_HOME/bin:$PATH</code></pre>
       <li><strong>ner</strong> identifies named entities (PERSON, ORG, CITY, DATE, etc.)</li>
     </ul>
 
-    <h3>Implementation — App.java</h3>
+    <h3>Implementation: App.java</h3>
     <pre><code>Properties props = new Properties();
 props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner");
 
@@ -174,7 +174,7 @@ mvn package -Dmaven.test.skip=true
 java -jar target/corenlp-demo-1.0-SNAPSHOT.jar</code></pre>
 
     <h2>Test Output &amp; Analysis</h2>
-    <h3>Sentence 1 — Named People</h3>
+    <h3>Sentence 1: Named People</h3>
     <table>
       <tr><th>Token</th><th>POS</th><th>Lemma</th><th>NER</th></tr>
       <tr><td>Samuel</td><td>NNP</td><td>Samuel</td><td>PERSON</td></tr>
@@ -184,7 +184,7 @@ java -jar target/corenlp-demo-1.0-SNAPSHOT.jar</code></pre>
       <tr><td>are</td><td>VBP</td><td>be</td><td>O</td></tr>
       <tr><td>students</td><td>NNS</td><td>student</td><td>O</td></tr>
     </table>
-    <h3>Sentence 3 — Organisation &amp; Location</h3>
+    <h3>Sentence 3: Organisation &amp; Location</h3>
     <table>
       <tr><th>Token</th><th>POS</th><th>Lemma</th><th>NER</th></tr>
       <tr><td>Apple</td><td>NNP</td><td>Apple</td><td>ORGANIZATION</td></tr>
@@ -201,7 +201,7 @@ java -jar target/corenlp-demo-1.0-SNAPSHOT.jar</code></pre>
       <tr><td>1</td><td><code>java</code> and <code>javac</code> reporting different versions</td><td>Manually registered <code>javac</code> via <code>update-alternatives</code> at priority 2511</td></tr>
       <tr><td>2</td><td><code>JAVA_HOME</code> pointing at Java 17</td><td>Updated to Java 25 path and re-sourced shell config</td></tr>
       <tr><td>3</td><td>Test compilation failure during <code>mvn package</code></td><td>Used <code>-Dmaven.test.skip=true</code> to bypass test compilation</td></tr>
-      <tr><td>4</td><td><code>Unable to access jarfile target/corenlp-demo.jar</code></td><td>Shade plugin appends version string — used full filename</td></tr>
+      <tr><td>4</td><td><code>Unable to access jarfile target/corenlp-demo.jar</code></td><td>Shade plugin appends version string used full filename</td></tr>
     </table>
 
     <h2>Key Takeaways</h2>

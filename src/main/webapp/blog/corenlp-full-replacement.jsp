@@ -71,7 +71,7 @@
 
     <h3>Compilation Failures Encountered</h3>
     <p>Removing OpenNLP before fixing all dependent files produced <strong>24 compilation errors</strong>. The errors were in <code>App.java</code> and <code>breakdownCV.java</code>, both of which still imported <code>opennlp.tools.sentdetect</code> classes directly.</p>
-    <p><code>App.java</code> retained active imports for <code>SentenceDetectorME</code>, <code>SentenceModel</code>, <code>TrainingParameters</code>, and five more — all used in the <code>trainCustSentModel</code> method. That method was replaced with a no-op and all eight imports were removed.</p>
+    <p><code>App.java</code> retained active imports for <code>SentenceDetectorME</code>, <code>SentenceModel</code>, <code>TrainingParameters</code>, and five more all used in the <code>trainCustSentModel</code> method. That method was replaced with a no-op and all eight imports were removed.</p>
     <div class="note">The distinction between <code>-DskipTests</code> and <code>-Dmaven.test.skip=true</code> is critical. <code>-DskipTests</code> skips test <em>execution</em> but still compiles test sources. Since <code>AppTest.java</code> referenced JUnit classes that had been removed, compilation still failed. The correct flag is <code>-Dmaven.test.skip=true</code>.</div>
 
     <h2>Phase 7: readCV Reconstruction Fix</h2>
@@ -82,15 +82,15 @@
     <p><code>detectSectionHeader</code> rejected it because it exceeded the 60-character limit applied to candidate headers.</p>
 
     <h3>Fix Applied</h3>
-    <p>Rewritten to use <code>BodyContentHandler</code> instead of <code>ToXMLContentHandler</code>. <code>BodyContentHandler</code> produces clean plain text from Tika with natural line breaks preserved — no secondary HTML parsing needed.</p>
-    <pre><code>// Before — Jsoup + ToXMLContentHandler
+    <p>Rewritten to use <code>BodyContentHandler</code> instead of <code>ToXMLContentHandler</code>. <code>BodyContentHandler</code> produces clean plain text from Tika with natural line breaks preserved no secondary HTML parsing needed.</p>
+    <pre><code>// Before Jsoup + ToXMLContentHandler
 ToXMLContentHandler xmlHandler = new ToXMLContentHandler();
 AutoDetectParser parser = new AutoDetectParser();
 parser.parse(stream, xmlHandler, metadata, context);
 Document doc = Jsoup.parse(xmlHandler.toString());
 // ... complex heuristic joining logic
 
-// After — BodyContentHandler (clean plain text)
+// After BodyContentHandler (clean plain text)
 BodyContentHandler handler = new BodyContentHandler(-1);
 AutoDetectParser parser = new AutoDetectParser();
 parser.parse(stream, handler, metadata, context);
@@ -108,10 +108,10 @@ line = line.replaceAll("^[a-z0-9]{1,3}\\.\\s*", "");
 // Then match against keyword lists</code></pre>
     <p>Additional changes:</p>
     <ul>
-      <li>65-character length guard — long content lines can never be mistaken for headers</li>
+      <li>65-character length guard long content lines can never be mistaken for headers</li>
       <li>URL and mailto lines explicitly skipped in the line iteration loop</li>
       <li>A PROJECTS header list added to null the current section on "projects" headers</li>
-      <li>Pre-section content (before the first header) intentionally ignored — this was the source of summary paragraph contamination into education/references buckets</li>
+      <li>Pre-section content (before the first header) intentionally ignored this was the source of summary paragraph contamination into education/references buckets</li>
     </ul>
 
     <h3>Education Parsing</h3>
@@ -121,7 +121,7 @@ line = line.replaceAll("^[a-z0-9]{1,3}\\.\\s*", "");
 
     <h3>Experience Parsing</h3>
     <p>The previous parser attempted to group lines into job blocks by splitting on blank lines. This failed because the test CV had no blank lines between experience entries.</p>
-    <p>The new implementation processes <strong>experience line by line</strong>, treating each bullet line as a self-contained entry. This produces one JSON object per experience line rather than attempting to group lines into job blocks — appropriate for CVs where each bullet is an independent activity.</p>
+    <p>The new implementation processes <strong>experience line by line</strong>, treating each bullet line as a self-contained entry. This produces one JSON object per experience line rather than attempting to group lines into job blocks appropriate for CVs where each bullet is an independent activity.</p>
 
     <h3>Skills Parsing</h3>
     <p>Previous skills parser attempted to split on bullet characters that the PDF parser encoded as multi-byte sequences not in the delimiter list, causing the entire skills section to be treated as one unsplit string.</p>
@@ -144,8 +144,8 @@ line = line.replaceAll("^[a-z0-9]{1,3}\\.\\s*", "");
       <tr><td>Name</td><td>UPAO MAZIBO</td><td> Correct</td></tr>
       <tr><td>Email</td><td>mazibohoppo@gmail.com</td><td> Correct</td></tr>
       <tr><td>Phone</td><td>+254746782795</td><td> Correct</td></tr>
-      <tr><td>Education</td><td>1 entry, institution + cert populated</td><td> Partial — edu-from unparsed</td></tr>
-      <tr><td>Experience</td><td>4 entries, role extracted for 2</td><td> Partial — company field empty</td></tr>
+      <tr><td>Education</td><td>1 entry, institution + cert populated</td><td> Partial edu-from unparsed</td></tr>
+      <tr><td>Experience</td><td>4 entries, role extracted for 2</td><td> Partial company field empty</td></tr>
       <tr><td>Skills</td><td>28 items with category metadata</td><td> Correct</td></tr>
     </table>
 
@@ -160,10 +160,10 @@ line = line.replaceAll("^[a-z0-9]{1,3}\\.\\s*", "");
 
     <h2>Remaining Challenges</h2>
     <ul>
-      <li><strong>edu-from "May 2024" unparsed</strong> — double space between month and year doesn't match <code>DateTimeFormatter</code>; fix: normalise whitespace before parsing</li>
+      <li><strong>edu-from "May 2024" unparsed</strong> double space between month and year doesn't match <code>DateTimeFormatter</code>; fix: normalise whitespace before parsing</li>
       <li><strong>PDF bullet garbage bytes surviving stripBullet</strong> extend regex character class for PDF-specific multi-byte bullet sequences</li>
-      <li><strong>PDF experience line fragmentation</strong> — wrapped bullet lines produce two separate entries; fix: continuation line merging heuristic</li>
-      <li><strong>No summary section captured</strong> — pre-section content is intentionally ignored; capturing it requires explicitly identifying the prose block between header and first section</li>
+      <li><strong>PDF experience line fragmentation</strong> wrapped bullet lines produce two separate entries; fix: continuation line merging heuristic</li>
+      <li><strong>No summary section captured</strong> pre-section content is intentionally ignored; capturing it requires explicitly identifying the prose block between header and first section</li>
     </ul>
 
     <h2>Technical Debt Observations</h2>

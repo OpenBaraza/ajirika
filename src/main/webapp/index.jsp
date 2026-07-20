@@ -35,9 +35,7 @@
     <div class="relative max-w-6xl mx-auto px-6 pb-8 pt-16">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="animate-fade-in-up">
-          <div class="inline-block mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold animate-scale-in">
-            Building the Future of Recruitment
-          </div>
+
           <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Project <span class="gradient-text-blue">Ajirika</span>
           </h1>
@@ -50,12 +48,12 @@
             <span class="font-medium text-gray-800">HR professionals</span> can use seamlessly.  
             Your profile becomes a reusable <a href="resume_guide.jsp" class="text-blue-700 font-semibold hover:underline">
               JSON CV
-            </a> — standardized, shareable, 
+            </a> standardized, shareable, 
             and readable by any job platform.
           </p>
 
           <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-            For applicants, it means applying once — anywhere.  
+            For applicants, it means applying once anywhere.  
             For recruiters, it means receiving structured, consistent candidate data.  
             Together, we’re building a smarter, faster hiring ecosystem.
           </p>
@@ -96,7 +94,7 @@
                   <div class="h-2 bg-gray-100 rounded w-1/2 mt-2"></div>
                 </div>
               </div>
-              <div class="mt-6 text-sm text-gray-400">Sample CV — human-readable fields</div>
+              <div class="mt-6 text-sm text-gray-400">Sample CV human-readable fields</div>
             </div>
 
             <!-- JSON Card -->
@@ -116,7 +114,7 @@
               </div>
 
               <div class="text-xs text-gray-400 px-4 py-2 border-t border-gray-100">
-                Machine-readable — ready to export / share
+                Machine-readable ready to export / share
               </div>
             </div>
 

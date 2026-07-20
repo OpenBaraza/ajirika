@@ -5,62 +5,151 @@ let skills = [];
 let projects = [];
 let referees = [];
 
-// let displayApplicant = function(applicant) {
-// 	if (applicant.length > 0) {
-// 		let applicantData = applicant.pop();
-// 		for( let field of Object.keys(applicantData) ) {
-// 			if(field == 'cv_data') {
-// 				document.getElementById("cv_data_id").innerHTML = applicantData[field];
-// 			} else {
-// 				$("[name='"+field+"']").val(applicantData[field]);
-// 				$("[data-display="+field+"]").html(applicantData[field]);
-// 			}
-// 		}
-// 		// calculateProgress();
-// 	}
-// };
-
 function renderEmptyMessage(container) {
   container.html('<p class="text-gray-500 italic">No items found.</p>');
 }
+
+function escapeHtml(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+let renderCvContentPreview = function (cvDataStr) {
+  let resumeExperience = $("#resumeEmployment");
+  let resumeSkillsPreview = $("#resumeSkills");
+  let resumeRefereesPreview = $("#resumeReferees");
+
+  if (!cvDataStr) {
+    renderEmptyMessage(resumeExperience);
+    renderEmptyMessage(resumeSkillsPreview);
+    renderEmptyMessage(resumeRefereesPreview);
+    return;
+  }
+
+  let cv;
+  try {
+    cv = JSON.parse(cvDataStr);
+  } catch (err) {
+    console.error("Could not parse cv_data:", err);
+    return;
+  }
+
+  let experience = cv.experience || [];
+  if (experience.length > 0) {
+    let expHtml = "";
+    experience.forEach(function (exp) {
+      let role = exp.role || exp.position || "";
+      let employer = exp.employer || exp.company || "";
+      let description = exp.description || "";
+
+      if (role && employer) {
+        expHtml +=
+          '<span class="block mb-1 text-gray-700"><strong>' +
+          escapeHtml(role) +
+          "</strong> at <em>" +
+          escapeHtml(employer) +
+          "</em></span>";
+      } else if (role) {
+        expHtml +=
+          '<span class="block mb-1 text-gray-700"><strong>' +
+          escapeHtml(role) +
+          "</strong></span>";
+      } else {
+        expHtml +=
+          '<span class="block mb-1 text-gray-700">' + escapeHtml(description) + "</span>";
+      }
+    });
+    resumeExperience.html(expHtml);
+  } else {
+    renderEmptyMessage(resumeExperience);
+  }
+
+  let cvSkills = cv.skills || [];
+  if (cvSkills.length > 0) {
+    let hasCategories = cvSkills.some((s) => typeof s === "object" && s.category);
+    let skillsHtml = "";
+
+    if (hasCategories) {
+      let groups = {};
+      cvSkills.forEach(function (s) {
+        if (typeof s === "object" && s.category) {
+          let cat = s.category.replace(/[^\x20-\x7E]/g, "").trim() || "Other";
+          if (!groups[cat]) groups[cat] = [];
+          groups[cat].push(s.skill);
+        } else if (typeof s === "string") {
+          if (!groups["Other"]) groups["Other"] = [];
+          groups["Other"].push(s);
+        }
+      });
+      Object.entries(groups).forEach(function ([category, catSkills]) {
+        skillsHtml +=
+          '<span class="block mb-1 text-gray-700"><strong>' +
+          escapeHtml(category) +
+          ":</strong> " +
+          escapeHtml(catSkills.join(", ")) +
+          "</span>";
+      });
+    } else {
+      cvSkills.forEach(function (s) {
+        let skillText = typeof s === "string" ? s : (s.skill || "");
+        skillsHtml += '<span class="block mb-1 text-gray-700">' + escapeHtml(skillText) + "</span>";
+      });
+    }
+    resumeSkillsPreview.html(skillsHtml);
+  } else {
+    renderEmptyMessage(resumeSkillsPreview);
+  }
+
+  let cvReferees = cv.references || [];
+  if (cvReferees.length > 0) {
+    let refHtml = "";
+    cvReferees.forEach(function (ref) {
+      refHtml +=
+        '<span class="block mb-1 text-gray-700">' +
+        escapeHtml(ref.name || ref["referee-name"] || "—") +
+        (ref.organization ? ", " + escapeHtml(ref.organization) : "") +
+        (ref.role ? ", " + escapeHtml(ref.role) : "") +
+        (ref.contact ? ", " + escapeHtml(ref.contact) : "") +
+        "</span>";
+    });
+    resumeRefereesPreview.html(refHtml);
+  } else {
+    renderEmptyMessage(resumeRefereesPreview);
+  }
+};
 
 let displayApplicant = function (applicant) {
   console.log("displayApplicant reached");
   if (applicant.length > 0) {
     let applicantData = applicant.pop();
 
-    // for (let field of Object.keys(applicantData)) {
-    //     if (field == 'cv_data') {
-    //         // Special case for CV content
-    //         document.getElementById("cv_data_id").innerHTML = applicantData[field];
-    //     } else {
-    //         // Fill form inputs and generic placeholders
-    //         $("[name='" + field + "']").val(applicantData[field]);
-    //         $("[data-display=" + field + "]").html(applicantData[field]);
-    //     }
-    // }
-
     for (let field of Object.keys(applicantData)) {
       // Fill form inputs and generic placeholders
       $("[name='" + field + "']").val(applicantData[field]);
-      $("[data-display=" + field + "]").html(applicantData[field]);
+      $("[data-display=" + field + "]").text(applicantData[field]);
     }
 
     if (applicantData.surname) {
-      document.getElementById("new_surname").innerHTML = applicantData.surname;
+      document.getElementById("new_surname").textContent = applicantData.surname;
     }
     if (applicantData.email) {
-      document.getElementById("new_applicant_email").innerHTML =
+      document.getElementById("new_applicant_email").textContent =
         applicantData.email;
     }
     if (applicantData.phone) {
-      document.getElementById("new_applicant_phone").innerHTML =
+      document.getElementById("new_applicant_phone").textContent =
         applicantData.phone;
     }
     if (applicantData.nationality) {
-      document.getElementById("new_home_country").innerHTML =
+      document.getElementById("new_home_country").textContent =
         applicantData.nationality;
     }
+
+    renderCvContentPreview(applicantData.cv_data);
   }
 };
 
@@ -82,15 +171,15 @@ let renderEducation = function () {
         '<div class="flex justify-between items-start py-3 border-b border-gray-100 last:border-0">' +
         '<div class="flex-1">' +
         '<div class="font-semibold text-gray-800">' +
-        object["institution"] +
+        escapeHtml(object["institution"]) +
         "</div>" +
         '<div class="text-sm text-gray-600">' +
-        object["edu-from"] +
+        escapeHtml(object["edu-from"]) +
         " – " +
-        object["edu-to"] +
+        escapeHtml(object["edu-to"]) +
         "</div>" +
         '<div class="text-sm text-gray-700 mt-1">' +
-        (object["certification"] || "") +
+        escapeHtml(object["certification"] || "") +
         "</div>" +
         "</div>" +
         '<div class="flex space-x-2 ml-4">' +
@@ -113,13 +202,13 @@ let renderEducation = function () {
 
       let resumeHtml =
         '<span class="block mb-1 text-gray-700">' +
-        object["institution"] +
+        escapeHtml(object["institution"]) +
         ", " +
-        object["certification"] +
+        escapeHtml(object["certification"]) +
         ", " +
-        object["edu-from"] +
+        escapeHtml(object["edu-from"]) +
         " – " +
-        object["edu-to"] +
+        escapeHtml(object["edu-to"]) +
         "</span>";
 
       educationList += listHtml;
@@ -133,9 +222,7 @@ let renderEducation = function () {
 
 let renderEmployment = function () {
   let employmentContainer = $("#employmentContainer");
-  let resumeContainer = $("#resumeEmployment");
   let employmentList = "";
-  let resumeEmployment = "";
 
   for (let i = 0; i < employment.length; i++) {
     let object = employment[i];
@@ -144,17 +231,17 @@ let renderEmployment = function () {
       '<div class="m-widget4__item">' +
       '<div class="m-widget4__info">' +
       '<span class="m-widget4__title">' +
-      object["employer"] +
+      escapeHtml(object["employer"]) +
       "</span><br> " +
       '<span class="m-widget4__sub">' +
-      object["emp-from"] +
+      escapeHtml(object["emp-from"]) +
       " - " +
-      object["emp-to"] +
+      escapeHtml(object["emp-to"] || "Present") +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext">' +
       '<span class="m-widget4__sub">' +
-      object["position"] +
+      escapeHtml(object["position"]) +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext m--align-right"> ' +
@@ -169,23 +256,10 @@ let renderEmployment = function () {
       "</div> " +
       "</div>";
 
-    let resumeHtml =
-      '<span class="m-widget4__sub">' +
-      object["employer"] +
-      ", " +
-      object["position"] +
-      ", " +
-      object["emp-from"] +
-      " - " +
-      object["emp-to"] +
-      "</span><br>";
-
     employmentList += listHtml;
-    resumeEmployment += resumeHtml;
   }
 
   employmentContainer.html(employmentList);
-  resumeContainer.html(resumeEmployment);
 };
 
 let renderProjects = function () {
@@ -201,12 +275,12 @@ let renderProjects = function () {
       '<div class="m-widget4__item">' +
       '<div class="m-widget4__info">' +
       '<span class="m-widget4__title">' +
-      object["project-name"] +
+      escapeHtml(object["project-name"]) +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext">' +
       '<span class="m-widget4__sub">' +
-      object["project-date"] +
+      escapeHtml(object["project-date"]) +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext m--align-right"> ' +
@@ -223,9 +297,9 @@ let renderProjects = function () {
 
     let resumeHtml =
       '<span class="m-widget4__sub">' +
-      object["project-name"] +
+      escapeHtml(object["project-name"]) +
       ", " +
-      object["project-date"] +
+      escapeHtml(object["project-date"]) +
       "</span><br>";
 
     projectsList += listHtml;
@@ -238,9 +312,7 @@ let renderProjects = function () {
 
 let renderReferees = function () {
   let refereesContainer = $("#refereesContainer");
-  let resumeContainer = $("#resumeReferees");
   let refereesList = "";
-  let resumeReferees = "";
 
   for (let i = 0; i < referees.length; i++) {
     let object = referees[i];
@@ -249,20 +321,20 @@ let renderReferees = function () {
       '<div class="m-widget4__item">' +
       '<div class="m-widget4__info">' +
       '<span class="m-widget4__title">' +
-      object["referee-name"] +
+      escapeHtml(object["referee-name"]) +
       " | " +
-      object["referee-company"] +
+      escapeHtml(object["referee-company"]) +
       "</span><br> " +
       '<span class="m-widget4__sub">' +
-      object["referee-position"] +
+      escapeHtml(object["referee-position"]) +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext">' +
       '<span class="m-widget4__sub">' +
-      object["referee-email"] +
+      escapeHtml(object["referee-email"]) +
       "</span><br>" +
       '<span class="m-widget4__sub">' +
-      object["referee-phone"] +
+      escapeHtml(object["referee-phone"]) +
       "</span>" +
       "</div>" +
       '<div class="m-widget4__ext m--align-right"> ' +
@@ -277,25 +349,10 @@ let renderReferees = function () {
       "</div> " +
       "</div>";
 
-    let resumeHtml =
-      '<span class="m-widget4__sub">' +
-      object["referee-name"] +
-      " | " +
-      object["referee-company"] +
-      ", " +
-      object["referee-position"] +
-      ", " +
-      object["referee-email"] +
-      ", " +
-      object["referee-phone"] +
-      "</span><br>";
-
     refereesList += listHtml;
-    resumeReferees += resumeHtml;
   }
 
   refereesContainer.html(refereesList);
-  resumeContainer.html(resumeReferees);
 };
 
 const skillLevels = {
@@ -306,9 +363,7 @@ const skillLevels = {
 
 let renderSkills = function () {
   let skillsContainer = $("#skillsContainer");
-  let resumeContainer = $("#resumeSkills");
   let skillsList = "";
-  let resumeSkills = "";
 
   for (let i = 0; i < skills.length; i++) {
     let object = skills[i];
@@ -341,19 +396,10 @@ let renderSkills = function () {
       "</div> " +
       "</div>";
 
-    let resumeHtml =
-      '<span class="m-widget4__sub">' +
-      skillNameText +
-      " | " +
-      skillLevelText +
-      "</span><br>";
-
     skillsList += listHtml;
-    resumeSkills += resumeHtml;
   }
 
   skillsContainer.html(skillsList);
-  resumeContainer.html(resumeSkills);
 };
 
 let calculateProgress = function () {
